@@ -5,11 +5,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // pages
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import { firestore } from './firebase';
+import { getRoom } from './api/main';
 
 function App() {
   useEffect(() => {
-    console.log('firestore', firestore);
+    getRoom('02OYhBlNkTHezBAoq0i4')
+      .then(res => {
+        console.log('res', res);
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
   }, []);
   return (
     <BrowserRouter>
