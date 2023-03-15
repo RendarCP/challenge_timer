@@ -5,13 +5,20 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // pages
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import { getRoom } from './api/main';
+import { getRoom, getRoomPersons } from './api/main';
 
 function App() {
   useEffect(() => {
     getRoom('02OYhBlNkTHezBAoq0i4')
       .then(res => {
         console.log('res', res);
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+    getRoomPersons('02OYhBlNkTHezBAoq0i4')
+      .then(res => {
+        console.log('res person', res);
       })
       .catch(err => {
         console.log('err', err);
