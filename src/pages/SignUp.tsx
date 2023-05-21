@@ -1,40 +1,72 @@
-import React from 'react';
-import styled from '@emotion/styled';
+import React, { useState } from 'react';
+import { createUserEmail } from '../api/main';
+import tw from 'twin.macro';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+const Container = tw.div`
+  flex
+  flex-col
+  justify-center
+  items-center
+  h-full
 `;
 
-const StyledInput = styled.input`
-  padding: 10px;
-  width: 100%;
-  border-radius: 8px;
+const SignUpWrap = tw.div`
+  w-[500px]
+  text-center
 `;
 
-const SignUpWrap = styled.div`
-  max-width: 500px;
-  width: 100%;
+const StyledInput = tw.input`
+  p-2.5
+  w-full
+  rounded-lg
+  border-2
+`;
+
+const SigunUpBox = tw.div`
+  w-full
 `;
 
 const SignUp = () => {
+  const [userId, setUserId] = useState('');
+  const [passWd, setPassWd] = useState('');
+
+  const onSignUp = () => {
+    createUserEmail(userId, passWd)
+      .then(res => {
+        console.log('res', res);
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+  };
+
+  console.log('userId', userId);
+  console.log('passWd', passWd);
+
   return (
     <Container>
-      <h1>회원가입</h1>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <SignUpWrap>
-        <div>이메일</div>
-        <StyledInput />
-      </SignUpWrap>
-      <SignUpWrap>
-        <div>비밀번호</div>
-        <StyledInput />
-      </SignUpWrap>
-      <SignUpWrap>
-        <div>목표</div>
-        <StyledInput />
+        <h1>회원가입</h1>
+        <SigunUpBox>
+          <div>이메일</div>
+          <StyledInput
+            value={userId}
+            onChange={(e: any) => setUserId(e.target.value)}
+          />
+        </SigunUpBox>
+        <SigunUpBox>
+          <div>비밀번호</div>
+          <StyledInput
+            value={passWd}
+            onChange={(e: any) => setPassWd(e.target.value)}
+          />
+        </SigunUpBox>
+        <SigunUpBox>
+          <div>목표</div>
+          <StyledInput />
+        </SigunUpBox>
+        <button onClick={onSignUp}>회원가입</button>
       </SignUpWrap>
     </Container>
   );

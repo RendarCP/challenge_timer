@@ -49,5 +49,6 @@ const createUserEmail =async (id: string, password: string) => {
 
 export {
   getRoom,
-  getRoomPersons
+  getRoomPersons,
+  createUserEmail
 }
