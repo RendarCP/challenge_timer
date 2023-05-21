@@ -5,9 +5,10 @@
 ## 적용 기술
 
 1. React (CRA)
-2. emotion
+2. TailWindCSS
 3. Recoil
 4. Firebase
+5. Jest/React-testing-library
 
 # 구현 사항
 
