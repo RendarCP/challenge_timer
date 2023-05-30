@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { createUserEmail } from '../api/main';
 import tw from 'twin.macro';
+import Button from '../components/core/Buttons';
+import Input from '../components/core/Input';
 
 const Container = tw.div`
   flex
@@ -67,6 +69,8 @@ const SignUp = () => {
           <StyledInput />
         </SigunUpBox>
         <button onClick={onSignUp}>회원가입</button>
+        <Button />
+        <Input type="standard" />
       </SignUpWrap>
     </Container>
   );
