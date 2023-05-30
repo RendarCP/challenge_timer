@@ -27,7 +27,8 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     ],
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    "react/no-unknown-property": ["error", { "ignore": ["css"] }],
+    // 'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
   settings: {
     'import/resolver': {
