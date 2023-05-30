@@ -54,7 +54,7 @@ Nextjs로 구현할려다 현재 appDir emotion관련된 부분때문에 react�
 
 ```mermaid
 ---
-title: challenge_timer ERD
+title: challenge_timer
 ---
 erDiagram
     USER ||--o{ ROOM_USER : places
