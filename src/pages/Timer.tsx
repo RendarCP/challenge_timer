@@ -147,8 +147,6 @@ export default function Timer() {
           {/* <Loader>
             <LoaderSpin />
           </Loader> */}
-
-          <h1 className="text-3xl font-bold underline">Hello world!</h1>
         </>
       )}
     </Container>
