@@ -5,7 +5,8 @@ import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/ko';
 import { toast } from 'react-toastify';
 import TimerComponent from '../components/TimerComponent';
-import CircleProgressBar from '../components/CircleProgressBar';
+import useClock from '../hooks/useClock';
+import useStopWatch from '../hooks/useStopWatch';
 
 dayjs.locale('ko');
 // dayjs.extend(localizedFormat);
@@ -24,8 +25,9 @@ const FlexWrap = tw.div`
 `;
 
 const HeaderTitle = tw.h1`
-  text-xl
+  // text-2xl
   font-bold
+  [font-size: 50px]
 `;
 
 const Button = tw.button`
@@ -47,9 +49,25 @@ const Label = tw.label`
   text-gray-500
 `;
 
-const TestLabel = styled.div<{ size: string | number }>`
+const UserLabel = styled.div<{ size: string | number }>`
   font-size: ${props => props.size && props.size}px;
   ${tw`text-blue-300`}
+`;
+
+const TimerWrap = tw.div`
+  flex
+  flex-col
+  items-center
+  border-2
+  rounded-lg 
+  p-6
+  mx-2.5
+  relative
+`;
+
+const TimerText = tw.div`
+  text-3xl
+  font-bold
 `;
 
 const Loader = styled.div`
@@ -89,6 +107,22 @@ export default function Timer() {
   const [show, setShow] = useState(false);
   const [start, setStart] = useState<Dayjs | null | Date>(null);
   const [end, setEnd] = useState<Dayjs | null | Date>(null);
+  const { hours, minutes, seconds } = useClock();
+  const {
+    timer,
+    milliseconds: stMilli,
+    seconds: stSeconds,
+    minutes: stMinutes,
+    hours: stHours,
+    onActive,
+    onPause,
+    isPause,
+    isActive,
+  } = useStopWatch();
+
+  console.log('isPause', isPause, isActive);
+
+  const TText = `${stHours}시간 ${stMinutes}분 ${stSeconds}초`;
 
   useEffect(() => {
     const storage = localStorage.getItem('challenge_timer');
@@ -97,6 +131,7 @@ export default function Timer() {
       console.log('storage', userDate);
       if (userDate.name) {
         setUser(userDate.name);
+        setStart(userDate.startTime);
         setShow(true);
       }
     }
@@ -108,15 +143,29 @@ export default function Timer() {
     } else {
       setShow(true);
       setStart(new Date());
-      localStorage.setItem('challenge_timer', JSON.stringify({ name: user }));
+      onPause();
+      localStorage.setItem(
+        'challenge_timer',
+        JSON.stringify({ name: user, startTime: new Date() })
+      );
     }
+  };
+
+  const handlePause = () => {
+    onPause();
+    localStorage.setItem(
+      'challenge_timer_stopWatch',
+      JSON.stringify({
+        stopwatch: timer,
+      })
+    );
   };
 
   const handleEnd = () => {
     setEnd(new Date());
     localStorage.setItem(
       'challenge_timer',
-      JSON.stringify({ name: user, lastDate: new Date() })
+      JSON.stringify({ name: user, startTime: start, lastDate: new Date() })
     );
   };
 
@@ -124,11 +173,9 @@ export default function Timer() {
     setUser(e.target.value);
   };
 
-  console.log('user', user);
-
   return (
     <Container>
-      <HeaderTitle>타이머 어택</HeaderTitle>
+      <HeaderTitle>타이머</HeaderTitle>
       {!show ? (
         <>
           <FlexWrap>
@@ -140,10 +187,48 @@ export default function Timer() {
         </>
       ) : (
         <>
-          <TestLabel size={20}>{user}님</TestLabel>
-          <TimerComponent />
-          <div>시작 시간 : {dayjs(start).format('HH:mm:ss')}</div>
-          <Button onClick={handleEnd}>종료</Button>
+          <UserLabel size={20}>{user}님</UserLabel>
+          <div style={{ display: 'flex', gap: 20 }}>
+            <Button onClick={handlePause}>{isActive ? '정지' : '재개'}</Button>
+            <Button onClick={handleEnd}>종료</Button>
+          </div>
+          <div style={{ display: 'flex', padding: 50 }}>
+            <TimerWrap>
+              <TimerText>
+                {hours}시 {minutes}분 {seconds}초
+              </TimerText>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '-17px',
+                  left: '17px',
+                  padding: 5,
+                  background: 'white',
+                }}
+              >
+                현재 시간
+              </div>
+            </TimerWrap>
+            <TimerWrap>
+              <TimerText>
+                {dayjs(start).format('MM월 DD일 HH 시 mm 분 ss 초')}
+              </TimerText>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '-17px',
+                  left: '17px',
+                  padding: 5,
+                  background: 'white',
+                }}
+              >
+                시작 시간
+              </div>
+            </TimerWrap>
+          </div>
+          <div style={{ display: 'flex', padding: 30 }}>
+            <TimerComponent time={start} text={TText} seconds={stSeconds} />
+          </div>
           {/* <Loader>
             <LoaderSpin />
           </Loader> */}
