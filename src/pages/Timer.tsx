@@ -120,15 +120,12 @@ export default function Timer() {
     isActive,
   } = useStopWatch();
 
-  console.log('isPause', isPause, isActive);
-
   const TText = `${stHours}시간 ${stMinutes}분 ${stSeconds}초`;
 
   useEffect(() => {
     const storage = localStorage.getItem('challenge_timer');
     if (storage !== null) {
       const userDate = JSON.parse(storage);
-      console.log('storage', userDate);
       if (userDate.name) {
         setUser(userDate.name);
         setStart(userDate.startTime);

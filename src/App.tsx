@@ -9,22 +9,22 @@ import { getRoom, getRoomPersons } from './api/main';
 import Timer from './pages/Timer';
 
 function App() {
-  useEffect(() => {
-    getRoom('02OYhBlNkTHezBAoq0i4')
-      .then(res => {
-        console.log('res', res);
-      })
-      .catch(err => {
-        console.log('err', err);
-      });
-    getRoomPersons('02OYhBlNkTHezBAoq0i4')
-      .then(res => {
-        console.log('res person', res);
-      })
-      .catch(err => {
-        console.log('err', err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   getRoom('02OYhBlNkTHezBAoq0i4')
+  //     .then(res => {
+  //       console.log('res', res);
+  //     })
+  //     .catch(err => {
+  //       console.log('err', err);
+  //     });
+  //   getRoomPersons('02OYhBlNkTHezBAoq0i4')
+  //     .then(res => {
+  //       console.log('res person', res);
+  //     })
+  //     .catch(err => {
+  //       console.log('err', err);
+  //     });
+  // }, []);
   return (
     <BrowserRouter>
       <Routes>

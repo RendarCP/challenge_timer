@@ -29,7 +29,6 @@ const useStopWatch = () => {
   }, 10)
 
   const onActive = () => {
-    console.log('testest', isActive);
     setIsActive(!isActive);
   }
 
