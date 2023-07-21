@@ -32,15 +32,15 @@ const SignUp = () => {
   const [userId, setUserId] = useState('');
   const [passWd, setPassWd] = useState('');
 
-  const onSignUp = () => {
-    createUserEmail(userId, passWd)
-      .then(res => {
-        console.log('res', res);
-      })
-      .catch(err => {
-        console.log('err', err);
-      });
-  };
+  // const onSignUp = () => {
+  //   createUserEmail(userId, passWd)
+  //     .then(res => {
+  //       console.log('res', res);
+  //     })
+  //     .catch(err => {
+  //       console.log('err', err);
+  //     });
+  // };
 
   console.log('userId', userId);
   console.log('passWd', passWd);

@@ -5,7 +5,7 @@ import App from './App';
 import { GlobalStyles } from 'twin.macro';
 import { ToastContainer } from 'react-toastify';
 import reportWebVitals from './reportWebVitals';
-import './firebase';
+// import './firebase';
 import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(

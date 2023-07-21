@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // pages
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import { getRoom, getRoomPersons } from './api/main';
+// import { getRoom, getRoomPersons } from './api/main';
 import Timer from './pages/Timer';
 
 function App() {
