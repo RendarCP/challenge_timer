@@ -54,7 +54,6 @@ const SignUp = () => {
 
   return (
     <Container>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <SignUpWrap>
         <h1>회원가입</h1>
         <SigunUpBox>
