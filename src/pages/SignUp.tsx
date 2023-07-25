@@ -32,15 +32,15 @@ const SignUp = () => {
   const [userId, setUserId] = useState('');
   const [passWd, setPassWd] = useState('');
 
-  // const onSignUp = () => {
-  //   createUserEmail(userId, passWd)
-  //     .then(res => {
-  //       console.log('res', res);
-  //     })
-  //     .catch(err => {
-  //       console.log('err', err);
-  //     });
-  // };
+  const onSignUp = () => {
+    createUserEmail(userId, passWd)
+      .then(res => {
+        console.log('res', res);
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+  };
 
   console.log('userId', userId);
   console.log('passWd', passWd);
@@ -68,8 +68,7 @@ const SignUp = () => {
           <div>목표</div>
           <StyledInput />
         </SigunUpBox>
-        <button onClick={onSignUp}>회원가입</button>
-        <Button />
+        <Button onClick={onSignUp}>회원가입</Button>
         <Input type="standard" />
       </SignUpWrap>
     </Container>

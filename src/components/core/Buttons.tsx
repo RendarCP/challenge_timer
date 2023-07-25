@@ -3,22 +3,22 @@ import styled from '@emotion/styled';
 import tw, { TwStyle } from 'twin.macro';
 
 const containerVariants: TwStyle = {
-  // Named class sets
-  light: tw`bg-white text-black`,
-  dark: tw`bg-black text-white`,
-  crazy: tw`bg-yellow-500 text-red-500`,
+  contained: tw`bg-orange-300 text-white hover:bg-orange-400`,
+  outlined: tw`border-2 border-orange-300 hover:bg-orange-400`,
+  text: tw`bg-yellow-500 text-red-500`,
 };
 
-const styles = {
-  container: ({ variant = 'dark' }: any) => [
-    tw`flex w-full`,
-    containerVariants[variant], // Grab the variant style via a prop
-  ],
-  column: tw`w-1/2`,
-};
+const styles = ({ variant = 'contained' }: any) => [
+  tw`flex justify-center items-center w-full p-3 rounded `,
+  containerVariants[variant],
+];
 
-const Button = () => {
-  return <div css={styles.container('light')}>테스트</div>;
+const Button = ({ variant = 'contained', children, ...props }) => {
+  return (
+    <button css={styles({ variant })} {...props}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;

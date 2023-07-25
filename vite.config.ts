@@ -33,4 +33,7 @@ export default defineConfig({
     viteTsconfigPaths(),
     svgrPlugin(),
   ],
+  server: {
+    port: 3010,
+  },
 });

@@ -14,10 +14,6 @@ const containerVariants: TwStyle = {
   filled: tw`p-2.5 border-b-2 rounded-lg bg-red-500`,
 };
 
-// const styles = {
-//   container: ({ variant }: any) => [containerVariants[variant]],
-// };
-
 const styles = ({ type }: any) => [containerVariants[type]];
 
 const Input = ({ type = 'standard' }: any) => {
