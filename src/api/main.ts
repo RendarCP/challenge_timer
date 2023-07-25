@@ -6,8 +6,10 @@ import {
   collection,
   where,
   getDocs,
+  addDoc,
 } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import type { IUserInfo } from '../types/apiType';
 
 const getRoom = async (id: string) => {
   try {
@@ -55,4 +57,20 @@ const createUserEmail = async (id: string, password: string) => {
   }
 };
 
-export { getRoom, getRoomPersons, createUserEmail };
+const createUserDoc = async ({ email, userName, goal }: IUserInfo) => {
+  try {
+    const setQuery = await addDoc(collection(firestore, 'users'), {
+      email,
+      userName,
+      goal,
+    });
+
+    if (setQuery) {
+      return setQuery;
+    }
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export { getRoom, getRoomPersons, createUserEmail, createUserDoc };
