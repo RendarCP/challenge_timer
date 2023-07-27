@@ -3,19 +3,20 @@ import styled from '@emotion/styled';
 import tw, { TwStyle } from 'twin.macro';
 
 const containerVariants: TwStyle = {
-  contained: tw`bg-orange-300 text-white hover:bg-orange-400`,
-  outlined: tw`border-2 border-orange-300 hover:bg-orange-400`,
+  contained: tw`bg-orange-400 text-white enabled:hover:bg-orange-500`,
+  outlined: tw`border-2 border-orange-400 enabled:hover:bg-orange-500`,
   text: tw`bg-yellow-500 text-red-500`,
 };
 
-const styles = ({ variant = 'contained' }: any) => [
+const styles = ({ variant = 'contained', disabled }: any) => [
   tw`flex justify-center items-center w-full p-3 rounded `,
+  disabled && tw`opacity-25 cursor-not-allowed`,
   containerVariants[variant],
 ];
 
-const Button = ({ variant = 'contained', children, ...props }) => {
+const Button = ({ variant = 'contained', children, disabled, ...props }) => {
   return (
-    <button css={styles({ variant })} {...props}>
+    <button disabled={disabled} css={styles({ variant, disabled })} {...props}>
       {children}
     </button>
   );

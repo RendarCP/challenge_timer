@@ -59,8 +59,8 @@ const SignUp = () => {
         <SigunUpBox>
           <div>이메일</div>
           <Input
-            validator={true}
-            validText="test"
+            validator={!emailRegex.test(email)}
+            validText="지원하지 않는 이메일 형식입니다."
             name="email"
             value={email}
             onChange={onChange}
@@ -74,7 +74,9 @@ const SignUp = () => {
           <div>목표</div>
           <Input />
         </SigunUpBox>
-        <Button onClick={onSignUp}>회원가입</Button>
+        <Button disabled onClick={onSignUp}>
+          회원가입
+        </Button>
       </SignUpWrap>
     </Container>
   );
