@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": [
+      "vite/client",
+      "vite-plugin-svgr/client",
+      "@emotion/react/types/css-prop"
     ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "noUnusedParameters": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
@@ -19,7 +21,6 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["@emotion/react/types/css-prop"],
     "jsxImportSource": "@emotion/react"
     // "baseUrl": "./src",
     // "paths": {
@@ -38,7 +39,5 @@
     // }
   },
   "files": ["twin.d.ts"],
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
