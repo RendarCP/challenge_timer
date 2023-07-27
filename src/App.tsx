@@ -8,6 +8,8 @@ import SignUp from './pages/SignUp';
 // import { getRoom, getRoomPersons } from './api/main';
 import Timer from './pages/Timer';
 import TestPage from './pages/Test.page';
+import MainPage from './pages/Main.page';
+import AuthLayout from './layouts/AuthLayout';
 
 function App() {
   // useEffect(() => {
@@ -29,7 +31,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/auth" element={<AuthLayout />}>
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/timer" element={<Timer />} />
         <Route path="/test" element={<TestPage />} />
