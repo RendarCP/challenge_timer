@@ -10,12 +10,11 @@ const Container = tw.div`
   flex-col
   justify-center
   items-center
-  h-full
   gap-2
 `;
 
 const SignUpWrap = tw.div`
-  w-[500px]
+  w-full
   flex
   flex-col
   gap-1
@@ -28,18 +27,15 @@ const SigunUpBox = tw.div`
 `;
 
 const SignUp = () => {
-  const [
-    { email, passwd, paddwdCheck, userName, nickName, goal },
-    onChange,
-    reset,
-  ] = useForm({
-    email: '',
-    passwd: '',
-    paddwdCheck: '',
-    userName: '',
-    nickName: '',
-    goal: '',
-  });
+  const [{ email, passwd, passwdCheck, nickName, goal }, onChange, reset] =
+    useForm({
+      email: '',
+      passwd: '',
+      passwdCheck: '',
+      // userName: '',
+      nickName: '',
+      goal: '',
+    });
 
   const onSignUp = () => {
     createUserEmail(email, passwd)
@@ -47,9 +43,10 @@ const SignUp = () => {
         console.log('create res', res);
         const { user }: any = res;
         createUserDoc({
+          user_uid: user.uid,
           email: user.email,
           nickName,
-          userName,
+          // userName,
           goal,
         })
           .then(res => {
@@ -64,11 +61,12 @@ const SignUp = () => {
       });
   };
 
-  console.log('userId', email);
-  console.log('passWd', passwd);
-
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const validPasswd = passwd !== paddwdCheck;
+  const validPasswd =
+    passwd === passwdCheck && passwd !== '' && passwdCheck !== '';
+
+  console.log('validPasswd', validPasswd);
+  console.log('!emailRegex.test(email)', emailRegex.test(email));
 
   return (
     <Container>
@@ -91,17 +89,17 @@ const SignUp = () => {
         <SigunUpBox>
           <div>비밀번호 확인</div>
           <Input
-            validator={validPasswd}
+            validator={passwd !== passwdCheck}
             validText="비밀번호가 달라요.😭"
-            name="paddwdCheck"
-            value={paddwdCheck}
+            name="passwdCheck"
+            value={passwdCheck}
             onChange={onChange}
           />
         </SigunUpBox>
-        <SigunUpBox>
+        {/* <SigunUpBox>
           <div>이름</div>
           <Input name="userName" value={userName} onChange={onChange} />
-        </SigunUpBox>
+        </SigunUpBox> */}
         <SigunUpBox>
           <div>닉네임</div>
           <Input name="nickName" value={nickName} onChange={onChange} />
@@ -111,7 +109,7 @@ const SignUp = () => {
           <Input name="goal" value={goal} onChange={onChange} />
         </SigunUpBox>
         <Button
-          disabled={!emailRegex.test(email) && passwd === '' && !validPasswd}
+          disabled={!emailRegex.test(email) || !validPasswd}
           onClick={onSignUp}
         >
           회원가입

@@ -58,19 +58,22 @@ const createUserEmail = async (id: string, password: string) => {
 };
 
 const createUserDoc = async ({
+  user_uid,
   email,
   nickName,
-  userName,
+  // userName,
   goal,
 }: IUserInfo) => {
   try {
     const setQuery = await addDoc(collection(firestore, 'users'), {
+      user_uid: user_uid,
       user_email: email,
-      user_name: userName,
+      // user_name: userName,
       user_goal: goal,
       user_nickname: nickName,
       create_date: new Date(),
       update_date: new Date(),
+      user_exp: 0,
     });
 
     if (setQuery) {

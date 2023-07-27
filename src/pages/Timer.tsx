@@ -208,7 +208,7 @@ export default function Timer() {
             </TimerWrap>
             <TimerWrap>
               <TimerText>
-                {dayjs(start).format('MM월 DD일 HH 시 mm 분 ss 초')}
+                {dayjs(start).format('MM월 DD일 HH 시 mm 분')}
               </TimerText>
               <div
                 style={{

@@ -10,7 +10,7 @@ const LeftHeader = tw.header`border border-orange-400 p-5`;
 
 const LeftCenterLogo = tw.div`border border-green-400 p-5`;
 
-const LeftContent = tw.div`border h-full border-pink-400 p-5`;
+const LeftContent = tw.div`border border-pink-400 p-5`;
 
 const RightWrapper = tw.section`border w-2/3 border-red-400`;
 
