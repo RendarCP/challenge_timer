@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createUserEmail } from '../api/main';
+import { createUserDoc, createUserEmail } from '../api/main';
 import tw from 'twin.macro';
 import Button from '../components/core/Buttons';
 import Input from '../components/core/Input';
@@ -16,14 +16,10 @@ const Container = tw.div`
 
 const SignUpWrap = tw.div`
   w-[500px]
+  flex
+  flex-col
+  gap-1
   text-center
-`;
-
-const StyledInput = tw.input`
-  p-2.5
-  w-full
-  rounded
-  border-2
 `;
 
 const SigunUpBox = tw.div`
@@ -32,15 +28,36 @@ const SigunUpBox = tw.div`
 `;
 
 const SignUp = () => {
-  const [{ email, passwd }, onChange, reset] = useForm({
+  const [
+    { email, passwd, paddwdCheck, userName, nickName, goal },
+    onChange,
+    reset,
+  ] = useForm({
     email: '',
     passwd: '',
+    paddwdCheck: '',
+    userName: '',
+    nickName: '',
+    goal: '',
   });
 
   const onSignUp = () => {
     createUserEmail(email, passwd)
       .then(res => {
-        console.log('res', res);
+        console.log('create res', res);
+        const { user }: any = res;
+        createUserDoc({
+          email: user.email,
+          nickName,
+          userName,
+          goal,
+        })
+          .then(res => {
+            console.log('user Create', res);
+          })
+          .catch(err => {
+            console.log('user create error', err);
+          });
       })
       .catch(err => {
         console.log('err', err);
@@ -51,6 +68,7 @@ const SignUp = () => {
   console.log('passWd', passwd);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const validPasswd = passwd !== paddwdCheck;
 
   return (
     <Container>
@@ -60,7 +78,7 @@ const SignUp = () => {
           <div>이메일</div>
           <Input
             validator={!emailRegex.test(email)}
-            validText="지원하지 않는 이메일 형식입니다."
+            validText="지원하지 않는 이메일 형식이예요!"
             name="email"
             value={email}
             onChange={onChange}
@@ -71,10 +89,31 @@ const SignUp = () => {
           <Input name="passwd" value={passwd} onChange={onChange} />
         </SigunUpBox>
         <SigunUpBox>
-          <div>목표</div>
-          <Input />
+          <div>비밀번호 확인</div>
+          <Input
+            validator={validPasswd}
+            validText="비밀번호가 달라요.😭"
+            name="paddwdCheck"
+            value={paddwdCheck}
+            onChange={onChange}
+          />
         </SigunUpBox>
-        <Button disabled onClick={onSignUp}>
+        <SigunUpBox>
+          <div>이름</div>
+          <Input name="userName" value={userName} onChange={onChange} />
+        </SigunUpBox>
+        <SigunUpBox>
+          <div>닉네임</div>
+          <Input name="nickName" value={nickName} onChange={onChange} />
+        </SigunUpBox>
+        <SigunUpBox>
+          <div>목표</div>
+          <Input name="goal" value={goal} onChange={onChange} />
+        </SigunUpBox>
+        <Button
+          disabled={!emailRegex.test(email) && passwd === '' && !validPasswd}
+          onClick={onSignUp}
+        >
           회원가입
         </Button>
       </SignUpWrap>

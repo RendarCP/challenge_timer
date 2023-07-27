@@ -1,7 +1,7 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
 type TValues = {
-  [key: string]: string;
+  [key: string]: string | number | boolean | any;
 };
 
 type ReturnType = [
