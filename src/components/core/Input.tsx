@@ -8,12 +8,17 @@ const containerVariants: TwStyle = {
 };
 
 const styles = ({ valid }: any) => [
-  tw`w-full rounded border-2 p-2.5 [user-select: none] !outline-none`,
+  tw`w-full rounded border-2 px-3 py-2 [user-select: none] !outline-none`,
   valid && tw`border-red-500`,
   // containerVariants[type],
 ];
 
-const Input = ({ type = 'standard', validator, validText, ...props }: any) => {
+const Input = ({
+  variant = 'standard',
+  validator,
+  validText,
+  ...props
+}: any) => {
   const valid = Boolean(props.value) && validator;
   return (
     <>

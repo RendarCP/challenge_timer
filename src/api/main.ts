@@ -8,7 +8,7 @@ import {
   getDocs,
   addDoc,
 } from 'firebase/firestore';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { User, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import type { IUserInfo } from '../types/apiType';
 
 const getRoom = async (id: string) => {
@@ -45,6 +45,19 @@ const getRoomPersons = async (id: string) => {
   }
 };
 
+const loginUserEmail =async (email: string, password: string) => {
+  try {
+    const login = signInWithEmailAndPassword(auth, email, password);
+
+    if(login){
+      return login
+    }
+  } catch (error:any) {
+    throw new Error(error);
+  }
+}
+
+// 유저 생성
 const createUserEmail = async (id: string, password: string) => {
   try {
     const signUp = createUserWithEmailAndPassword(auth, id, password);
@@ -57,6 +70,20 @@ const createUserEmail = async (id: string, password: string) => {
   }
 };
 
+// 이메일 인증
+const emailVerification =async () => {
+  try {
+    const verification =  sendEmailVerification(auth.currentUser as User);
+
+    if (verification) {
+      return verification
+    }
+  } catch(error: any){
+    throw new Error(error);
+  }
+}
+
+// 유저 데이터 베이스 생성
 const createUserDoc = async ({
   user_uid,
   email,
@@ -84,4 +111,4 @@ const createUserDoc = async ({
   }
 };
 
-export { getRoom, getRoomPersons, createUserEmail, createUserDoc };
+export { getRoom, getRoomPersons, loginUserEmail, createUserEmail, emailVerification, createUserDoc };

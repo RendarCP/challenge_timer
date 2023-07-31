@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createUserDoc, createUserEmail } from '../api/main';
+import { createUserDoc, createUserEmail, emailVerification } from '../api/main';
 import tw from 'twin.macro';
 import Button from '../components/core/Buttons';
 import Input from '../components/core/Input';
@@ -42,6 +42,7 @@ const SignUp = () => {
       .then(res => {
         console.log('create res', res);
         const { user }: any = res;
+        emailVerification();
         createUserDoc({
           user_uid: user.uid,
           email: user.email,
@@ -64,9 +65,6 @@ const SignUp = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const validPasswd =
     passwd === passwdCheck && passwd !== '' && passwdCheck !== '';
-
-  console.log('validPasswd', validPasswd);
-  console.log('!emailRegex.test(email)', emailRegex.test(email));
 
   return (
     <Container>

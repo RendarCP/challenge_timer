@@ -10,7 +10,7 @@ const LeftHeader = tw.header`border border-orange-400 p-5`;
 
 const LeftCenterLogo = tw.div`border border-green-400 p-5`;
 
-const LeftContent = tw.div`border border-pink-400 p-5`;
+const LeftContent = tw.div`flex flex-col h-full justify-center border border-pink-400 py-10 px-20`;
 
 const RightWrapper = tw.section`border w-2/3 border-red-400`;
 
@@ -18,10 +18,9 @@ const AuthLayout = () => {
   return (
     <AuthContainer>
       <LeftWrapper>
-        <LeftHeader>여기는 로고가 들어갈자리임</LeftHeader>
-        <LeftCenterLogo>여기는 큰 로고가 들어갈 자리임</LeftCenterLogo>
+        {/* <LeftHeader>여기는 로고가 들어갈자리임</LeftHeader> */}
         <LeftContent>
-          여기는 회원가입/로그인 섹션이 들어갈 자리임
+          <LeftCenterLogo>여기는 큰 로고가 들어갈 자리임</LeftCenterLogo>
           <Outlet />
         </LeftContent>
       </LeftWrapper>
