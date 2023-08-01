@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import useInterval from './useInterval';
 import dayjs, { Dayjs } from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+// import worker from '../modules/worker';
 
 dayjs.extend(duration);
 const useStopWatch = () => {
   const [isActive, setIsActive] = useState(false);
   const [isPause, setIsPause] = useState(false);
   const [timer, setTimer] = useState(0);
+  const [test, setTest] = useState(0);
+
+  console.log('test', test);
 
   useEffect(() => {
     const storage = localStorage.getItem('challenge_timer_stopWatch');

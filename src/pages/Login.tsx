@@ -4,6 +4,7 @@ import Input from '../components/core/Input';
 import Button from '../components/core/Buttons';
 import { useForm } from '../hooks/useForm';
 import { loginUserEmail } from '../api/main';
+import { ReactComponent as Google }from '../assets/google_logo.svg'
 
 const Container = tw.div`
 `;
@@ -34,6 +35,11 @@ const Login = () => {
   };
   return (
     <Container>
+      <div>
+        {/* <img src={Google} /> */}
+        <Google />
+      </div>
+      <div>divider</div>
       <LoginWrap>
         <h1>로그인</h1>
         <LoginBox>

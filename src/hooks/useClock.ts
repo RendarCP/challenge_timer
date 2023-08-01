@@ -7,13 +7,13 @@ const useClock = () => {
 
   useInterval(() => {
     setTime(dayjs());
-  }, 1000)
+  }, 1000);
 
   const hours = dayjs(time).format('HH');
   const minutes = dayjs(time).format('mm');
   const seconds = dayjs(time).format('ss');
 
-  return {time, hours, minutes, seconds};
-}
+  return { time, hours, minutes, seconds };
+};
 
 export default useClock;
