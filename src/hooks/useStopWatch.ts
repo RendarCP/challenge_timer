@@ -22,6 +22,8 @@ const useStopWatch = () => {
     }
   }, [isActive]);
 
+  console.log('timer', timer);
+
   useInterval(() => {
     if (isActive) {
       setTimer(timer => timer + 1);

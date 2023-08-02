@@ -40,48 +40,56 @@
 //   }
 // };
 
-// self.onmessage = function (event) {
-//   const { delay } = event.data;
+// let timerInterval: any;
+// let isTimerRunning = false;
 
-//   // Start the timer
-//   let time = 0;
-//   const interval = setInterval(() => {
-//     time++;
-//     postMessage(time);
-//     console.log('time', time);
-
-//     clearInterval(interval);
-//   }, delay);
+// self.onmessage = function (e) {
+//   if (e.data === 'start') {
+//     isTimerRunning = true;
+//     timerInterval = setInterval(() => {
+//       postMessage(isTimerRunning);
+//     }, 1000);
+//   } else if (e.data === 'stop') {
+//     console.log('stop here');
+//     isTimerRunning = false;
+//     clearInterval(timerInterval);
+//   }
 // };
 
-let timerInterval: any;
+let timerInterval:any;
 let isTimerRunning = false;
+let timer = 0;
 
 self.onmessage = function (e) {
   if (e.data === 'start') {
-    isTimerRunning = true;
-    timerInterval = setInterval(() => {
-      postMessage(isTimerRunning);
-    }, 1000);
-  } else if (e.data === 'stop') {
-    console.log('stop here');
-    isTimerRunning = false;
-    clearInterval(timerInterval);
+    startTimer();
+  } else if (e.data === 'pause') {
+    pauseTimer();
+  }
+  else {
+    stopTimer();
   }
 };
 
-// function startTimer() {
-//   isTimerRunning = true;
-//   timerInterval = setInterval(() => {
-//     postMessage(isTimerRunning);
-//   }, 1000);
-// }
+function startTimer() {
+  isTimerRunning = true;
+  if(isTimerRunning){
+    timerInterval = setInterval(() => {
+        timer += 1;
+        postMessage({isTimerRunning, timer} );
+      }, 10);
+  }
+}
 
-// function stopTimer() {
-//   isTimerRunning = false;
-//   clearInterval(timerInterval);
-// }
+function pauseTimer() { 
+  isTimerRunning = false;
+  timer = timer;
+  postMessage({ isTimerRunning, timer });
+}
 
-// self.onmessage = ({ data }) => {
-//   console.log(data, 'data from onmessage');
-// };
+function stopTimer() {
+  isTimerRunning = false;
+  timer = 0;
+  postMessage({ isTimerRunning, timer });
+  clearInterval(timerInterval);
+}

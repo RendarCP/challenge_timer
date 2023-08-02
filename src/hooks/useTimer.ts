@@ -6,13 +6,17 @@ const useTimer = () => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
+  console.log('isTimerRunning', isTimerRunning);
+
   useEffect(() => {
     // Initialize the web worker
     workerRef.current = timerWorker;
 
     // Handle messages from the worker
     workerRef.current.onmessage = (e: any) => {
-      setIsTimerRunning(e.data);
+      console.log('-=========-=', e.data);
+      setIsTimerRunning(e.data.isTimerRunning);
+      setElapsedTime(e.data.timer);
     };
 
     // Clean up the worker on unmount
@@ -21,21 +25,25 @@ const useTimer = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (isTimerRunning) {
-      const timerInterval = setInterval(() => {
-        setElapsedTime(prevElapsedTime => prevElapsedTime + 1);
-      }, 1000);
+  // useEffect(() => {
+  //   if (isTimerRunning) {
+  //     const timerInterval = setInterval(() => {
+  //       setElapsedTime(prevElapsedTime => prevElapsedTime + 1);
+  //     }, 10);
 
-      return () => {
-        clearInterval(timerInterval);
-      };
-    }
-  }, [isTimerRunning]);
+  //     return () => {
+  //       clearInterval(timerInterval);
+  //     };
+  //   }
+  // }, [isTimerRunning]);
 
   const startTimer = () => {
     workerRef.current.postMessage('start');
   };
+
+  const pauseTimer = () => {
+    workerRef.current.postMessage('pause');
+  }
 
   const stopTimer = () => {
     workerRef.current.postMessage('stop');
@@ -45,7 +53,7 @@ const useTimer = () => {
     setElapsedTime(0);
   };
 
-  return { startTimer, stopTimer, resetTimer, elapsedTime, isTimerRunning };
+  return { startTimer, pauseTimer, stopTimer, resetTimer, elapsedTime, isTimerRunning };
 };
 
 export default useTimer;

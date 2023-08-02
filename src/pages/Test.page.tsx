@@ -6,7 +6,7 @@ import useTimer from '../hooks/useTimer';
 import { timerWorker } from '../utils/initWorker';
 
 export default function TestPage() {
-  const { startTimer, stopTimer, resetTimer, elapsedTime, isTimerRunning } =
+  const { startTimer, pauseTimer,  stopTimer, resetTimer, elapsedTime, isTimerRunning } =
     useTimer();
   return (
     <div>
@@ -15,6 +15,9 @@ export default function TestPage() {
       <p>Elapsed Time: {elapsedTime} seconds</p>
       <button onClick={startTimer} disabled={isTimerRunning}>
         Start
+      </button>
+      <button onClick={pauseTimer}>
+        pause
       </button>
       <button onClick={stopTimer} disabled={!isTimerRunning}>
         Stop
