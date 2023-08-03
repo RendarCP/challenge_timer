@@ -63,6 +63,7 @@ const TimerWrap = tw.div`
   p-6
   mx-2.5
   relative
+  mt-4
 `;
 
 const TimerText = tw.div`
@@ -189,7 +190,7 @@ export default function Timer() {
             <Button onClick={handlePause}>{isActive ? '정지' : '재개'}</Button>
             <Button onClick={handleEnd}>종료</Button>
           </div>
-          <div style={{ display: 'flex', padding: 50 }}>
+          <div style={{ padding: 50 }}>
             <TimerWrap>
               <TimerText>
                 {hours}시 {minutes}분 {seconds}초

@@ -4,21 +4,11 @@ import Input from '../components/core/Input';
 import Button from '../components/core/Buttons';
 import { useForm } from '../hooks/useForm';
 import { loginUserEmail, googleAuth } from '../api/main';
-import { ReactComponent as Google }from '../assets/google_logo.svg'
-
-const Container = tw.div`
-`;
-
-const LoginWrap = tw.div`
-  flex
-  flex-col
-  justify-center 
-  gap-2
-`;
-
-const LoginBox = tw.div``;
+import { ReactComponent as Google } from '../assets/google_logo.svg';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [{ email, passwd }, onChange, reset] = useForm({
     email: '',
     passwd: '',
@@ -27,6 +17,7 @@ const Login = () => {
   const handelClick = () => {
     loginUserEmail(email, passwd)
       .then(res => {
+        navigate('/');
         console.log('res', res);
       })
       .catch(err => {
@@ -35,15 +26,28 @@ const Login = () => {
   };
 
   const handleGoogle = () => {
-    googleAuth()
-  }
+    googleAuth();
+  };
   return (
     <Container>
       <div>
         {/* <img src={Google} /> */}
-        <Button variant="text" onClick={handleGoogle}>
-          <Google />
-          <div>테스트입니당.</div>
+        <Button
+          style={{ border: '1px solid gray' }}
+          variant="text"
+          onClick={handleGoogle}
+        >
+          <Google
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: 0,
+              transform: 'translate(50%, -40%)',
+            }}
+            width={20}
+            height={20}
+          />
+          <div>구글 로그인</div>
         </Button>
       </div>
       <div>divider</div>
@@ -68,3 +72,15 @@ const Login = () => {
   );
 };
 export default Login;
+
+const Container = tw.div`
+`;
+
+const LoginWrap = tw.div`
+  flex
+  flex-col
+  justify-center 
+  gap-2
+`;
+
+const LoginBox = tw.div``;

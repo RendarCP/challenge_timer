@@ -4,29 +4,10 @@ import tw from 'twin.macro';
 import Button from '../components/core/Buttons';
 import Input from '../components/core/Input';
 import { useForm } from '../hooks/useForm';
-
-const Container = tw.div`
-  flex
-  flex-col
-  justify-center
-  items-center
-  gap-2
-`;
-
-const SignUpWrap = tw.div`
-  w-full
-  flex
-  flex-col
-  gap-1
-  text-center
-`;
-
-const SigunUpBox = tw.div`
-  w-full
-  mb-4
-`;
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [{ email, passwd, passwdCheck, nickName, goal }, onChange, reset] =
     useForm({
       email: '',
@@ -51,6 +32,7 @@ const SignUp = () => {
           goal,
         })
           .then(res => {
+            navigate('/');
             console.log('user Create', res);
           })
           .catch(err => {
@@ -118,3 +100,24 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+const Container = tw.div`
+  flex
+  flex-col
+  justify-center
+  items-center
+  gap-2
+`;
+
+const SignUpWrap = tw.div`
+  w-full
+  flex
+  flex-col
+  gap-1
+  text-center
+`;
+
+const SigunUpBox = tw.div`
+  w-full
+  mb-4
+`;

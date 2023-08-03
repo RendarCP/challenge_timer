@@ -15,6 +15,7 @@ import {
   sendEmailVerification,
   GoogleAuthProvider,
   signInWithPopup,
+  getAdditionalUserInfo
 } from 'firebase/auth';
 import type { IUserInfo } from '../types/apiType';
 
@@ -97,7 +98,8 @@ const googleAuth = async () => {
     signInWithPopup(auth, provider)
     .then(res => {
       console.log('res', res);
-      console.log('_tokenResponse', res?.user);
+      const credential = getAdditionalUserInfo(res);
+      console.log('credential', credential);
     })
   }
   catch(error: any) {

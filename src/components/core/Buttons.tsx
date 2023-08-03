@@ -9,7 +9,7 @@ const containerVariants: TwStyle = {
 };
 
 const styles = ({ variant = 'contained', disabled }: any) => [
-  tw`flex justify-center items-center w-full p-3 rounded `,
+  tw`flex justify-center items-center w-full p-3 rounded relative`,
   disabled && tw`opacity-25 cursor-not-allowed`,
   containerVariants[variant],
 ];
