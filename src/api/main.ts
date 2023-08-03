@@ -8,7 +8,14 @@ import {
   getDocs,
   addDoc,
 } from 'firebase/firestore';
-import { User, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import {
+  User,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth';
 import type { IUserInfo } from '../types/apiType';
 
 const getRoom = async (id: string) => {
@@ -71,7 +78,7 @@ const createUserEmail = async (id: string, password: string) => {
 };
 
 // 이메일 인증
-const emailVerification =async () => {
+const emailVerification = async () => {
   try {
     const verification =  sendEmailVerification(auth.currentUser as User);
 
@@ -79,6 +86,21 @@ const emailVerification =async () => {
       return verification
     }
   } catch(error: any){
+    throw new Error(error);
+  }
+}
+
+// GoogleAuth 
+const googleAuth = async () => {
+  try {
+    const provider = new GoogleAuthProvider(); // provider 구글 설정
+    signInWithPopup(auth, provider)
+    .then(res => {
+      console.log('res', res);
+      console.log('_tokenResponse', res?.user);
+    })
+  }
+  catch(error: any) {
     throw new Error(error);
   }
 }
@@ -111,4 +133,4 @@ const createUserDoc = async ({
   }
 };
 
-export { getRoom, getRoomPersons, loginUserEmail, createUserEmail, emailVerification, createUserDoc };
+export { getRoom, getRoomPersons, loginUserEmail, createUserEmail, emailVerification, googleAuth, createUserDoc };

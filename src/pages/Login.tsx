@@ -3,7 +3,7 @@ import tw from 'twin.macro';
 import Input from '../components/core/Input';
 import Button from '../components/core/Buttons';
 import { useForm } from '../hooks/useForm';
-import { loginUserEmail } from '../api/main';
+import { loginUserEmail, googleAuth } from '../api/main';
 import { ReactComponent as Google }from '../assets/google_logo.svg'
 
 const Container = tw.div`
@@ -33,11 +33,18 @@ const Login = () => {
         console.log('err', err);
       });
   };
+
+  const handleGoogle = () => {
+    googleAuth()
+  }
   return (
     <Container>
       <div>
         {/* <img src={Google} /> */}
-        <Google />
+        <Button variant="text" onClick={handleGoogle}>
+          <Google />
+          <div>테스트입니당.</div>
+        </Button>
       </div>
       <div>divider</div>
       <LoginWrap>
