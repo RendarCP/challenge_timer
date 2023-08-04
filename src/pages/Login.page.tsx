@@ -6,6 +6,7 @@ import { useForm } from '../hooks/useForm';
 import { loginUserEmail, googleAuth } from '../api/main';
 import { ReactComponent as Google } from '../assets/google_logo.svg';
 import { useNavigate } from 'react-router-dom';
+import { Divider } from '../components/core/Divider';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const Login = () => {
           <div>구글 로그인</div>
         </Button>
       </div>
-      <div>divider</div>
+      <Divider>divider</Divider>
       <LoginWrap>
         <h1>로그인</h1>
         <LoginBox>

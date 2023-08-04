@@ -1,7 +1,12 @@
 import { HTMLAttributes } from 'react';
 import tw, { TwStyle } from 'twin.macro';
 
-export const Text = ({ typography = 'p', color, ...props }) => {
+interface TextProps {
+  typography: string;
+  color?: string;
+}
+
+export const Text = ({ typography = 'p', color, ...props }: TextProps) => {
   return (
     <span style={{ color }} css={TYPOGRAPH_VARIANT[typography]} {...props} />
   );

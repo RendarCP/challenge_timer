@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import tw, { TwStyle } from 'twin.macro';
 
@@ -14,7 +14,18 @@ const styles = ({ variant = 'contained', disabled }: any) => [
   containerVariants[variant],
 ];
 
-const Button = ({ variant = 'contained', children, disabled, ...props }) => {
+interface ButtonProps {
+  variant: string;
+  children?: ReactNode;
+  disabled?: boolean;
+}
+
+const Button = ({
+  variant = 'contained',
+  children,
+  disabled,
+  ...props
+}: ButtonProps) => {
   return (
     <button disabled={disabled} css={styles({ variant, disabled })} {...props}>
       {children}

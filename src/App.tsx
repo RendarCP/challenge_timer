@@ -3,8 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // pages
-import Login from './pages/Login';
-import SignUp from './pages/SignUp';
+import Login from './pages/Login.page';
+import SignUp from './pages/SignUp.page';
 // import { getRoom, getRoomPersons } from './api/main';
 import Timer from './pages/Timer';
 import TestPage from './pages/Test.page';
