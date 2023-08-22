@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { HTMLAttributes, JSXElementConstructor, ReactNode } from 'react';
 import styled from '@emotion/styled';
 import tw, { TwStyle } from 'twin.macro';
+import { extend } from 'dayjs';
 
 const containerVariants: TwStyle = {
   contained: tw`bg-orange-400 text-white enabled:hover:bg-orange-500`,
@@ -14,8 +15,8 @@ const styles = ({ variant = 'contained', disabled }: any) => [
   containerVariants[variant],
 ];
 
-interface ButtonProps {
-  variant: string;
+interface ButtonProps extends React.ComponentProps<'button'> {
+  variant?: string;
   children?: ReactNode;
   disabled?: boolean;
 }

@@ -3,7 +3,7 @@ import { timerWorker } from '../utils/initWorker';
 
 const useTimer = () => {
   const workerRef = useRef<any>();
-  const [elapsedTime, setElapsedTime] = useState(0);
+  const [timer, setTimer] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   console.log('isTimerRunning', isTimerRunning);
@@ -14,9 +14,8 @@ const useTimer = () => {
 
     // Handle messages from the worker
     workerRef.current.onmessage = (e: any) => {
-      console.log('-=========-=', e.data);
       setIsTimerRunning(e.data.isTimerRunning);
-      setElapsedTime(e.data.timer);
+      setTimer(e.data.timer);
     };
 
     // Clean up the worker on unmount
@@ -25,7 +24,7 @@ const useTimer = () => {
     };
   }, []);
 
-  console.log('elapsedTime', elapsedTime);
+  console.log('timer', timer);
 
   const storage = localStorage.getItem('challenge_timer_stopWatch');
   const startTimer = () => {
@@ -41,18 +40,18 @@ const useTimer = () => {
   };
 
   const pauseTimer = () => {
-    workerRef.current.postMessage({ type: 'pause', stopwatch: elapsedTime });
+    workerRef.current.postMessage({ type: 'pause', stopwatch: timer });
     localStorage.setItem(
       'challenge_timer_stopWatch',
       JSON.stringify({
-        stopwatch: elapsedTime,
+        stopwatch: timer,
       })
     );
   };
 
   const stopTimer = () => {
     workerRef.current.postMessage({ type: 'stop' });
-    setElapsedTime(0);
+    setTimer(0);
     localStorage.setItem(
       'challenge_timer_stopWatch',
       JSON.stringify({
@@ -62,15 +61,37 @@ const useTimer = () => {
   };
 
   const resetTimer = () => {
-    setElapsedTime(0);
+    setTimer(0);
   };
 
+  // Hours calculation
+  const hours = Math.floor(timer / 360000)
+    .toString()
+    .padStart(2, '0');
+
+  // Minutes calculation
+  const minutes = Math.floor((timer % 360000) / 6000)
+    .toString()
+    .padStart(2, '0');
+
+  // Seconds calculation
+  const seconds = Math.floor((timer % 6000) / 100)
+    .toString()
+    .padStart(2, '0');
+
+  // Milliseconds calculation
+  const milliseconds = (timer % 100).toString().padStart(2, '0');
+
   return {
+    hours,
+    minutes,
+    seconds,
+    milliseconds,
     startTimer,
     pauseTimer,
     stopTimer,
     resetTimer,
-    elapsedTime,
+    timer,
     isTimerRunning,
   };
 };

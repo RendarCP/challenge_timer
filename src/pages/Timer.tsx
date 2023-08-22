@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import TimerComponent from '../components/TimerComponent';
 import useClock from '../hooks/useClock';
 import useStopWatch from '../hooks/useStopWatch';
+import useTimer from '../hooks/useTimer';
 
 dayjs.locale('ko');
 // dayjs.extend(localizedFormat);
@@ -109,17 +110,29 @@ export default function Timer() {
   const [start, setStart] = useState<Dayjs | null | Date>(null);
   const [end, setEnd] = useState<Dayjs | null | Date>(null);
   const { hours, minutes, seconds } = useClock();
+  // const {
+  //   timer,
+  //   milliseconds: stMilli,
+  //   seconds: stSeconds,
+  //   minutes: stMinutes,
+  //   hours: stHours,
+  //   onActive,
+  //   onPause,
+  //   isPause,
+  //   isActive,
+  // } = useStopWatch();
+
   const {
     timer,
     milliseconds: stMilli,
     seconds: stSeconds,
     minutes: stMinutes,
     hours: stHours,
-    onActive,
-    onPause,
+    startTimer: onActive,
+    pauseTimer: onPause,
     isPause,
-    isActive,
-  } = useStopWatch();
+    isTimerRunning: isActive,
+  } = useTimer();
 
   const TText = `${stHours}시간 ${stMinutes}분 ${stSeconds}초`;
 
@@ -159,6 +172,14 @@ export default function Timer() {
     );
   };
 
+  const handleTimer = () => {
+    if (isActive) {
+      onPause();
+    } else {
+      onActive();
+    }
+  };
+
   const handleEnd = () => {
     setEnd(new Date());
     localStorage.setItem(
@@ -187,7 +208,8 @@ export default function Timer() {
         <>
           <UserLabel size={20}>{user}님</UserLabel>
           <div style={{ display: 'flex', gap: 20 }}>
-            <Button onClick={handlePause}>{isActive ? '정지' : '재개'}</Button>
+            {/* <Button onClick={handlePause}>{isActive ? '정지' : '재개'}</Button> */}
+            <Button onClick={handleTimer}>{isActive ? '정지' : '재개'}</Button>
             <Button onClick={handleEnd}>종료</Button>
           </div>
           <div style={{ padding: 50 }}>
