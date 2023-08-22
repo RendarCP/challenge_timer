@@ -22,8 +22,8 @@
 
 ## 3. 구현사항
 
-- [ x ] 로그인
-- [ x ] 회원가입
+- [x] 로그인
+- [x] 회원가입
 - [ ] Timer_Room 기능
   - [ ] Share_room
   - [ ] Single_room
