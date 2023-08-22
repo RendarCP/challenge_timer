@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
-import { createUserDoc, createUserEmail, emailVerification } from '../api/main';
+import {
+  createUserDoc,
+  createUserEmail,
+  emailVerification,
+  googleAuth,
+} from '../api/main';
 import tw from 'twin.macro';
 import Button from '../components/core/Buttons';
 import Input from '../components/core/Input';
 import { useForm } from '../hooks/useForm';
 import { useNavigate } from 'react-router-dom';
+import { emailRegex } from '../utils/regex';
+import { ReactComponent as Google } from '../assets/google_logo.svg';
+import { Divider } from '../components/core/Divider';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -44,12 +52,42 @@ const SignUp = () => {
       });
   };
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const handleGoogle = () => {
+    googleAuth()
+      .then(res => {
+        console.log('res', res);
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+  };
+
   const validPasswd =
     passwd === passwdCheck && passwd !== '' && passwdCheck !== '';
 
   return (
     <Container>
+      <div>
+        {/* <img src={Google} /> */}
+        <Button
+          style={{ border: '1px solid gray' }}
+          variant="text"
+          onClick={handleGoogle}
+        >
+          <Google
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: 0,
+              transform: 'translate(50%, -40%)',
+            }}
+            width={20}
+            height={20}
+          />
+          <div>구글 로그인</div>
+        </Button>
+      </div>
+      <Divider>divider</Divider>
       <SignUpWrap>
         <h1>회원가입</h1>
         <SigunUpBox>
@@ -101,20 +139,14 @@ const SignUp = () => {
 
 export default SignUp;
 
-const Container = tw.div`
+const Container = tw.div``;
+
+const SignUpWrap = tw.div`
   flex
   flex-col
   justify-center
   items-center
   gap-2
-`;
-
-const SignUpWrap = tw.div`
-  w-full
-  flex
-  flex-col
-  gap-1
-  text-center
 `;
 
 const SigunUpBox = tw.div`

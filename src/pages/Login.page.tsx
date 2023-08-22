@@ -27,7 +27,13 @@ const Login = () => {
   };
 
   const handleGoogle = () => {
-    googleAuth();
+    googleAuth()
+      .then(res => {
+        console.log('res', res);
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
   };
   return (
     <Container>

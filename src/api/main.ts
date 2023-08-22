@@ -15,7 +15,7 @@ import {
   sendEmailVerification,
   GoogleAuthProvider,
   signInWithPopup,
-  getAdditionalUserInfo
+  getAdditionalUserInfo,
 } from 'firebase/auth';
 import type { IUserInfo } from '../types/apiType';
 
@@ -53,17 +53,17 @@ const getRoomPersons = async (id: string) => {
   }
 };
 
-const loginUserEmail =async (email: string, password: string) => {
+const loginUserEmail = async (email: string, password: string) => {
   try {
     const login = signInWithEmailAndPassword(auth, email, password);
 
-    if(login){
-      return login
+    if (login) {
+      return login;
     }
-  } catch (error:any) {
+  } catch (error: any) {
     throw new Error(error);
   }
-}
+};
 
 // 유저 생성
 const createUserEmail = async (id: string, password: string) => {
@@ -81,31 +81,42 @@ const createUserEmail = async (id: string, password: string) => {
 // 이메일 인증
 const emailVerification = async () => {
   try {
-    const verification =  sendEmailVerification(auth.currentUser as User);
+    const verification = sendEmailVerification(auth.currentUser as User);
 
     if (verification) {
-      return verification
+      return verification;
     }
-  } catch(error: any){
+  } catch (error: any) {
     throw new Error(error);
   }
-}
+};
 
-// GoogleAuth 
+// GoogleAuth
 const googleAuth = async () => {
   try {
     const provider = new GoogleAuthProvider(); // provider 구글 설정
-    signInWithPopup(auth, provider)
-    .then(res => {
-      console.log('res', res);
-      const credential = getAdditionalUserInfo(res);
-      console.log('credential', credential);
-    })
-  }
-  catch(error: any) {
+    const googleUser = await signInWithPopup(auth, provider);
+
+    const credential = getAdditionalUserInfo(googleUser);
+
+    console.log('googleuser', googleUser);
+    console.log('credential', credential);
+
+    if (credential?.isNewUser) {
+      const user = await createUserDoc({
+        user_uid: googleUser.user.uid,
+        email: credential.profile.email,
+        nickName: credential.profile.name,
+        goal: '',
+      });
+      return user;
+    } else {
+      return true;
+    }
+  } catch (error: any) {
     throw new Error(error);
   }
-}
+};
 
 // 유저 데이터 베이스 생성
 const createUserDoc = async ({
@@ -135,4 +146,12 @@ const createUserDoc = async ({
   }
 };
 
-export { getRoom, getRoomPersons, loginUserEmail, createUserEmail, emailVerification, googleAuth, createUserDoc };
+export {
+  getRoom,
+  getRoomPersons,
+  loginUserEmail,
+  createUserEmail,
+  emailVerification,
+  googleAuth,
+  createUserDoc,
+};
