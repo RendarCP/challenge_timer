@@ -56,40 +56,41 @@
 //   }
 // };
 
-let timerInterval:any;
+let timerInterval: any;
 let isTimerRunning = false;
-let timer = 0;
+// let timer = 0;
 
 self.onmessage = function (e) {
-  if (e.data === 'start') {
-    startTimer();
-  } else if (e.data === 'pause') {
-    pauseTimer();
-  }
-  else {
+  console.log('e', e);
+  if (e.data.type === 'start') {
+    startTimer(e.data.stopwatch);
+  } else if (e.data.type === 'pause') {
+    pauseTimer(e.data.stopwatch);
+  } else {
     stopTimer();
   }
 };
 
-function startTimer() {
+function startTimer(timer: number) {
   isTimerRunning = true;
-  if(isTimerRunning){
+  if (isTimerRunning) {
+    console.log('==================', isTimerRunning);
     timerInterval = setInterval(() => {
-        timer += 1;
-        postMessage({isTimerRunning, timer} );
-      }, 10);
+      timer += 1;
+      postMessage({ isTimerRunning, timer });
+    }, 10);
   }
 }
 
-function pauseTimer() { 
+function pauseTimer(timer: number) {
   isTimerRunning = false;
-  timer = timer;
+  clearInterval(timerInterval);
   postMessage({ isTimerRunning, timer });
 }
 
 function stopTimer() {
   isTimerRunning = false;
-  timer = 0;
-  postMessage({ isTimerRunning, timer });
+  // timer = 0;
+  postMessage({ isTimerRunning, timer: 0 });
   clearInterval(timerInterval);
 }

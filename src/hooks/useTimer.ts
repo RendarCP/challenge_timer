@@ -25,35 +25,54 @@ const useTimer = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (isTimerRunning) {
-  //     const timerInterval = setInterval(() => {
-  //       setElapsedTime(prevElapsedTime => prevElapsedTime + 1);
-  //     }, 10);
+  console.log('elapsedTime', elapsedTime);
 
-  //     return () => {
-  //       clearInterval(timerInterval);
-  //     };
-  //   }
-  // }, [isTimerRunning]);
-
+  const storage = localStorage.getItem('challenge_timer_stopWatch');
   const startTimer = () => {
-    workerRef.current.postMessage('start');
+    if (storage !== null) {
+      const data = JSON.parse(storage);
+      workerRef.current.postMessage({
+        type: 'start',
+        stopwatch: data.stopwatch,
+      });
+    } else {
+      workerRef.current.postMessage({ type: 'start', stopwatch: 0 });
+    }
   };
 
   const pauseTimer = () => {
-    workerRef.current.postMessage('pause');
-  }
+    workerRef.current.postMessage({ type: 'pause', stopwatch: elapsedTime });
+    localStorage.setItem(
+      'challenge_timer_stopWatch',
+      JSON.stringify({
+        stopwatch: elapsedTime,
+      })
+    );
+  };
 
   const stopTimer = () => {
-    workerRef.current.postMessage('stop');
+    workerRef.current.postMessage({ type: 'stop' });
+    setElapsedTime(0);
+    localStorage.setItem(
+      'challenge_timer_stopWatch',
+      JSON.stringify({
+        stopwatch: 0,
+      })
+    );
   };
 
   const resetTimer = () => {
     setElapsedTime(0);
   };
 
-  return { startTimer, pauseTimer, stopTimer, resetTimer, elapsedTime, isTimerRunning };
+  return {
+    startTimer,
+    pauseTimer,
+    stopTimer,
+    resetTimer,
+    elapsedTime,
+    isTimerRunning,
+  };
 };
 
 export default useTimer;
