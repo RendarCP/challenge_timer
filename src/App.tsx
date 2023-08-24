@@ -8,6 +8,7 @@ import MainPage from './pages/Main.page';
 import AuthLayout from './layouts/AuthLayout';
 import Rooms from './pages/challenge/Rooms.page';
 import Room from './pages/challenge/Room.page';
+import MainLayout from './layouts/MainLayout';
 
 function App() {
   return (
@@ -18,9 +19,16 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
         </Route>
-        <Route path="/timer" element={<Timer />} />
-        <Route path="/challenge/room" element={<Rooms />} />
-        <Route path="/challenge/room/:id" element={<Room />} />
+        <Route path="/main" element={<MainLayout />}>
+          <Route path="timer" element={<Timer />} />
+          <Route path="challenge/room" element={<Rooms />} />
+          <Route path="challenge/room/:id" element={<Room />} />
+          {/* timer/report */}
+          {/* comunity */}
+          {/* comunity/:type */}
+          {/* shared */}
+          {/* profile */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );
