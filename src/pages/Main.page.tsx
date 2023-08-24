@@ -11,7 +11,7 @@ export default function MainPage() {
       <Text typography="h1">Challenage_Timer</Text>
       <BtnWrap>
         <Button onClick={() => navigate('/auth/login')}>로그인</Button>
-        <Button onClick={() => navigate('/timer')}>타이머</Button>
+        <Button onClick={() => navigate('/main/timer')}>타이머</Button>
         <Button onClick={() => navigate('/auth/signup')}>회원가입</Button>
       </BtnWrap>
     </Container>
