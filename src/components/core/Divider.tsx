@@ -11,8 +11,6 @@ interface DividerProps {
   children?: ReactNode;
 }
 export const Divider = ({ children, ...props }: DividerProps) => {
-  const withChildren = !!children;
-  console.log('withChildren', withChildren);
   return (
     <div css={dividerStyles.root}>
       <div css={dividerStyles.divider}></div>

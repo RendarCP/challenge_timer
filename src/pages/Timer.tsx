@@ -6,7 +6,6 @@ import 'dayjs/locale/ko';
 import { toast } from 'react-toastify';
 import TimerComponent from '../components/TimerComponent';
 import useClock from '../hooks/useClock';
-import useStopWatch from '../hooks/useStopWatch';
 import useTimer from '../hooks/useTimer';
 import Loading from '../components/Loading';
 
@@ -78,19 +77,7 @@ export default function Timer() {
   const [show, setShow] = useState(false);
   const [start, setStart] = useState<Dayjs | null | Date>(null);
   const [end, setEnd] = useState<Dayjs | null | Date>(null);
-  const { hours, minutes, seconds } = useClock();
-  // const {
-  //   timer,
-  //   milliseconds: stMilli,
-  //   seconds: stSeconds,
-  //   minutes: stMinutes,
-  //   hours: stHours,
-  //   onActive,
-  //   onPause,
-  //   isPause,
-  //   isActive,
-  // } = useStopWatch();
-
+  // const { hours, minutes, seconds } = useClock();
   const {
     timer,
     milliseconds: stMilli,
@@ -218,7 +205,7 @@ export default function Timer() {
           <div style={{ display: 'flex', padding: 30 }}>
             <TimerComponent time={start} text={TText} seconds={stSeconds} />
           </div>
-          <Loading />
+          {/* <Loading /> */}
         </>
       )}
     </Container>
