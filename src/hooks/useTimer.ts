@@ -6,8 +6,16 @@ const useTimer = () => {
   const [timer, setTimer] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  console.log('isTimerRunning', isTimerRunning);
+  const storage = localStorage.getItem('challenge_timer_stopWatch');
+  // initial localstorage data
+  useEffect(() => {
+    if (storage !== null) {
+      const data = JSON.parse(storage);
+      setTimer(data.stopwatch);
+    }
+  }, []);
 
+  // initial webworker
   useEffect(() => {
     // Initialize the web worker
     workerRef.current = timerWorker;
@@ -24,9 +32,6 @@ const useTimer = () => {
     };
   }, []);
 
-  console.log('timer', timer);
-
-  const storage = localStorage.getItem('challenge_timer_stopWatch');
   const startTimer = () => {
     if (storage !== null) {
       const data = JSON.parse(storage);
