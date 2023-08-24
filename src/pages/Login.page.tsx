@@ -57,7 +57,7 @@ const Login = () => {
           <div>구글 로그인</div>
         </Button>
       </div>
-      <Divider>divider</Divider>
+      <Divider>or</Divider>
       <LoginWrap>
         <h1>로그인</h1>
         <LoginBox>

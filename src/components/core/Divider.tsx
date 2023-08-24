@@ -1,11 +1,23 @@
 import React, { Children, ReactNode } from 'react';
 import tw, { TwStyle } from 'twin.macro';
 
-const Root = tw.div`[border-width: 1px] border-solid border-gray-300 my-2.5`;
+const dividerStyles: TwStyle = {
+  root: tw`flex items-center my-5`,
+  divider: tw`w-full border-t border-gray-300`,
+  text: tw`px-4`,
+};
 
 interface DividerProps {
   children?: ReactNode;
 }
 export const Divider = ({ children, ...props }: DividerProps) => {
-  return <Root {...props}>{children}</Root>;
+  const withChildren = !!children;
+  console.log('withChildren', withChildren);
+  return (
+    <div css={dividerStyles.root}>
+      <div css={dividerStyles.divider}></div>
+      {children && <div css={dividerStyles.text}>{children}</div>}
+      <div css={dividerStyles.divider}></div>
+    </div>
+  );
 };

@@ -8,6 +8,7 @@ import TimerComponent from '../components/TimerComponent';
 import useClock from '../hooks/useClock';
 import useStopWatch from '../hooks/useStopWatch';
 import useTimer from '../hooks/useTimer';
+import Loading from '../components/Loading';
 
 dayjs.locale('ko');
 // dayjs.extend(localizedFormat);
@@ -70,38 +71,6 @@ const TimerWrap = tw.div`
 const TimerText = tw.div`
   text-3xl
   font-bold
-`;
-
-const Loader = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 10000;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(255, 255, 255, 0.9);
-`;
-
-const LoaderSpin = styled.div`
-  border: 8px solid #f3f3f3;
-  border-top: 8px solid #02c685;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 2s linear infinite;
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
 `;
 
 export default function Timer() {
@@ -212,7 +181,7 @@ export default function Timer() {
             <Button onClick={handleTimer}>{isActive ? '정지' : '재개'}</Button>
             <Button onClick={handleEnd}>종료</Button>
           </div>
-          <div style={{ padding: 50 }}>
+          {/* <div style={{ padding: 50 }}>
             <TimerWrap>
               <TimerText>
                 {hours}시 {minutes}분 {seconds}초
@@ -245,13 +214,11 @@ export default function Timer() {
                 시작 시간
               </div>
             </TimerWrap>
-          </div>
+          </div> */}
           <div style={{ display: 'flex', padding: 30 }}>
             <TimerComponent time={start} text={TText} seconds={stSeconds} />
           </div>
-          {/* <Loader>
-            <LoaderSpin />
-          </Loader> */}
+          <Loading />
         </>
       )}
     </Container>

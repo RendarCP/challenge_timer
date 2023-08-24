@@ -1,33 +1,16 @@
-import React, { useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // pages
 import Login from './pages/Login.page';
 import SignUp from './pages/SignUp.page';
 // import { getRoom, getRoomPersons } from './api/main';
 import Timer from './pages/Timer';
-import TestPage from './pages/Test.page';
 import MainPage from './pages/Main.page';
 import AuthLayout from './layouts/AuthLayout';
+import Rooms from './pages/challenge/Rooms.page';
+import Room from './pages/challenge/Room.page';
+import MainLayout from './layouts/MainLayout';
 
 function App() {
-  // useEffect(() => {
-  //   getRoom('02OYhBlNkTHezBAoq0i4')
-  //     .then(res => {
-  //       console.log('res', res);
-  //     })
-  //     .catch(err => {
-  //       console.log('err', err);
-  //     });
-  //   getRoomPersons('02OYhBlNkTHezBAoq0i4')
-  //     .then(res => {
-  //       console.log('res person', res);
-  //     })
-  //     .catch(err => {
-  //       console.log('err', err);
-  //     });
-  // }, []);
   return (
     <BrowserRouter>
       <Routes>
@@ -36,10 +19,16 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
         </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/timer" element={<Timer />} />
-        <Route path="/test" element={<TestPage />} />
+        <Route path="/main" element={<MainLayout />}>
+          <Route path="timer" element={<Timer />} />
+          <Route path="challenge/room" element={<Rooms />} />
+          <Route path="challenge/room/:id" element={<Room />} />
+          {/* timer/report */}
+          {/* comunity */}
+          {/* comunity/:type */}
+          {/* shared */}
+          {/* profile */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );

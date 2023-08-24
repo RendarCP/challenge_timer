@@ -57,7 +57,7 @@ Nextjs로 구현할려다 현재 appDir emotion관련된 부분때문에 react�
 title: challenge_timer
 ---
 erDiagram
-    USER ||--o{ ROOM_USER : places
+    USER ||--o{ ROOM_USER : user
     USER {
         string USER_ID
         string USER_PW
@@ -69,7 +69,7 @@ erDiagram
         datetime CREATE_DATE
         datetime UPDATE_DATE
     }
-    ROOM_USER }|--|| ROOM : contains
+    ROOM_USER }|--|| ROOM : room
     ROOM_USER {
         int ROOM_USER_ID
         string ROOM_ID
