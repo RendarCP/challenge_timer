@@ -202,9 +202,7 @@ export default function Timer() {
               </div>
             </TimerWrap>
           </div> */}
-          <div style={{ display: 'flex', padding: 30 }}>
-            <TimerComponent time={start} text={TText} seconds={stSeconds} />
-          </div>
+          <TimerComponent time={start} text={TText} seconds={stSeconds} />
           {/* <Loading /> */}
         </>
       )}
