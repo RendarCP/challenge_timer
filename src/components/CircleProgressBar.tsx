@@ -1,48 +1,43 @@
 import React from 'react';
 
-const CircleProgressBar = ({
-  percentage,
-  text,
-  color = '#ff5722',
-  size,
-}: any) => {
-  const radius = size / 2; // Radius of the circle
+const CircleProgressBar = ({ size, percentage, text, color = '#ff5722' }: any) => {
+  const radius = 40; // Adjust the radius as needed
   const circumference = 2 * Math.PI * radius; // Circumference of the circle
 
-  // Calculate the progress based on the percentage and start from the top
   const progress = (percentage / 100) * circumference;
 
   return (
-    <svg className="circle-progress-bar" width={size} height={size}>
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 100 100"
+    >
       <circle
-        className="circle-progress-bar-background"
-        cx={radius}
-        cy={radius}
-        r={radius - 5} // Adjust the thickness of the background circle
+        cx="50%"
+        cy="50%"
+        r="40%" // Adjust the thickness of the background circle
         fill="transparent"
         stroke="#e6e6e6"
-        strokeWidth="10"
+        strokeWidth="5"
       />
       <circle
-        className="circle-progress-bar-progress"
-        cx={radius}
-        cy={radius}
-        r={radius - 5} // Adjust the thickness of the progress circle
+        cx="50%"
+        cy="50%"
+        r="40%" // Adjust the thickness of the progress circle
         fill="transparent"
         stroke={color}
-        strokeWidth="10"
+        strokeWidth="5"
         strokeLinecap="round"
         strokeDasharray={circumference}
-        strokeDashoffset={circumference - progress} // Invert the progress
-        transform={`rotate(-90 ${radius} ${radius})`} // Rotate the circle 90 degrees counter-clockwise
+        strokeDashoffset={circumference - progress} // Start from the top
+        transform={`rotate(-90 50 50)`} // Rotate the circle 90 degrees counter-clockwise
       />
       <text
-        className="circle-progress-bar-text"
         x="50%"
         y="50%"
         dominantBaseline="middle"
         textAnchor="middle"
-        fontSize={size / 10} // Adjust the font size based on the size of the SVG container
+        fontSize="8" // Adjust the font size as needed
         fill="#333333"
       >
         {text}
