@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react';
 import tw, { TwStyle } from 'twin.macro';
 
-interface TextProps {
+interface TextProps extends React.ComponentProps<'span'> {
   typography: string;
   color?: string;
 }

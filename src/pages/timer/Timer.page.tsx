@@ -4,10 +4,10 @@ import styled from '@emotion/styled';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/ko';
 import { toast } from 'react-toastify';
-import TimerComponent from '../components/TimerComponent';
-import useClock from '../hooks/useClock';
-import useTimer from '../hooks/useTimer';
-import Loading from '../components/Loading';
+import TimerComponent from '../../components/TimerComponent';
+import useClock from '../../hooks/useClock';
+import useTimer from '../../hooks/useTimer';
+import Loading from '../../components/Loading';
 
 dayjs.locale('ko');
 // dayjs.extend(localizedFormat);
