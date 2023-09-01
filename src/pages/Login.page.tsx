@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import tw from 'twin.macro';
 import Input from '../components/core/Input';
 import Button from '../components/core/Buttons';
@@ -7,6 +7,7 @@ import { loginUserEmail, googleAuth } from '../api/main';
 import { ReactComponent as Google } from '../assets/google_logo.svg';
 import { useNavigate } from 'react-router-dom';
 import { Divider } from '../components/core/Divider';
+import { useUserInfo } from '../store/userStore';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,12 +15,15 @@ const Login = () => {
     email: '',
     passwd: '',
   });
+  const { loginUserInfo } = useUserInfo();
 
   const handelClick = () => {
     loginUserEmail(email, passwd)
       .then(res => {
+        const user = res[0];
+        loginUserInfo(user);
         navigate('/');
-        console.log('res', res);
+        console.log('res', user);
       })
       .catch(err => {
         console.log('err', err);

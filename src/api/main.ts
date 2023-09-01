@@ -55,10 +55,22 @@ const getRoomPersons = async (id: string) => {
 
 const loginUserEmail = async (email: string, password: string) => {
   try {
-    const login = signInWithEmailAndPassword(auth, email, password);
+    const login = await signInWithEmailAndPassword(auth, email, password);
 
     if (login) {
-      return login;
+      const loginUser = await getDocs(
+        query(
+          collection(firestore, 'users'),
+          where('user_uid', '==', login.user.uid)
+        )
+      );
+
+      const newData = loginUser.docs.map(doc => ({
+        ...doc.data(),
+      }));
+
+      // console.log('login user', ...newData);
+      return newData;
     }
   } catch (error: any) {
     throw new Error(error);

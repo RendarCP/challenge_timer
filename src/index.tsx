@@ -15,7 +15,7 @@ root.render(
   <>
     <GlobalStyles />
     <App />
-    <ToastContainer />
+    <ToastContainer hideProgressBar autoClose={3000} pauseOnHover={false} />
   </>
 );
 
