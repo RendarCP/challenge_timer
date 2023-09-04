@@ -38,9 +38,9 @@
 
 ## 4. 적용 기술
 
-1. React (CRA)
-2. TailWindCSS
-3. Recoil
+1. React (CRA) -> vite
+2. TailWindCSS, twin.macro
+3. zustand
 4. Firebase
 5. Jest/React-testing-library
 
