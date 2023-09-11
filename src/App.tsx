@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // pages
 import Login from './pages/Login.page';
 import SignUp from './pages/SignUp.page';
-// import { getRoom, getRoomPersons } from './api/main';
 import Timer from './pages/Timer';
 import MainPage from './pages/Main.page';
 import AuthLayout from './layouts/AuthLayout';
