@@ -19,6 +19,15 @@ import {
 } from 'firebase/auth';
 import type { IUserInfo } from '../types/apiType';
 
+class FirebaseError extends Error {
+  code: string;
+  constructor(originalError: any) {
+    super(originalError.message);
+    this.code = originalError.code;
+    this.name = 'FirebaseError';
+  }
+}
+
 const getRoom = async (id: string) => {
   try {
     const room = doc(firestore, 'timer_room', id);
@@ -29,7 +38,7 @@ const getRoom = async (id: string) => {
     }
     throw new Error('fail');
   } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
   }
 };
 
@@ -49,19 +58,7 @@ const getRoomPersons = async (id: string) => {
     }
     throw new Error('fail');
   } catch (error: any) {
-    throw new Error(error);
-  }
-};
-
-const loginUserEmail = async (email: string, password: string) => {
-  try {
-    const login = signInWithEmailAndPassword(auth, email, password);
-
-    if (login) {
-      return login;
-    }
-  } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
   }
 };
 
@@ -74,7 +71,23 @@ const createUserEmail = async (id: string, password: string) => {
       return signUp;
     }
   } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
+  }
+};
+
+// 이메일 로그인
+const loginUserEmail = async (email: string, password: string) => {
+  try {
+    const login = await signInWithEmailAndPassword(auth, email, password);
+
+    console.log('login', login);
+    if (login) {
+      return getUserDoc(login.user.uid);
+    }
+  } catch (error: any) {
+    console.log('error', error.code);
+    // return error;
+    throw new FirebaseError(error);
   }
 };
 
@@ -87,7 +100,7 @@ const emailVerification = async () => {
       return verification;
     }
   } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
   }
 };
 
@@ -99,8 +112,8 @@ const googleAuth = async () => {
 
     const credential = getAdditionalUserInfo(googleUser);
 
-    console.log('googleuser', googleUser);
-    console.log('credential', credential);
+    // console.log('googleuser', googleUser);
+    // console.log('credential', credential);
 
     if (credential?.isNewUser) {
       const user = await createUserDoc({
@@ -111,10 +124,11 @@ const googleAuth = async () => {
       });
       return user;
     } else {
-      return true;
+      return getUserDoc(googleUser.user.uid);
+      // return true;
     }
   } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
   }
 };
 
@@ -142,7 +156,28 @@ const createUserDoc = async ({
       return setQuery;
     }
   } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
+  }
+};
+
+const getUserDoc = async (uid: string) => {
+  try {
+    const q = query(
+      collection(firestore, 'users'),
+      where('user_uid', '==', uid)
+    );
+    const querySnapshot = await getDocs(q);
+
+    // const newData = querySnapshot.docs.map(doc => ({
+    //   ...doc.data(),
+    // }));
+    const newData = querySnapshot.docs[0]?.data();
+    if (querySnapshot) {
+      return newData;
+    }
+    throw new Error('fail');
+  } catch (error: any) {
+    throw new FirebaseError(error);
   }
 };
 
@@ -154,4 +189,5 @@ export {
   emailVerification,
   googleAuth,
   createUserDoc,
+  getUserDoc,
 };

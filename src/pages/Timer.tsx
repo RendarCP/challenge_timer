@@ -8,6 +8,7 @@ import TimerComponent from '../components/TimerComponent';
 import useClock from '../hooks/useClock';
 import useTimer from '../hooks/useTimer';
 import Loading from '../components/Loading';
+import Input from '../components/core/Input';
 
 dayjs.locale('ko');
 // dayjs.extend(localizedFormat);
@@ -71,8 +72,20 @@ export default function Timer() {
   const handleTimer = () => {
     if (isActive) {
       onPause();
+      localStorage.setItem(
+        'challenge_timer_stopWatch',
+        JSON.stringify({
+          stopwatch: timer,
+        })
+      );
     } else {
       onActive();
+      localStorage.setItem(
+        'challenge_timer_stopWatch',
+        JSON.stringify({
+          stopwatch: 0,
+        })
+      );
     }
   };
 
@@ -96,6 +109,7 @@ export default function Timer() {
           <FlexWrap>
             <Label>이름</Label>
             <Input value={user} onChange={handleChange} />
+            <Input value={user} onCHa />
           </FlexWrap>
           <div style={{ marginTop: 20 }} />
           <Button onClick={handleStart}>저장후 시작</Button>
@@ -176,12 +190,12 @@ const Button = tw.button`
   py-2
 `;
 
-const Input = tw.input`
-  border-2
-  rounded-lg
-  p-2
-  border-green-500
-`;
+// const Input = tw.input`
+//   border-2
+//   rounded-lg
+//   p-2
+//   border-green-500
+// `;
 
 const Label = tw.label`
   text-sm

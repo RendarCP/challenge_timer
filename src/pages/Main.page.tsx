@@ -8,7 +8,7 @@ export default function MainPage() {
   const navigate = useNavigate();
   return (
     <Container>
-      <Text typography="h1">Challenage_Timer</Text>
+      <Text typography="h3">Challenage_Timer</Text>
       <BtnWrap>
         <Button onClick={() => navigate('/auth/login')}>로그인</Button>
         <Button onClick={() => navigate('/main/timer')}>타이머</Button>

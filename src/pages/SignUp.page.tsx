@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Children, useState } from 'react';
 import {
   createUserDoc,
   createUserEmail,
@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { emailRegex } from '../utils/regex';
 import { ReactComponent as Google } from '../assets/google_logo.svg';
 import { Divider } from '../components/core/Divider';
+import { Text } from '../components/core/Text';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -84,12 +85,11 @@ const SignUp = () => {
             width={20}
             height={20}
           />
-          <div>구글 로그인</div>
+          <Text>구글 회원가입</Text>
         </Button>
       </div>
-      <Divider>divider</Divider>
+      <Divider>or</Divider>
       <SignUpWrap>
-        <h1>회원가입</h1>
         <SigunUpBox>
           <div>이메일</div>
           <Input
@@ -151,5 +151,4 @@ const SignUpWrap = tw.div`
 
 const SigunUpBox = tw.div`
   w-full
-  mb-4
 `;

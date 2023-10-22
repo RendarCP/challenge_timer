@@ -46,23 +46,23 @@ const useTimer = () => {
 
   const pauseTimer = () => {
     workerRef.current.postMessage({ type: 'pause', stopwatch: timer });
-    localStorage.setItem(
-      'challenge_timer_stopWatch',
-      JSON.stringify({
-        stopwatch: timer,
-      })
-    );
+    // localStorage.setItem(
+    //   'challenge_timer_stopWatch',
+    //   JSON.stringify({
+    //     stopwatch: timer,
+    //   })
+    // );
   };
 
   const stopTimer = () => {
     workerRef.current.postMessage({ type: 'stop' });
     setTimer(0);
-    localStorage.setItem(
-      'challenge_timer_stopWatch',
-      JSON.stringify({
-        stopwatch: 0,
-      })
-    );
+    // localStorage.setItem(
+    //   'challenge_timer_stopWatch',
+    //   JSON.stringify({
+    //     stopwatch: 0,
+    //   })
+    // );
   };
 
   const resetTimer = () => {

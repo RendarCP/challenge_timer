@@ -7,6 +7,9 @@ import { loginUserEmail, googleAuth } from '../api/main';
 import { ReactComponent as Google } from '../assets/google_logo.svg';
 import { useNavigate } from 'react-router-dom';
 import { Divider } from '../components/core/Divider';
+import { errorCode } from '../modules/ErrorHandling';
+import { toast } from 'react-toastify';
+import { Text } from '../components/core/Text';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,6 +18,7 @@ const Login = () => {
     passwd: '',
   });
 
+  // 이메일 로그인
   const handelClick = () => {
     loginUserEmail(email, passwd)
       .then(res => {
@@ -22,17 +26,24 @@ const Login = () => {
         console.log('res', res);
       })
       .catch(err => {
-        console.log('err', err);
+        toast.error(errorCode(err.code));
+        // console.log('err', err, err.code);
       });
   };
 
+  // 구글 로그인
   const handleGoogle = () => {
     googleAuth()
       .then(res => {
         console.log('res', res);
+        console.log(
+          'res dat',
+          res.create_date.seconds,
+          new Date(res.create_date.seconds * 1000)
+        );
       })
       .catch(err => {
-        console.log('err', err);
+        console.log('err', err, err.code);
       });
   };
   return (
@@ -54,12 +65,11 @@ const Login = () => {
             width={20}
             height={20}
           />
-          <div>구글 로그인</div>
+          <Text>구글 로그인</Text>
         </Button>
       </div>
       <Divider>or</Divider>
       <LoginWrap>
-        <h1>로그인</h1>
         <LoginBox>
           <div>아이디</div>
           <Input type="email" name="email" value={email} onChange={onChange} />
