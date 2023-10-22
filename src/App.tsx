@@ -13,12 +13,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/" element={<MainLayout />}>
+          <Route path="" element={<MainPage />} />
+        </Route>
         <Route path="/auth" element={<AuthLayout />}>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
         </Route>
-        <Route path="/main" element={<MainLayout />}>
+        <Route path="/main" element={<MainLayout showHeader />}>
           <Route path="timer" element={<Timer />} />
           <Route path="challenge/room" element={<Rooms />} />
           <Route path="challenge/room/:id" element={<Room />} />

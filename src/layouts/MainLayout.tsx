@@ -4,10 +4,14 @@ import Header from '../components/Header';
 
 const MainContainer = tw.div`border-red-500 border-2 border-solid flex flex-col w-full h-full`;
 
-const MainLayout = () => {
+interface MainlayoutProps {
+  showHeader?: boolean;
+}
+
+const MainLayout = ({ showHeader }: MainlayoutProps) => {
   return (
     <MainContainer>
-      <Header />
+      {showHeader && <Header />}
       <Outlet />
     </MainContainer>
   );

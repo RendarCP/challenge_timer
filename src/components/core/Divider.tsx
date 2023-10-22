@@ -12,7 +12,7 @@ interface DividerProps {
 }
 export const Divider = ({ children, ...props }: DividerProps) => {
   return (
-    <div css={dividerStyles.root}>
+    <div css={dividerStyles.root} {...props}>
       <div css={dividerStyles.divider}></div>
       {children && <div css={dividerStyles.text}>{children}</div>}
       <div css={dividerStyles.divider}></div>

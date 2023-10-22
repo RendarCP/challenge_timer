@@ -1,19 +1,25 @@
 import React from 'react';
 import tw from 'twin.macro';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useMatch } from 'react-router-dom';
+import { Text } from '../components/core/Text';
 
 const AuthContainer = tw.div`flex flex-col justify-center items-center w-full h-full`;
 
-const MainWarpper = tw.section`w-1/3 p-10 border-2 border-solid border-primary rounded-lg`;
+const AuthInner = tw.div`flex-auto xs:w-full sm:w-[500px] flex flex-col justify-center`;
+
+const MainWarpper = tw.section`p-10 border-2 border-solid border-primary rounded-lg`;
 
 const AuthLayout = () => {
+  const match = useMatch('/auth/login');
   return (
     <AuthContainer>
-      <div>logo</div>
-      <div>signUp</div>
-      <MainWarpper>
-        <Outlet />
-      </MainWarpper>
+      <AuthInner>
+        <div>logo</div>
+        <Text typography="h4">{match ? '로그인' : '회원가입'}</Text>
+        <MainWarpper>
+          <Outlet />
+        </MainWarpper>
+      </AuthInner>
     </AuthContainer>
   );
 };
