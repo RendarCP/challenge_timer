@@ -10,8 +10,12 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
     'prettier'
   ],
+  ignorePatterns: ['dist', '.eslintrc.js', 'tsconfig'],
   overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -28,8 +32,36 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     ],
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     "react/no-unknown-property": ["error", { "ignore": ["css"] }],
-    // 'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+        'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index'], 'object', 'type'],
+        pathGroups: [
+          {
+            "pattern": "../components/*",
+            "group": "builtin",
+            "position": "after"
+          },
+          {
+            "pattern": "../hooks/*",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "../api/*",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+        'newlines-between': 'always',
+      },
+    ],
   },
   settings: {
     'import/resolver': {
@@ -37,5 +69,6 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
+        'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
   },
 };

@@ -18,6 +18,8 @@
     "@types/jest": "^27.5.2",
     "@types/react-dom": "^18.0.11",
     "dayjs": "^1.11.7",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.0",
     "firebase": "^9.17.2",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
@@ -33,7 +35,8 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "eslintConfig": {
     "extends": [
@@ -68,6 +71,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.10.0",
     "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8.4.27",
     "prettier": "^2.8.8",
     "react-app-rewired": "^2.2.1",
