@@ -1,19 +1,21 @@
 import React, { Children, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import tw from 'twin.macro';
+
+import { useForm } from '../hooks/useForm';
+
 import {
   createUserDoc,
   createUserEmail,
   emailVerification,
   googleAuth,
 } from '../api/main';
-import tw from 'twin.macro';
-import Button from '../components/core/Buttons';
-import Input from '../components/core/Input';
-import { useForm } from '../hooks/useForm';
-import { useNavigate } from 'react-router-dom';
-import { emailRegex } from '../utils/regex';
 import { ReactComponent as Google } from '../assets/google_logo.svg';
+import Button from '../components/core/Buttons';
 import { Divider } from '../components/core/Divider';
+import Input from '../components/core/Input';
 import { Text } from '../components/core/Text';
+import { emailRegex } from '../utils/regex';
 
 const SignUp = () => {
   const navigate = useNavigate();

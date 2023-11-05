@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text } from '../components/core/Text';
-import tw from 'twin.macro';
-import Button from '../components/core/Buttons';
 import { useNavigate } from 'react-router-dom';
+import tw from 'twin.macro';
+
+import Button from '../components/core/Buttons';
+import { Text } from '../components/core/Text';
 
 export default function MainPage() {
   const navigate = useNavigate();

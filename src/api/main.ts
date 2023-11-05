@@ -1,4 +1,13 @@
-import { auth, firestore } from '../firebase/index';
+import {
+  User,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  GoogleAuthProvider,
+  signInWithPopup,
+  getAdditionalUserInfo,
+  GithubAuthProvider,
+} from 'firebase/auth';
 import {
   getDoc,
   doc,
@@ -8,15 +17,9 @@ import {
   getDocs,
   addDoc,
 } from 'firebase/firestore';
-import {
-  User,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  GoogleAuthProvider,
-  signInWithPopup,
-  getAdditionalUserInfo,
-} from 'firebase/auth';
+
+import { auth, firestore } from '../firebase/index';
+
 import type { IUserInfo } from '../types/apiType';
 
 class FirebaseError extends Error {
@@ -112,8 +115,8 @@ const googleAuth = async () => {
 
     const credential = getAdditionalUserInfo(googleUser);
 
-    // console.log('googleuser', googleUser);
-    // console.log('credential', credential);
+    console.log('googleuser', googleUser);
+    console.log('credential', credential);
 
     if (credential?.isNewUser) {
       const user = await createUserDoc({
@@ -121,13 +124,38 @@ const googleAuth = async () => {
         email: credential.profile.email,
         nickName: credential.profile.name,
         goal: '',
+        // photo: googleUser.user.photoURL,
       });
       return user;
     } else {
       return getUserDoc(googleUser.user.uid);
-      // return true;
     }
   } catch (error: any) {
+    throw new FirebaseError(error);
+  }
+};
+
+// github Auth
+const githubAuth = async () => {
+  try {
+    const provider = new GithubAuthProvider(); // provider 깃허브 설정
+    const githubUser = await signInWithPopup(auth, provider);
+
+    const credential = getAdditionalUserInfo(githubUser);
+
+    if (credential?.isNewUser) {
+      const user = await createUserDoc({
+        user_uid: githubUser.user.uid,
+        email: githubUser.user.email,
+        nickName: githubUser.user.displayName,
+        goal: '',
+        // photo: githubUser.user.photoURL,
+      });
+      return user;
+    } else {
+      return getUserDoc(githubUser.user.uid);
+    }
+  } catch (error) {
     throw new FirebaseError(error);
   }
 };
@@ -188,6 +216,7 @@ export {
   createUserEmail,
   emailVerification,
   googleAuth,
+  githubAuth,
   createUserDoc,
   getUserDoc,
 };

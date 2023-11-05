@@ -72,20 +72,20 @@ export default function Timer() {
   const handleTimer = () => {
     if (isActive) {
       onPause();
-      localStorage.setItem(
-        'challenge_timer_stopWatch',
-        JSON.stringify({
-          stopwatch: timer,
-        })
-      );
+      // localStorage.setItem(
+      //   'challenge_timer_stopWatch',
+      //   JSON.stringify({
+      //     stopwatch: timer,
+      //   })
+      // );
     } else {
       onActive();
-      localStorage.setItem(
-        'challenge_timer_stopWatch',
-        JSON.stringify({
-          stopwatch: 0,
-        })
-      );
+      // localStorage.setItem(
+      //   'challenge_timer_stopWatch',
+      //   JSON.stringify({
+      //     stopwatch: 0,
+      //   })
+      // );
     }
   };
 
@@ -109,7 +109,6 @@ export default function Timer() {
           <FlexWrap>
             <Label>이름</Label>
             <Input value={user} onChange={handleChange} />
-            <Input value={user} onCHa />
           </FlexWrap>
           <div style={{ marginTop: 20 }} />
           <Button onClick={handleStart}>저장후 시작</Button>
@@ -156,6 +155,7 @@ export default function Timer() {
               </div>
             </TimerWrap>
           </div> */}
+
           <TimerComponent time={start} text={TText} seconds={stSeconds} />
           {/* <Loading /> */}
         </>

@@ -7,18 +7,22 @@ const AuthContainer = tw.div`flex flex-col justify-center items-center w-full h-
 
 const AuthInner = tw.div`flex-auto xs:w-full sm:w-[500px] flex flex-col justify-center`;
 
-const MainWarpper = tw.section`p-10 border-2 border-solid border-primary rounded-lg`;
+const LogoWrapper = tw.div`flex justify-center`;
+
+const MainWrapper = tw.section`p-10 border-2 border-solid border-primary rounded-lg`;
 
 const AuthLayout = () => {
   const match = useMatch('/auth/login');
   return (
     <AuthContainer>
       <AuthInner>
-        <div>logo</div>
-        <Text typography="h4">{match ? '로그인' : '회원가입'}</Text>
-        <MainWarpper>
+        <LogoWrapper>logo</LogoWrapper>
+        <Text typography="h4" tw="text-center">
+          {match ? '로그인' : '회원가입'}
+        </Text>
+        <MainWrapper>
           <Outlet />
-        </MainWarpper>
+        </MainWrapper>
       </AuthInner>
     </AuthContainer>
   );
