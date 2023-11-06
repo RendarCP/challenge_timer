@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { Children, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import tw from 'twin.macro';
+
+import { useForm } from '../hooks/useForm';
+
 import {
   createUserDoc,
   createUserEmail,
   emailVerification,
   googleAuth,
 } from '../api/main';
-import tw from 'twin.macro';
-import Button from '../components/core/Buttons';
-import Input from '../components/core/Input';
-import { useForm } from '../hooks/useForm';
-import { useNavigate } from 'react-router-dom';
-import { emailRegex } from '../utils/regex';
+
 import { ReactComponent as Google } from '../assets/google_logo.svg';
+import Button from '../components/core/Buttons';
 import { Divider } from '../components/core/Divider';
+import Input from '../components/core/Input';
+import { Text } from '../components/core/Text';
+import { emailRegex } from '../utils/regex';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -67,29 +71,7 @@ const SignUp = () => {
 
   return (
     <Container>
-      <div>
-        {/* <img src={Google} /> */}
-        <Button
-          style={{ border: '1px solid gray' }}
-          variant="text"
-          onClick={handleGoogle}
-        >
-          <Google
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: 0,
-              transform: 'translate(50%, -40%)',
-            }}
-            width={20}
-            height={20}
-          />
-          <div>구글 로그인</div>
-        </Button>
-      </div>
-      <Divider>divider</Divider>
       <SignUpWrap>
-        <h1>회원가입</h1>
         <SigunUpBox>
           <div>이메일</div>
           <Input
@@ -151,5 +133,4 @@ const SignUpWrap = tw.div`
 
 const SigunUpBox = tw.div`
   w-full
-  mb-4
 `;

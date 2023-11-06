@@ -1,4 +1,13 @@
-import { auth, firestore } from '../firebase/index';
+import {
+  User,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  GoogleAuthProvider,
+  signInWithPopup,
+  getAdditionalUserInfo,
+  GithubAuthProvider,
+} from 'firebase/auth';
 import {
   getDoc,
   doc,
@@ -8,16 +17,19 @@ import {
   getDocs,
   addDoc,
 } from 'firebase/firestore';
-import {
-  User,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  GoogleAuthProvider,
-  signInWithPopup,
-  getAdditionalUserInfo,
-} from 'firebase/auth';
+
+import { auth, firestore } from '../firebase/index';
+
 import type { IUserInfo } from '../types/apiType';
+
+class FirebaseError extends Error {
+  code: string;
+  constructor(originalError: any) {
+    super(originalError.message);
+    this.code = originalError.code;
+    this.name = 'FirebaseError';
+  }
+}
 
 const getRoom = async (id: string) => {
   try {
@@ -29,7 +41,7 @@ const getRoom = async (id: string) => {
     }
     throw new Error('fail');
   } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
   }
 };
 
@@ -49,19 +61,7 @@ const getRoomPersons = async (id: string) => {
     }
     throw new Error('fail');
   } catch (error: any) {
-    throw new Error(error);
-  }
-};
-
-const loginUserEmail = async (email: string, password: string) => {
-  try {
-    const login = signInWithEmailAndPassword(auth, email, password);
-
-    if (login) {
-      return login;
-    }
-  } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
   }
 };
 
@@ -74,7 +74,22 @@ const createUserEmail = async (id: string, password: string) => {
       return signUp;
     }
   } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
+  }
+};
+
+// 이메일 로그인
+const loginUserEmail = async (email: string, password: string) => {
+  try {
+    const login = await signInWithEmailAndPassword(auth, email, password);
+
+    if (login) {
+      return getUserDoc(login.user.uid);
+    }
+  } catch (error: any) {
+    console.log('error', error.code);
+    // return error;
+    throw new FirebaseError(error);
   }
 };
 
@@ -87,7 +102,7 @@ const emailVerification = async () => {
       return verification;
     }
   } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
   }
 };
 
@@ -108,13 +123,39 @@ const googleAuth = async () => {
         email: credential.profile.email,
         nickName: credential.profile.name,
         goal: '',
+        // photo: googleUser.user.photoURL,
       });
       return user;
     } else {
-      return true;
+      return getUserDoc(googleUser.user.uid);
     }
   } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
+  }
+};
+
+// github Auth
+const githubAuth = async () => {
+  try {
+    const provider = new GithubAuthProvider(); // provider 깃허브 설정
+    const githubUser = await signInWithPopup(auth, provider);
+
+    const credential = getAdditionalUserInfo(githubUser);
+
+    if (credential?.isNewUser) {
+      const user = await createUserDoc({
+        user_uid: githubUser.user.uid,
+        email: githubUser.user.email,
+        nickName: githubUser.user.displayName,
+        goal: '',
+        // photo: githubUser.user.photoURL,
+      });
+      return user;
+    } else {
+      return getUserDoc(githubUser.user.uid);
+    }
+  } catch (error) {
+    throw new FirebaseError(error);
   }
 };
 
@@ -142,7 +183,28 @@ const createUserDoc = async ({
       return setQuery;
     }
   } catch (error: any) {
-    throw new Error(error);
+    throw new FirebaseError(error);
+  }
+};
+
+const getUserDoc = async (uid: string) => {
+  try {
+    const q = query(
+      collection(firestore, 'users'),
+      where('user_uid', '==', uid)
+    );
+    const querySnapshot = await getDocs(q);
+
+    // const newData = querySnapshot.docs.map(doc => ({
+    //   ...doc.data(),
+    // }));
+    const newData = querySnapshot.docs[0]?.data();
+    if (querySnapshot) {
+      return newData;
+    }
+    throw new Error('fail');
+  } catch (error: any) {
+    throw new FirebaseError(error);
   }
 };
 
@@ -153,5 +215,7 @@ export {
   createUserEmail,
   emailVerification,
   googleAuth,
+  githubAuth,
   createUserDoc,
+  getUserDoc,
 };

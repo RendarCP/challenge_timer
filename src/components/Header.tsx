@@ -1,12 +1,21 @@
-import tw from 'twin.macro';
-import Button from './core/Buttons';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import tw from 'twin.macro';
+
+import Button from './core/Buttons';
+import Spacer from './core/Spacer';
+import { Text } from './core/Text';
+import Logo from '../assets/logo.png';
 
 const Header = () => {
   const navigate = useNavigate();
   return (
     <HeaderContainer>
-      <div>logo</div>
+      <LogoBox onClick={() => navigate('/')}>
+        <LogoImage src={Logo} />
+        <Spacer right={10} />
+        <Text>Challenge Timer</Text>
+      </LogoBox>
       <RightWrapper>
         <NavItem>home</NavItem>
         <NavItem>타이머</NavItem>
@@ -27,6 +36,16 @@ const HeaderContainer = tw.header`
   justify-between
   items-center
   p-3
+`;
+
+const LogoBox = tw.div`
+  flex
+  items-center
+  cursor-pointer
+`;
+
+const LogoImage = tw.img`
+  h-12
 `;
 
 const RightWrapper = tw.nav`

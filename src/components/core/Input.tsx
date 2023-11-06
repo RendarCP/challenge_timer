@@ -8,7 +8,7 @@ const containerVariants: TwStyle = {
 };
 
 const styles = ({ valid }: any) => [
-  tw`w-full rounded border-2 px-3 py-2 [user-select: none] !outline-none`,
+  tw`w-full rounded border-2 px-3 py-2 [user-select: none] !outline-none text-black`,
   valid && tw`border-error`,
   // containerVariants[type],
 ];
@@ -23,10 +23,12 @@ const Input = ({
   return (
     <>
       <input css={styles({ valid })} {...props} />
-      {valid && (
+      {valid ? (
         <div css={tw`flex`}>
           <div css={tw`text-error`}>{validText}</div>
         </div>
+      ) : (
+        <div style={{ height: 24 }} />
       )}
     </>
   );

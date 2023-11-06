@@ -8,69 +8,10 @@ import TimerComponent from '../components/TimerComponent';
 import useClock from '../hooks/useClock';
 import useTimer from '../hooks/useTimer';
 import Loading from '../components/Loading';
+import Input from '../components/core/Input';
 
 dayjs.locale('ko');
 // dayjs.extend(localizedFormat);
-
-const Container = tw.div`
-  flex
-  flex-col
-  justify-center
-  items-center
-  h-full
-`;
-
-const FlexWrap = tw.div`
-  flex
-  flex-col
-`;
-
-const HeaderTitle = tw.h1`
-  // text-2xl
-  font-bold
-  [font-size: 50px]
-`;
-
-const Button = tw.button`
-  border-2
-  rounded-lg
-  px-6
-  py-2
-`;
-
-const Input = tw.input`
-  border-2
-  rounded-lg
-  p-2
-  border-green-500
-`;
-
-const Label = tw.label`
-  text-sm
-  text-gray-500
-`;
-
-const UserLabel = styled.div<{ size: string | number }>`
-  font-size: ${props => props.size && props.size}px;
-  ${tw`text-blue-300`}
-`;
-
-const TimerWrap = tw.div`
-  flex
-  flex-col
-  items-center
-  border-2
-  rounded-lg 
-  p-6
-  mx-2.5
-  relative
-  mt-4
-`;
-
-const TimerText = tw.div`
-  text-3xl
-  font-bold
-`;
 
 export default function Timer() {
   const [user, setUser] = useState('');
@@ -131,8 +72,20 @@ export default function Timer() {
   const handleTimer = () => {
     if (isActive) {
       onPause();
+      // localStorage.setItem(
+      //   'challenge_timer_stopWatch',
+      //   JSON.stringify({
+      //     stopwatch: timer,
+      //   })
+      // );
     } else {
       onActive();
+      // localStorage.setItem(
+      //   'challenge_timer_stopWatch',
+      //   JSON.stringify({
+      //     stopwatch: 0,
+      //   })
+      // );
     }
   };
 
@@ -202,6 +155,7 @@ export default function Timer() {
               </div>
             </TimerWrap>
           </div> */}
+
           <TimerComponent time={start} text={TText} seconds={stSeconds} />
           {/* <Loading /> */}
         </>
@@ -209,3 +163,63 @@ export default function Timer() {
     </Container>
   );
 }
+
+const Container = tw.div`
+  flex
+  flex-col
+  justify-center
+  items-center
+  h-full
+`;
+
+const FlexWrap = tw.div`
+  flex
+  flex-col
+`;
+
+const HeaderTitle = tw.h1`
+  // text-2xl
+  font-bold
+  [font-size: 50px]
+`;
+
+const Button = tw.button`
+  border-2
+  rounded-lg
+  px-6
+  py-2
+`;
+
+// const Input = tw.input`
+//   border-2
+//   rounded-lg
+//   p-2
+//   border-green-500
+// `;
+
+const Label = tw.label`
+  text-sm
+  text-gray-500
+`;
+
+const UserLabel = styled.div<{ size: string | number }>`
+  font-size: ${props => props.size && props.size}px;
+  ${tw`text-blue-300`}
+`;
+
+const TimerWrap = tw.div`
+  flex
+  flex-col
+  items-center
+  border-2
+  rounded-lg 
+  p-6
+  mx-2.5
+  relative
+  mt-4
+`;
+
+const TimerText = tw.div`
+  text-3xl
+  font-bold
+`;
