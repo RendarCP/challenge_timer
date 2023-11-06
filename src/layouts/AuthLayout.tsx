@@ -1,22 +1,32 @@
 import React from 'react';
+import { Outlet, useMatch, useNavigate } from 'react-router-dom';
 import tw from 'twin.macro';
-import { Outlet, useMatch } from 'react-router-dom';
+
+import Logo from '../assets/logo.png';
 import { Text } from '../components/core/Text';
 
 const AuthContainer = tw.div`flex flex-col justify-center items-center w-full h-full`;
 
 const AuthInner = tw.div`flex-auto xs:w-full sm:w-[500px] flex flex-col justify-center`;
 
-const LogoWrapper = tw.div`flex justify-center`;
+const LogoWrapper = tw.div`flex flex-col justify-center items-center cursor-pointer`;
 
 const MainWrapper = tw.section`p-10 border-2 border-solid border-primary rounded-lg`;
 
+const LogoImage = tw.img`
+  h-20
+`;
+
 const AuthLayout = () => {
   const match = useMatch('/auth/login');
+  const navigate = useNavigate();
   return (
     <AuthContainer>
       <AuthInner>
-        <LogoWrapper>logo</LogoWrapper>
+        <LogoWrapper onClick={() => navigate('/')}>
+          <LogoImage src={Logo} />
+          <Text>Challenge Timer</Text>
+        </LogoWrapper>
         <Text typography="h4" tw="text-center">
           {match ? '로그인' : '회원가입'}
         </Text>

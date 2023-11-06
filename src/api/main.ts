@@ -83,7 +83,6 @@ const loginUserEmail = async (email: string, password: string) => {
   try {
     const login = await signInWithEmailAndPassword(auth, email, password);
 
-    console.log('login', login);
     if (login) {
       return getUserDoc(login.user.uid);
     }

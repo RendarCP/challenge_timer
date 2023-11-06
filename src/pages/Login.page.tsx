@@ -16,9 +16,11 @@ import { Divider } from '../components/core/Divider';
 import Input from '../components/core/Input';
 import { Text } from '../components/core/Text';
 import { errorCode } from '../modules/ErrorHandling';
+import { useUserStore } from '../store/useUserStore';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { getUser } = useUserStore();
   const [{ email, passwd }, onChange, reset] = useForm({
     email: '',
     passwd: '',
@@ -30,6 +32,7 @@ const Login = () => {
       .then(res => {
         navigate('/');
         console.log('res', res);
+        getUser(res);
       })
       .catch(err => {
         toast.error(errorCode(err.code));

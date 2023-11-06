@@ -4,9 +4,11 @@ import tw from 'twin.macro';
 
 import Button from '../components/core/Buttons';
 import { Text } from '../components/core/Text';
+import { useUserStore } from '../store/useUserStore';
 
 export default function MainPage() {
   const navigate = useNavigate();
+  const { user } = useUserStore();
   return (
     <Container>
       <Text typography="h3">Challenage_Timer</Text>

@@ -10,6 +10,7 @@ import {
   emailVerification,
   googleAuth,
 } from '../api/main';
+
 import { ReactComponent as Google } from '../assets/google_logo.svg';
 import Button from '../components/core/Buttons';
 import { Divider } from '../components/core/Divider';
@@ -70,27 +71,6 @@ const SignUp = () => {
 
   return (
     <Container>
-      <div>
-        {/* <img src={Google} /> */}
-        <Button
-          style={{ border: '1px solid gray' }}
-          variant="text"
-          onClick={handleGoogle}
-        >
-          <Google
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: 0,
-              transform: 'translate(50%, -40%)',
-            }}
-            width={20}
-            height={20}
-          />
-          <Text>구글 회원가입</Text>
-        </Button>
-      </div>
-      <Divider>or</Divider>
       <SignUpWrap>
         <SigunUpBox>
           <div>이메일</div>

@@ -1,8 +1,10 @@
-import tw from 'twin.macro';
-import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 
-const MainContainer = tw.div`border-red-500 border-2 border-solid flex flex-col w-full h-full`;
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import tw from 'twin.macro';
+
+const MainContainer = tw.div`flex flex-col w-full h-full`;
 
 interface MainlayoutProps {
   showHeader?: boolean;
@@ -11,7 +13,8 @@ interface MainlayoutProps {
 const MainLayout = ({ showHeader }: MainlayoutProps) => {
   return (
     <MainContainer>
-      {showHeader && <Header />}
+      {/* {showHeader && <Header />} */}
+      <Header />
       <Outlet />
     </MainContainer>
   );

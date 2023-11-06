@@ -2562,6 +2562,7 @@ __metadata:
     vite-plugin-svgr: "npm:^3.2.0"
     vite-tsconfig-paths: "npm:^4.2.0"
     web-vitals: "npm:^2.1.4"
+    zustand: "npm:^4.4.6"
   languageName: unknown
   linkType: soft
 
@@ -6495,7 +6496,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.2.0":
+"use-sync-external-store@npm:1.2.0, use-sync-external-store@npm:^1.2.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:
@@ -6814,5 +6815,25 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^4.4.6":
+  version: 4.4.6
+  resolution: "zustand@npm:4.4.6"
+  dependencies:
+    use-sync-external-store: "npm:1.2.0"
+  peerDependencies:
+    "@types/react": ">=16.8"
+    immer: ">=9.0"
+    react: ">=16.8"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    immer:
+      optional: true
+    react:
+      optional: true
+  checksum: 78ed41a9e946eb5488a102fb8ed839f9ba901f45b83cec23539957939744a09d484aa430d5ef7066b007fa90dc780f8b531f0d176b3c132c8e11216ddc3dbd43
   languageName: node
   linkType: hard

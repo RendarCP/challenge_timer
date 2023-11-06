@@ -1,6 +1,7 @@
+import styled from '@emotion/styled';
 import React from 'react';
 import tw from 'twin.macro';
-import styled from '@emotion/styled';
+
 import CircleProgressBar from './CircleProgressBar';
 
 const Container = tw.div`
@@ -8,6 +9,7 @@ const Container = tw.div`
   justify-center
   w-full
   h-full
+  select-none
 `;
 
 const Wrapper = tw.div`
