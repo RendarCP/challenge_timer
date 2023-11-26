@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet, useMatch, useNavigate } from 'react-router-dom';
 import tw from 'twin.macro';
 
-import Logo from '../assets/logo.png';
+import Logo from '../assets/images/logo.png';
 import { Text } from '../components/core/Text';
 
 const AuthContainer = tw.div`flex flex-col justify-center items-center w-full h-full`;

@@ -32,7 +32,7 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     ],
-    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    // 'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     "react/no-unknown-property": ["error", { "ignore": ["css"] }],
         'import/order': [
       'error',

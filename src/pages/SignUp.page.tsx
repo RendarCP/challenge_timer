@@ -84,7 +84,12 @@ const SignUp = () => {
         </SigunUpBox>
         <SigunUpBox>
           <div>비밀번호</div>
-          <Input name="passwd" value={passwd} onChange={onChange} />
+          <Input
+            type="password"
+            name="passwd"
+            value={passwd}
+            onChange={onChange}
+          />
         </SigunUpBox>
         <SigunUpBox>
           <div>비밀번호 확인</div>

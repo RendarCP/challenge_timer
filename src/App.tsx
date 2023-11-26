@@ -1,13 +1,16 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 // pages
+import AuthLayout from './layouts/AuthLayout';
+import MainLayout from './layouts/MainLayout';
+import Room from './pages/challenge/Room.page';
+import Rooms from './pages/challenge/Rooms.page';
 import Login from './pages/Login.page';
+import MainPage from './pages/Main.page';
 import SignUp from './pages/SignUp.page';
 import Timer from './pages/Timer';
-import MainPage from './pages/Main.page';
-import AuthLayout from './layouts/AuthLayout';
-import Rooms from './pages/challenge/Rooms.page';
-import Room from './pages/challenge/Room.page';
-import MainLayout from './layouts/MainLayout';
+import TimerMainPage from './pages/timer/TimerMain.page';
 
 function App() {
   return (
@@ -21,7 +24,8 @@ function App() {
           <Route path="signup" element={<SignUp />} />
         </Route>
         <Route path="/main" element={<MainLayout showHeader />}>
-          <Route path="timer" element={<Timer />} />
+          {/* <Route path="timer" element={<Timer />} /> */}
+          <Route path="" element={<TimerMainPage />} />
           <Route path="challenge/room" element={<Rooms />} />
           <Route path="challenge/room/:id" element={<Room />} />
           {/* timer/report */}

@@ -16,6 +16,10 @@ code {
     monospace;
 }
 
+img {
+  user-select: none;
+}
+
 #root {
   height: 100vh;
   background-color: #111827;

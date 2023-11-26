@@ -5,7 +5,7 @@ import tw from 'twin.macro';
 import Button from './core/Buttons';
 import Spacer from './core/Spacer';
 import { Text } from './core/Text';
-import Logo from '../assets/logo.png';
+import Logo from '../assets/images/logo.png';
 
 const Header = () => {
   const navigate = useNavigate();
