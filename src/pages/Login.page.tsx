@@ -7,7 +7,7 @@ import tw from 'twin.macro';
 
 import { useForm } from '../hooks/useForm';
 
-import { loginUserEmail, googleAuth, githubAuth } from '../api/main';
+import { loginUserEmail } from '../api/auth';
 
 import { ReactComponent as Github } from '../assets/github_logo.svg';
 import { ReactComponent as Google } from '../assets/google_logo.svg';

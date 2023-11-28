@@ -1,7 +1,7 @@
 import React from 'react';
 import tw from 'twin.macro';
 
-import { googleAuth, githubAuth } from '../api/main';
+import { googleAuth, githubAuth } from '../api/auth';
 
 import Button from './core/Buttons';
 import Spacer from './core/Spacer';
