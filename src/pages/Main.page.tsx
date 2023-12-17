@@ -1,6 +1,6 @@
 import TimerComponent from '../components/TimerComponent';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import tw from 'twin.macro';
 
@@ -11,17 +11,20 @@ import Button from '../components/core/Buttons';
 import Spacer from '../components/core/Spacer';
 import { Text } from '../components/core/Text';
 
+const lendingTimerTime = 3000;
+
 export default function MainPage() {
   const navigate = useNavigate();
-  const { minutes, seconds, timer, startTimer, pauseTimer } = useTimer(30000);
+  const { minutes, seconds, timer, startTimer, pauseTimer } =
+    useTimer(lendingTimerTime);
 
   const mainTimerText = `${minutes}분 ${seconds}초`;
 
+  console.log('timer', timer);
+
   return (
     <Container>
-      <div>
-        <LogoImage src={Logo} />
-      </div>
+      <LogoImage src={Logo} />
       <Spacer top={20} />
       <Wrapper>
         <Text typography="h1">Challenge Timer</Text>
@@ -34,18 +37,12 @@ export default function MainPage() {
       <Spacer top={20} />
       <TimerComponent
         text={mainTimerText}
-        percentage={Math.floor(Number(timer / 30000) * 100)}
+        percentage={Math.floor(Number(timer / lendingTimerTime) * 100)}
       />
       <Spacer top={20} />
       <ButtonWrap>
         <Button onClick={startTimer}>시작하기</Button>
       </ButtonWrap>
-      <BtnWrap>
-        <Button onClick={() => navigate('/auth/login')}>로그인</Button>
-        <Button onClick={() => navigate('/main/timer')}>타이머</Button>
-        <Button onClick={() => navigate('/main/challenge/room')}>룸</Button>
-        <Button onClick={() => navigate('/auth/signup')}>회원가입</Button>
-      </BtnWrap>
     </Container>
   );
 }
@@ -68,9 +65,7 @@ const Wrapper = tw.div`
 `;
 
 const ButtonWrap = tw.div`
-  h-32 sm:h-48 md:h-64
-  w-auto
-  max-w-full
+  min-w-[300px]
 `;
 
 const BtnWrap = tw.div`flex w-1/2 gap-3`;

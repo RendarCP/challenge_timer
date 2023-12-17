@@ -6,7 +6,6 @@ let isStopWatchRunning = false;
 let isTimerRunning = false;
 
 self.onmessage = function (e) {
-  console.log('e', e);
   switch (e.data.type) {
     case 'start':
       return startStopWatch(e.data.stopwatch);
@@ -59,9 +58,10 @@ function startTimer(timer: number) {
   isTimerRunning = true;
   if (isTimerRunning) {
     timerInterval = setInterval(() => {
-      console.log('timer', timer);
-      timer -= 1;
-      postMessage({ isTimerRunning, timer });
+      if (timer !== 0) {
+        timer -= 1;
+        postMessage({ isTimerRunning, timer });
+      }
     }, 10);
   }
 }
