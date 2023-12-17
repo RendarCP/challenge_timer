@@ -13,8 +13,8 @@ interface MainlayoutProps {
 const MainLayout = ({ showHeader }: MainlayoutProps) => {
   return (
     <MainContainer>
-      {/* {showHeader && <Header />} */}
-      <Header />
+      {showHeader && <Header />}
+      {/* <Header /> */}
       <Outlet />
     </MainContainer>
   );

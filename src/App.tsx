@@ -1,7 +1,11 @@
-import React from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // pages
+import { getUserDoc } from './api/main';
+import { auth } from './firebase';
+import { useUserCheck } from './hooks/useUserCheck';
 import AuthLayout from './layouts/AuthLayout';
 import MainLayout from './layouts/MainLayout';
 import Room from './pages/challenge/Room.page';
@@ -13,6 +17,7 @@ import Timer from './pages/Timer';
 import TimerMainPage from './pages/timer/TimerMain.page';
 
 function App() {
+  useUserCheck();
   return (
     <BrowserRouter>
       <Routes>
@@ -24,7 +29,7 @@ function App() {
           <Route path="signup" element={<SignUp />} />
         </Route>
         <Route path="/main" element={<MainLayout showHeader />}>
-          {/* <Route path="timer" element={<Timer />} /> */}
+          <Route path="timer" element={<Timer />} />
           <Route path="" element={<TimerMainPage />} />
           <Route path="challenge/room" element={<Rooms />} />
           <Route path="challenge/room/:id" element={<Room />} />

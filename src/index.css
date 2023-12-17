@@ -24,6 +24,7 @@ img {
   height: 100vh;
   background-color: #111827;
   color: #d1d5db;
+  user-select: none;
 }
 
 .dark {
