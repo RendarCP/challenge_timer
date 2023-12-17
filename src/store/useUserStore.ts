@@ -6,7 +6,6 @@ import { IUser } from '../types/userType';
 const store = (set, get) => ({
   user: {},
   getUser: (user: IUser) => {
-    console.log('user', user);
     set(
       (state: any) => ({
         user: {
@@ -21,11 +20,12 @@ const store = (set, get) => ({
         },
       }),
       false,
-      'addItem'
+      'auth_user'
     );
   },
 });
 
-const useUserStore = create(devtools(persist(store, { name: 'user' })));
+// const useUserStore = create(devtools(persist(store, { name: 'user' })));
+const useUserStore = create(devtools(store, { name: 'user' }));
 
 export { useUserStore };

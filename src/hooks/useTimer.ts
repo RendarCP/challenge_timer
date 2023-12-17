@@ -1,68 +1,38 @@
 import { useEffect, useRef, useState } from 'react';
+
 import { timerWorker } from '../utils/initWorker';
 
-const useTimer = () => {
+const useTimer = (time: number) => {
   const workerRef = useRef<any>();
-  const [timer, setTimer] = useState(0);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [timer, setTimer] = useState(time);
+  const [isRunning, setIsRunning] = useState(false);
 
-  const storage = localStorage.getItem('challenge_timer_stopWatch');
-  // initial localstorage data
   useEffect(() => {
-    if (storage !== null) {
-      const data = JSON.parse(storage);
-      setTimer(data.stopwatch);
-    }
-  }, []);
-
-  // initial webworker
-  useEffect(() => {
-    // Initialize the web worker
     workerRef.current = timerWorker;
 
-    // Handle messages from the worker
     workerRef.current.onmessage = (e: any) => {
-      setIsTimerRunning(e.data.isTimerRunning);
+      setIsRunning(e.data.isTimerRunning);
       setTimer(e.data.timer);
     };
-
-    // Clean up the worker on unmount
     return () => {
       workerRef.current.terminate();
     };
   }, []);
 
   const startTimer = () => {
-    if (storage !== null) {
-      const data = JSON.parse(storage);
-      workerRef.current.postMessage({
-        type: 'start',
-        stopwatch: data.stopwatch,
-      });
-    } else {
-      workerRef.current.postMessage({ type: 'start', stopwatch: 0 });
-    }
+    workerRef.current.postMessage({
+      type: 'start_timer',
+      timer,
+    });
   };
 
   const pauseTimer = () => {
-    workerRef.current.postMessage({ type: 'pause', stopwatch: timer });
-    localStorage.setItem(
-      'challenge_timer_stopWatch',
-      JSON.stringify({
-        stopwatch: timer,
-      })
-    );
+    workerRef.current.postMessage({ type: 'pause_timer', timer });
   };
 
   const stopTimer = () => {
-    workerRef.current.postMessage({ type: 'stop' });
+    workerRef.current.postMessage({ type: 'stop_timer' });
     setTimer(0);
-    localStorage.setItem(
-      'challenge_timer_stopWatch',
-      JSON.stringify({
-        stopwatch: 0,
-      })
-    );
   };
 
   const resetTimer = () => {
@@ -97,7 +67,7 @@ const useTimer = () => {
     stopTimer,
     resetTimer,
     timer,
-    isTimerRunning,
+    isRunning,
   };
 };
 
