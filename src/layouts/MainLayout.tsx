@@ -4,7 +4,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import tw from 'twin.macro';
 
-const MainContainer = tw.div`flex flex-col w-full h-full`;
+const MainContainer = tw.div`flex flex-col w-screen h-screen`;
 
 interface MainlayoutProps {
   showHeader?: boolean;
