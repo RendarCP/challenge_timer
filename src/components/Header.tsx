@@ -2,10 +2,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import tw from 'twin.macro';
 
+import Logo from '../assets/images/logo.png';
 import Button from './core/Buttons';
 import Spacer from './core/Spacer';
 import { Text } from './core/Text';
-import Logo from '../assets/images/logo.png';
 
 const Header = () => {
   const navigate = useNavigate();

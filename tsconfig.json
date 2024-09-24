@@ -21,22 +21,22 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react"
-    // "baseUrl": "./src",
-    // "paths": {
-    //   "@src/*": ["src/*"],
-    //   "@/*": ["./*"],
-    //   "@/component/*": ["components/*"],
-    //   "@/types/*": ["types/*"],
-    //   "@/pages/*": ["pages/*"],
-    //   "@/styles/*": ["styles/*"],
-    //   "@/api/*": ["api/*"],
-    //   "@/modules/*": ["modules/*"],
-    //   "@/hooks/*": ["hooks/*"],
-    //   "@/utils/*": ["utils/*"],
-    //   "@/layouts/*": ["layouts/*"],
-    //   "@/store/*": ["store/*"]
-    // }
+    "jsxImportSource": "@emotion/react",
+    "baseUrl": "./src",
+    "paths": {
+      // "@src/*": ["src/*"],
+      "@/*": ["./*"],
+      "@/components/*": ["components/*"],
+      "@/types/*": ["types/*"],
+      "@/pages/*": ["pages/*"],
+      "@/styles/*": ["styles/*"],
+      "@/api/*": ["api/*"],
+      "@/modules/*": ["modules/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/utils/*": ["utils/*"],
+      "@/layouts/*": ["layouts/*"],
+      "@/store/*": ["store/*"]
+    }
   },
   "files": ["twin.d.ts"],
   "include": ["src"]

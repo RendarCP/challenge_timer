@@ -1,28 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import { stopWatchWorker } from '../utils/initWorker';
 
 const useStopWatch = (storage: any) => {
-  const workerRef = useRef<any>();
+  const workerRef: MutableRefObject<any> = useRef<any>(null);
   const [timer, setTimer] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   // const storage = localStorage.getItem('challenge_timer_stopWatch');
   // initial localstorage data
-  useEffect(() => {
+  useEffect((): void => {
     if (storage !== null) {
-      const data = JSON.parse(storage);
+      const data: any = JSON.parse(storage);
       setTimer(data.stopwatch);
     }
   }, []);
 
   // initial webworker
-  useEffect(() => {
+  useEffect((): (() => void) => {
     // Initialize the web worker
     workerRef.current = stopWatchWorker;
 
     // Handle messages from the worker
-    workerRef.current.onmessage = (e: any) => {
+    workerRef.current.onmessage = (e: any): void => {
       setIsTimerRunning(e.data.isStopWatchRunning);
       setTimer(e.data.timer);
     };
@@ -33,9 +33,9 @@ const useStopWatch = (storage: any) => {
     };
   }, []);
 
-  const startTimer = () => {
+  const startTimer: () => void = (): void => {
     if (storage !== null) {
-      const data = JSON.parse(storage);
+      const data: any = JSON.parse(storage);
       workerRef.current.postMessage({
         type: 'start',
         stopwatch: data.stopwatch,
@@ -45,16 +45,16 @@ const useStopWatch = (storage: any) => {
     }
   };
 
-  const pauseTimer = () => {
+  const pauseTimer: () => void = (): void => {
     workerRef.current.postMessage({ type: 'pause', stopwatch: timer });
   };
 
-  const stopTimer = () => {
+  const stopTimer: () => void = (): void => {
     workerRef.current.postMessage({ type: 'stop' });
     setTimer(0);
   };
 
-  const resetTimer = () => {
+  const resetTimer: () => void = (): void => {
     setTimer(0);
   };
 

@@ -1,15 +1,16 @@
-import TimerComponent from '../components/TimerComponent';
-
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import tw from 'twin.macro';
 
-import useTimer from '../hooks/useTimer';
+import Logo from '@/assets/images/logo.png';
 
-import Logo from '../assets/images/logo.png';
-import Button from '../components/core/Buttons';
-import Spacer from '../components/core/Spacer';
-import { Text } from '../components/core/Text';
+import Button from '@/components/core/Buttons';
+import Spacer from '@/components/core/Spacer';
+import { Text } from '@/components/core/Text';
+
+import TimerComponent from '@/components/TimerComponent';
+
+import useTimer from '@/hooks/useTimer';
 
 const lendingTimerTime = 3000;
 

@@ -13,7 +13,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:import/errors',
     'plugin:import/warnings',
-    'prettier'
+    'prettier',
   ],
   ignorePatterns: ['dist', '.eslintrc.js', 'tsconfig'],
   overrides: [],
@@ -33,27 +33,47 @@ module.exports = {
       },
     ],
     // 'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-    "react/no-unknown-property": ["error", { "ignore": ["css"] }],
-        'import/order': [
+    'react/no-unknown-property': ['error', { ignore: ['css'] }],
+    'import/order': [
       'error',
       {
-        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index'], 'object', 'type'],
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'parent',
+          'sibling',
+          'index',
+          // ['parent', 'sibling', 'index'],
+          'object',
+          'type',
+        ],
         pathGroups: [
           {
-            "pattern": "../components/*",
-            "group": "builtin",
-            "position": "after"
+            pattern: '@/assets/*',
+            group: 'internal',
+            position: 'before',
           },
           {
-            "pattern": "../hooks/*",
-            "group": "internal",
-            "position": "after"
+            pattern: '@/components/core/*',
+            group: 'internal',
+            position: 'after',
           },
           {
-            "pattern": "../api/*",
-            "group": "internal",
-            "position": "after"
-          }
+            pattern: '@/components/*',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: '@/hooks/*',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: '@/api/*',
+            group: 'internal',
+            position: 'after',
+          },
         ],
         alphabetize: {
           order: 'asc',
@@ -65,10 +85,11 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
+      typescript: {},
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
-        'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
+    'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
   },
 };

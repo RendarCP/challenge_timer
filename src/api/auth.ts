@@ -1,15 +1,15 @@
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendEmailVerification,
-  GoogleAuthProvider,
   GithubAuthProvider,
-  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
   getAdditionalUserInfo,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+  signInWithPopup,
 } from 'firebase/auth';
 
-import { createUserDoc, getUserDoc } from './main';
 import { auth } from '../firebase';
+import { createUserDoc, getUserDoc } from './main';
 
 class FirebaseError extends Error {
   code: string;

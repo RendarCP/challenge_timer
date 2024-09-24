@@ -14,12 +14,12 @@ const useTimer = (time: number) => {
       setIsRunning(e.data.isTimerRunning);
       setTimer(e.data.timer);
     };
-    return () => {
+    return (): void => {
       workerRef.current.terminate();
     };
   }, []);
 
-  const startTimer = () => {
+  const startTimer: () => void = (): void => {
     workerRef.current.postMessage({
       type: 'start_timer',
       timer,
@@ -40,22 +40,22 @@ const useTimer = (time: number) => {
   };
 
   // Hours calculation
-  const hours = Math.floor(timer / 360000)
+  const hours: string = Math.floor(timer / 360000)
     .toString()
     .padStart(2, '0');
 
   // Minutes calculation
-  const minutes = Math.floor((timer % 360000) / 6000)
+  const minutes: string = Math.floor((timer % 360000) / 6000)
     .toString()
     .padStart(2, '0');
 
   // Seconds calculation
-  const seconds = Math.floor((timer % 6000) / 100)
+  const seconds: string = Math.floor((timer % 6000) / 100)
     .toString()
     .padStart(2, '0');
 
   // Milliseconds calculation
-  const milliseconds = (timer % 100).toString().padStart(2, '0');
+  const milliseconds: string = (timer % 100).toString().padStart(2, '0');
 
   return {
     hours,

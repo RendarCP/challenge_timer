@@ -10,14 +10,22 @@ type ReturnType = [
   () => void
 ];
 
-export const useForm = (initailValue: TValues): ReturnType => {
+export const useForm: (initialValue: TValues) => ReturnType = (
+  initailValue: TValues
+): ReturnType => {
   const [form, setForm] = useState(initailValue);
 
-  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm(form => ({ ...form, [name]: value }));
-  }, []);
+  const onChange: (e: ChangeEvent<HTMLInputElement>) => void = useCallback(
+    (e: ChangeEvent<HTMLInputElement>): void => {
+      const { name, value } = e.target;
+      setForm((form: TValues) => ({ ...form, [name]: value }));
+    },
+    []
+  );
 
-  const reset = useCallback(() => setForm(initailValue), [initailValue]);
+  const reset: () => void = useCallback(
+    (): void => setForm(initailValue),
+    [initailValue]
+  );
   return [form, onChange, reset];
 };
