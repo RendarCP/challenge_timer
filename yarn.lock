@@ -2676,6 +2676,7 @@ __metadata:
     autoprefixer: "npm:^10.4.14"
     babel-plugin-macros: "npm:^3.1.0"
     customize-cra: "npm:^1.0.0"
+    daisyui: "npm:^4.12.10"
     dayjs: "npm:^1.11.7"
     eslint: "npm:^8.41.0"
     eslint-config-airbnb: "npm:^19.0.4"
@@ -2871,6 +2872,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-selector-tokenizer@npm:^0.8":
+  version: 0.8.0
+  resolution: "css-selector-tokenizer@npm:0.8.0"
+  dependencies:
+    cssesc: "npm:^3.0.0"
+    fastparse: "npm:^1.1.2"
+  checksum: 86f68cc666d41f9d153351677694002a9d00e2609e6abc66fcfd7f580be3d6ecc0929e46a06c621ab28da5febbb54567db9709b819414edae4a36d9ff9133e16
+  languageName: node
+  linkType: hard
+
 "css.escape@npm:^1.5.1":
   version: 1.5.1
   resolution: "css.escape@npm:1.5.1"
@@ -2894,12 +2905,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"culori@npm:^3":
+  version: 3.3.0
+  resolution: "culori@npm:3.3.0"
+  checksum: acd330a8f940dc22f36650ba722c9302a4745fee3c8fb40a27ac27228767e2cba4221c2dc414fce652b82cb264d28f65d8b76d505df402ecf94dbb9e440319e1
+  languageName: node
+  linkType: hard
+
 "customize-cra@npm:^1.0.0":
   version: 1.0.0
   resolution: "customize-cra@npm:1.0.0"
   dependencies:
     lodash.flow: "npm:^3.5.0"
   checksum: 5a091d68610acfc44053e89a3a76d3ed3ee3c7a7f16a7e6fd2db9db4c89bcad906a02641185b9612689f7f954ed52ee7b609ec7f1fecba243ec4fe5d09224cdf
+  languageName: node
+  linkType: hard
+
+"daisyui@npm:^4.12.10":
+  version: 4.12.10
+  resolution: "daisyui@npm:4.12.10"
+  dependencies:
+    css-selector-tokenizer: "npm:^0.8"
+    culori: "npm:^3"
+    picocolors: "npm:^1"
+    postcss-js: "npm:^4"
+  checksum: f677d9717d6241d6c829141645ff15a5d6aaa9e279a90e1acb248613c9cc25d7d0b9fcac55ec572537f6bc472e1ab5f0bed7797a1815b6fde9a644be62f357d0
   languageName: node
   linkType: hard
 
@@ -3682,6 +3712,13 @@ __metadata:
   version: 2.0.6
   resolution: "fast-levenshtein@npm:2.0.6"
   checksum: 111972b37338bcb88f7d9e2c5907862c280ebf4234433b95bc611e518d192ccb2d38119c4ac86e26b668d75f7f3894f4ff5c4982899afced7ca78633b08287c4
+  languageName: node
+  linkType: hard
+
+"fastparse@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "fastparse@npm:1.1.2"
+  checksum: c08d6e7ef10c0928426c1963dd4593e2baaf44d223ab1e5ba5d7b30470144b3a4ecb3605958b73754cea3f857ecef00b67c885f07ca2c312b38b67d9d88b84b5
   languageName: node
   linkType: hard
 
@@ -5403,6 +5440,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"picocolors@npm:^1":
+  version: 1.1.0
+  resolution: "picocolors@npm:1.1.0"
+  checksum: 86946f6032148801ef09c051c6fb13b5cf942eaf147e30ea79edb91dd32d700934edebe782a1078ff859fb2b816792e97ef4dab03d7f0b804f6b01a0df35e023
+  languageName: node
+  linkType: hard
+
 "picocolors@npm:^1.0.0":
   version: 1.0.0
   resolution: "picocolors@npm:1.0.0"
@@ -5444,7 +5488,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-js@npm:^4.0.1":
+"postcss-js@npm:^4, postcss-js@npm:^4.0.1":
   version: 4.0.1
   resolution: "postcss-js@npm:4.0.1"
   dependencies:
