@@ -3,9 +3,19 @@ import { devtools, persist } from 'zustand/middleware';
 
 import { IUser } from '../types/userType';
 
+const initialState: IUser = {
+  uid: null,
+  email: null,
+  nickname: null,
+  goal: null,
+  create_date: null,
+  update_date: null,
+  exp: null,
+};
+
 const store = (set, get) => ({
   user: {},
-  getUser: (user: IUser) => {
+  setUser: (user: IUser) => {
     set(
       (state: any) => ({
         user: {
@@ -21,6 +31,15 @@ const store = (set, get) => ({
       }),
       false,
       'auth_user'
+    );
+  },
+  logoutUser: () => {
+    set(
+      () => ({
+        user: { ...initialState },
+      }),
+      false,
+      'logout_user'
     );
   },
 });

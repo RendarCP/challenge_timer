@@ -21,11 +21,15 @@ const Wrapper = tw.div`
   // sm:w-3/5
 `;
 
-export default function TimerComponent({ percentage, text }: any) {
+export default function TimerComponent({ percentage, text, showcircle }: any) {
   return (
     <Container>
       <Wrapper>
-        <CircleProgressBar percentage={percentage} text={text} />
+        <CircleProgressBar
+          showcircle={showcircle}
+          percentage={percentage}
+          text={text}
+        />
       </Wrapper>
     </Container>
   );

@@ -1,26 +1,23 @@
-import SocialLoginButtons from '../components/SocialLoginButtons';
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import tw from 'twin.macro';
 
-import { useForm } from '../hooks/useForm';
-
 import { loginUserEmail } from '../api/auth';
-
 import { ReactComponent as Github } from '../assets/github_logo.svg';
 import { ReactComponent as Google } from '../assets/google_logo.svg';
+import SocialLoginButtons from '../components/SocialLoginButtons';
 import Button from '../components/core/Buttons';
 import { Divider } from '../components/core/Divider';
 import Input from '../components/core/Input';
 import { Text } from '../components/core/Text';
+import { useForm } from '../hooks/useForm';
 import { errorCode } from '../modules/ErrorHandling';
 import { useUserStore } from '../store/useUserStore';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { getUser } = useUserStore();
+  const { setUser } = useUserStore();
   const [{ email, passwd }, onChange, reset] = useForm({
     email: '',
     passwd: '',
@@ -32,7 +29,7 @@ const Login = () => {
       .then(res => {
         navigate('/');
         console.log('res', res);
-        getUser(res);
+        setUser(res);
       })
       .catch(err => {
         toast.error(errorCode(err.code));

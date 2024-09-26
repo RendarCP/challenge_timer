@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line no-undef
 module.exports = {
   darkMode: 'class',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
@@ -12,14 +13,32 @@ module.exports = {
       },
     },
     screens: {
-      'xs': '320px',
-      'sm': '640px',
+      xs: '320px',
+      sm: '640px',
       // => @media (min-width: 640px) { ... }
-      'md': '1024px',
+      md: '1024px',
       // => @media (min-width: 1024px) { ... }
-      'lg': '1280px',
+      lg: '1280px',
       // => @media (min-width: 1280px) { ... }
     },
   },
-  plugins: [],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: '#ff9d3f',
+          secondary: '#3200ff',
+          accent: '#00c179',
+          neutral: '#001a0c',
+          'base-100': '#242823',
+          info: '#00e1ff',
+          success: '#00b15a',
+          warning: '#ffab00',
+          error: '#ff4870',
+        },
+      },
+    ],
+  },
+  // eslint-disable-next-line no-undef
+  plugins: [require('daisyui')],
 };

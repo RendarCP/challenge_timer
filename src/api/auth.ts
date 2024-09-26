@@ -6,6 +6,7 @@ import {
   sendEmailVerification,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from 'firebase/auth';
 
 import { auth } from '../firebase';
@@ -114,10 +115,23 @@ const githubAuth = async () => {
   }
 };
 
+const userLogout = async () => {
+  try {
+    const logout = await signOut(auth);
+    // Sign-out successful.
+    console.log('successful', logout);
+    return logout;
+  } catch (error) {
+    // An error happened.
+    console.error('Error signing out:', error);
+  }
+};
+
 export {
   createUserEmail,
   loginUserEmail,
   emailVerification,
   googleAuth,
   githubAuth,
+  userLogout,
 };

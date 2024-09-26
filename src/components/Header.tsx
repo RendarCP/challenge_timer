@@ -1,6 +1,11 @@
-import React from 'react';
+import { useUserStore } from '@/store/useUserStore';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import tw from 'twin.macro';
+
+import { userLogout } from '@/api/auth';
+
+import { useUserCheck } from '@/hooks/useUserCheck';
 
 import Logo from '../assets/images/logo.png';
 import Button from './core/Buttons';
@@ -8,24 +13,73 @@ import Spacer from './core/Spacer';
 import { Text } from './core/Text';
 
 const Header = () => {
+  const { user, setUser, isLoading } = useUserCheck();
+  const { logoutUser } = useUserStore();
+  // const { user } = useUserStore();
+  console.log('user', user?.uid, isLoading);
   const navigate = useNavigate();
+  const handleLogout = async () => {
+    // 먼저 상태를 초기화
+    logoutUser();
+    // 그 다음 로그아웃 API 호출
+    await userLogout();
+  };
   return (
-    <HeaderContainer>
-      <LogoBox onClick={() => navigate('/')}>
-        <LogoImage src={Logo} />
-        <Spacer right={10} />
-        <Text>Challenge Timer</Text>
-      </LogoBox>
-      <RightWrapper>
-        <NavItem>home</NavItem>
-        <NavItem>타이머</NavItem>
-        <NavItem>커뮤니티</NavItem>
-        <NavItem>내 정보</NavItem>
-        <div>
-          <Button onClick={() => navigate('/auth/login')}>로그인</Button>
+    <div className="navbar bg-base-100">
+      <div className="flex-1">
+        <div className="text-xl">
+          <LogoBox onClick={() => navigate('/')}>
+            <LogoImage src={Logo} />
+            <Spacer right={10} />
+            TimeFight
+          </LogoBox>
         </div>
-      </RightWrapper>
-    </HeaderContainer>
+      </div>
+      <div className="flex-none gap-2">
+        {isLoading ? (
+          <div className="skeleton h-10 w-10 shrink-0 rounded-full"></div> // 로딩 중 표시
+        ) : user?.uid ? (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 rounded-full">
+                <img
+                  alt="User Avatar"
+                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                />
+              </div>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <a className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </a>
+              </li>
+              <li>
+                <a>Settings</a>
+              </li>
+              <li onClick={handleLogout}>
+                <a>Logout</a>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <button
+            className="btn btn-primary"
+            onClick={() => navigate('/auth/login')}
+          >
+            로그인
+          </button>
+        )}
+      </div>
+    </div>
   );
 };
 

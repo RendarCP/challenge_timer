@@ -58,11 +58,14 @@ function startTimer(timer: number) {
   isTimerRunning = true;
   if (isTimerRunning) {
     timerInterval = setInterval(() => {
-      if (timer !== 0) {
-        timer -= 1;
+      if (timer > 0) {
+        timer -= 1; // 10ms 단위로 감소
         postMessage({ isTimerRunning, timer });
+      } else {
+        clearInterval(timerInterval); // 타이머 종료
+        postMessage({ isTimerRunning: false, timer: 0 });
       }
-    }, 10);
+    }, 10); // 10ms 간격으로 동작
   }
 }
 

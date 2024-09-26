@@ -1,18 +1,15 @@
 import styled from '@emotion/styled';
 import dayjs, { Dayjs } from 'dayjs';
-import React, { useEffect, useState } from 'react';
-import tw, { css } from 'twin.macro';
 import 'dayjs/locale/ko';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-
-import TimerComponent from '../components/TimerComponent';
-
-import useClock from '../hooks/useClock';
-import useStopWatch from '../hooks/useStopWatch';
+import tw, { css } from 'twin.macro';
 
 import Loading from '../components/Loading';
-
+import TimerComponent from '../components/TimerComponent';
 import Input from '../components/core/Input';
+import useClock from '../hooks/useClock';
+import useStopWatch from '../hooks/useStopWatch';
 
 dayjs.locale('ko');
 // dayjs.extend(localizedFormat);
@@ -35,8 +32,6 @@ export default function Timer() {
     isPause,
     isTimerRunning: isActive,
   } = useStopWatch(storage);
-
-  console.log('isActive', isActive);
 
   // console.log('storagge', Boolean(storage));
 
