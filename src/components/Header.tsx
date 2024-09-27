@@ -8,6 +8,7 @@ import { userLogout } from '@/api/auth';
 import { useUserCheck } from '@/hooks/useUserCheck';
 
 import Logo from '../assets/images/logo.png';
+import LoginView from './auth/LoginView';
 import Button from './core/Buttons';
 import Spacer from './core/Spacer';
 import { Text } from './core/Text';
@@ -73,11 +74,21 @@ const Header = () => {
         ) : (
           <button
             className="btn btn-primary"
-            onClick={() => navigate('/auth/login')}
+            // onClick={() => navigate('/auth/login')}
+            onClick={() => document.getElementById('login_modal').showModal()}
           >
             로그인
           </button>
         )}
+        <dialog id="login_modal" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg text-center">로그인</h3>
+            <LoginView />
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
       </div>
     </div>
   );

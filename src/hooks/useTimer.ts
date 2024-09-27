@@ -7,6 +7,8 @@ const useTimer = (time: number) => {
   const [timer, setTimer] = useState(time);
   const [isRunning, setIsRunning] = useState(false);
 
+  console.log('timer', timer);
+
   useEffect(() => {
     workerRef.current = timerWorker;
 
