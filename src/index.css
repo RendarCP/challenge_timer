@@ -9,6 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #111827;
 }
 
 code {
@@ -16,10 +17,18 @@ code {
     monospace;
 }
 
+img {
+  user-select: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 #root {
-  height: 100vh;
   background-color: #111827;
   color: #d1d5db;
+  user-select: none;
 }
 
 .dark {

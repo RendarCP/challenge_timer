@@ -1,11 +1,12 @@
+import { useUserStore } from '@/store/useUserStore';
 import React from 'react';
 import { Outlet, useMatch, useNavigate } from 'react-router-dom';
 import tw from 'twin.macro';
 
-import Logo from '../assets/logo.png';
+import Logo from '../assets/images/logo.png';
 import { Text } from '../components/core/Text';
 
-const AuthContainer = tw.div`flex flex-col justify-center items-center w-full h-full`;
+const AuthContainer = tw.div`flex flex-col justify-center items-center w-full h-screen`;
 
 const AuthInner = tw.div`flex-auto xs:w-full sm:w-[500px] flex flex-col justify-center`;
 
@@ -20,6 +21,7 @@ const LogoImage = tw.img`
 const AuthLayout = () => {
   const match = useMatch('/auth/login');
   const navigate = useNavigate();
+
   return (
     <AuthContainer>
       <AuthInner>

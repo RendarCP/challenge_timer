@@ -21,12 +21,13 @@ const Wrapper = tw.div`
   // sm:w-3/5
 `;
 
-export default function TimerComponent({ time, seconds, text }: any) {
+export default function TimerComponent({ percentage, text, showcircle }: any) {
   return (
     <Container>
       <Wrapper>
         <CircleProgressBar
-          percentage={Math.floor((Number(seconds) / 60) * 100)}
+          showcircle={showcircle}
+          percentage={percentage}
           text={text}
         />
       </Wrapper>

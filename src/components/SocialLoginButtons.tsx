@@ -1,15 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import tw from 'twin.macro';
 
-import { googleAuth, githubAuth } from '../api/main';
-
+import { githubAuth, googleAuth } from '../api/auth';
+import { ReactComponent as Github } from '../assets/github_logo.svg';
+import { ReactComponent as Google } from '../assets/google_logo.svg';
 import Button from './core/Buttons';
 import Spacer from './core/Spacer';
 import { Text } from './core/Text';
-import { ReactComponent as Github } from '../assets/github_logo.svg';
-import { ReactComponent as Google } from '../assets/google_logo.svg';
 
 export default function SocialLoginButtons() {
+  const navigate = useNavigate();
   // 구글 로그인
   const handleGoogle = () => {
     googleAuth()
@@ -20,6 +21,7 @@ export default function SocialLoginButtons() {
           res.create_date.seconds,
           new Date(res.create_date.seconds * 1000)
         );
+        navigate('/');
       })
       .catch(err => {
         console.log('err', err, err.code);
@@ -31,6 +33,7 @@ export default function SocialLoginButtons() {
     githubAuth()
       .then(res => {
         console.log('res', res);
+        navigate('/');
       })
       .catch(err => {
         console.log('err', err);

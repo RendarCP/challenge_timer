@@ -4,12 +4,8 @@ import tw from 'twin.macro';
 
 import { useForm } from '../hooks/useForm';
 
-import {
-  createUserDoc,
-  createUserEmail,
-  emailVerification,
-  googleAuth,
-} from '../api/main';
+import { createUserEmail, emailVerification, googleAuth } from '../api/auth';
+import { createUserDoc } from '../api/main';
 
 import { ReactComponent as Google } from '../assets/google_logo.svg';
 import Button from '../components/core/Buttons';
@@ -84,7 +80,12 @@ const SignUp = () => {
         </SigunUpBox>
         <SigunUpBox>
           <div>비밀번호</div>
-          <Input name="passwd" value={passwd} onChange={onChange} />
+          <Input
+            type="password"
+            name="passwd"
+            value={passwd}
+            onChange={onChange}
+          />
         </SigunUpBox>
         <SigunUpBox>
           <div>비밀번호 확인</div>

@@ -1,3 +1,4 @@
-import TimerWorker from '../workers/worker.ts?worker';
+import Worker from '../workers/timeworker.ts?worker';
 
-export const timerWorker = new TimerWorker();
+export const stopWatchWorker = new Worker();
+export const timerWorker = new Worker();

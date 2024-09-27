@@ -1,68 +1,40 @@
 import { useEffect, useRef, useState } from 'react';
+
 import { timerWorker } from '../utils/initWorker';
 
-const useTimer = () => {
+const useTimer = (time: number) => {
   const workerRef = useRef<any>();
-  const [timer, setTimer] = useState(0);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [timer, setTimer] = useState(time);
+  const [isRunning, setIsRunning] = useState(false);
 
-  const storage = localStorage.getItem('challenge_timer_stopWatch');
-  // initial localstorage data
-  useEffect(() => {
-    if (storage !== null) {
-      const data = JSON.parse(storage);
-      setTimer(data.stopwatch);
-    }
-  }, []);
+  console.log('timer', timer);
 
-  // initial webworker
   useEffect(() => {
-    // Initialize the web worker
     workerRef.current = timerWorker;
 
-    // Handle messages from the worker
     workerRef.current.onmessage = (e: any) => {
-      setIsTimerRunning(e.data.isTimerRunning);
+      setIsRunning(e.data.isTimerRunning);
       setTimer(e.data.timer);
     };
-
-    // Clean up the worker on unmount
-    return () => {
+    return (): void => {
       workerRef.current.terminate();
     };
   }, []);
 
-  const startTimer = () => {
-    if (storage !== null) {
-      const data = JSON.parse(storage);
-      workerRef.current.postMessage({
-        type: 'start',
-        stopwatch: data.stopwatch,
-      });
-    } else {
-      workerRef.current.postMessage({ type: 'start', stopwatch: 0 });
-    }
+  const startTimer: () => void = (): void => {
+    workerRef.current.postMessage({
+      type: 'start_timer',
+      timer,
+    });
   };
 
   const pauseTimer = () => {
-    workerRef.current.postMessage({ type: 'pause', stopwatch: timer });
-    localStorage.setItem(
-      'challenge_timer_stopWatch',
-      JSON.stringify({
-        stopwatch: timer,
-      })
-    );
+    workerRef.current.postMessage({ type: 'pause_timer', timer });
   };
 
   const stopTimer = () => {
-    workerRef.current.postMessage({ type: 'stop' });
+    workerRef.current.postMessage({ type: 'stop_timer' });
     setTimer(0);
-    localStorage.setItem(
-      'challenge_timer_stopWatch',
-      JSON.stringify({
-        stopwatch: 0,
-      })
-    );
   };
 
   const resetTimer = () => {
@@ -70,22 +42,22 @@ const useTimer = () => {
   };
 
   // Hours calculation
-  const hours = Math.floor(timer / 360000)
+  const hours: string = Math.floor(timer / 360000)
     .toString()
     .padStart(2, '0');
 
   // Minutes calculation
-  const minutes = Math.floor((timer % 360000) / 6000)
+  const minutes: string = Math.floor((timer % 360000) / 6000)
     .toString()
     .padStart(2, '0');
 
   // Seconds calculation
-  const seconds = Math.floor((timer % 6000) / 100)
+  const seconds: string = Math.floor((timer % 6000) / 100)
     .toString()
     .padStart(2, '0');
 
   // Milliseconds calculation
-  const milliseconds = (timer % 100).toString().padStart(2, '0');
+  const milliseconds: string = (timer % 100).toString().padStart(2, '0');
 
   return {
     hours,
@@ -97,7 +69,7 @@ const useTimer = () => {
     stopTimer,
     resetTimer,
     timer,
-    isTimerRunning,
+    isRunning,
   };
 };
 

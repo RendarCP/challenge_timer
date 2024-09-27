@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import tw, { css } from 'twin.macro';
 import styled from '@emotion/styled';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/ko';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import TimerComponent from '../components/TimerComponent';
-import useClock from '../hooks/useClock';
-import useTimer from '../hooks/useTimer';
+import tw, { css } from 'twin.macro';
+
 import Loading from '../components/Loading';
+import TimerComponent from '../components/TimerComponent';
 import Input from '../components/core/Input';
+import useClock from '../hooks/useClock';
+import useStopWatch from '../hooks/useStopWatch';
 
 dayjs.locale('ko');
 // dayjs.extend(localizedFormat);
@@ -19,6 +20,7 @@ export default function Timer() {
   const [start, setStart] = useState<Dayjs | null | Date>(null);
   const [end, setEnd] = useState<Dayjs | null | Date>(null);
   // const { hours, minutes, seconds } = useClock();
+  const storage = localStorage.getItem('challenge_timer_stopWatch');
   const {
     timer,
     milliseconds: stMilli,
@@ -29,7 +31,9 @@ export default function Timer() {
     pauseTimer: onPause,
     isPause,
     isTimerRunning: isActive,
-  } = useTimer();
+  } = useStopWatch(storage);
+
+  // console.log('storagge', Boolean(storage));
 
   const TText = `${stHours}시간 ${stMinutes}분 ${stSeconds}초`;
 
@@ -70,23 +74,13 @@ export default function Timer() {
   };
 
   const handleTimer = () => {
-    if (isActive) {
-      onPause();
-      // localStorage.setItem(
-      //   'challenge_timer_stopWatch',
-      //   JSON.stringify({
-      //     stopwatch: timer,
-      //   })
-      // );
-    } else {
-      onActive();
-      // localStorage.setItem(
-      //   'challenge_timer_stopWatch',
-      //   JSON.stringify({
-      //     stopwatch: 0,
-      //   })
-      // );
-    }
+    onActive();
+    localStorage.setItem(
+      'challenge_timer_stopWatch',
+      JSON.stringify({
+        stopwatch: storage ? timer : 0,
+      })
+    );
   };
 
   const handleEnd = () => {
@@ -117,47 +111,18 @@ export default function Timer() {
         <>
           <UserLabel size={20}>{user}님</UserLabel>
           <div style={{ display: 'flex', gap: 20 }}>
-            {/* <Button onClick={handlePause}>{isActive ? '정지' : '재개'}</Button> */}
-            <Button onClick={handleTimer}>{isActive ? '정지' : '재개'}</Button>
+            {isActive ? (
+              <Button onClick={handlePause}>정지</Button>
+            ) : (
+              <Button onClick={handleTimer}>재개</Button>
+            )}
             <Button onClick={handleEnd}>종료</Button>
           </div>
-          {/* <div style={{ padding: 50 }}>
-            <TimerWrap>
-              <TimerText>
-                {hours}시 {minutes}분 {seconds}초
-              </TimerText>
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '-17px',
-                  left: '17px',
-                  padding: 5,
-                  background: 'white',
-                }}
-              >
-                현재 시간
-              </div>
-            </TimerWrap>
-            <TimerWrap>
-              <TimerText>
-                {dayjs(start).format('MM월 DD일 HH 시 mm 분')}
-              </TimerText>
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '-17px',
-                  left: '17px',
-                  padding: 5,
-                  background: 'white',
-                }}
-              >
-                시작 시간
-              </div>
-            </TimerWrap>
-          </div> */}
 
-          <TimerComponent time={start} text={TText} seconds={stSeconds} />
-          {/* <Loading /> */}
+          <TimerComponent
+            text={TText}
+            percentage={Math.floor((Number(stSeconds) / 60) * 100)}
+          />
         </>
       )}
     </Container>
