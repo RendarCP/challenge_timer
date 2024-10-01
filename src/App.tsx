@@ -13,15 +13,19 @@ import Login from './pages/Login.page';
 import MainPage from './pages/Main.page';
 import SignUp from './pages/SignUp.page';
 import TestPage from './pages/Test.page';
+import TestTest from './pages/TestTest';
 import Timer from './pages/Timer';
 import Room from './pages/challenge/Room.page';
 import Rooms from './pages/challenge/Rooms.page';
+import Single from './pages/single/Single';
+import SingleTimer from './pages/single/SingleTimer';
 import TimerMainPage from './pages/timer/TimerMain.page';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/ss" element={<TestTest />} />
         <Route path="/" element={<MainLayout showHeader />}>
           <Route path="" element={<HomePage />} />
           <Route path="test" element={<TestPage />} />
@@ -34,6 +38,10 @@ function App() {
           <Route path="" element={<MainPage />} />
           <Route path="timer" element={<Timer />} />
           <Route path="test" element={<TimerMainPage />} />
+          {/* timer/single */}
+          <Route path="timer/single" element={<Single />} />
+          {/* timer/single/:id */}
+          <Route path="timer/single/:id" element={<SingleTimer />} />
           <Route path="challenge/room" element={<Rooms />} />
           <Route path="challenge/room/:id" element={<Room />} />
           {/* timer/report */}
