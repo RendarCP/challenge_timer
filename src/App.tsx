@@ -25,8 +25,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/ss" element={<TestTest />} />
         <Route path="/" element={<MainLayout showHeader />}>
+          <Route path="/ss" element={<TestTest />} />
           <Route path="" element={<HomePage />} />
           <Route path="test" element={<TestPage />} />
         </Route>
