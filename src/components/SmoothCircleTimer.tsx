@@ -23,7 +23,6 @@ const SmoothCircleTimer = ({
   onComplete,
   mode = 'timer', // 'timer' or 'stopwatch'
 }: ISmoothCircleTimer) => {
-  console.log('mode', mode);
   const [time, setTime] = useState(mode === 'timer' ? duration : 0);
   const requestRef = useRef();
   const startTimeRef = useRef();
