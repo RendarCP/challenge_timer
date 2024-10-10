@@ -22,6 +22,7 @@ export default function SocialLoginButtons() {
           new Date(res.create_date.seconds * 1000)
         );
         navigate('/');
+        document.getElementById('login_modal').close();
       })
       .catch(err => {
         console.log('err', err, err.code);
@@ -34,6 +35,7 @@ export default function SocialLoginButtons() {
       .then(res => {
         console.log('res', res);
         navigate('/');
+        document.getElementById('login_modal').close();
       })
       .catch(err => {
         console.log('err', err);

@@ -5,6 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import tw, { css } from 'twin.macro';
 
+import SmoothCircleTimer from '@/components/SmoothCircleTimer';
+import CircleProgressBar from '@/components/test/CircleProgressBar';
+
 import Loading from '../components/Loading';
 import TimerComponent from '../components/TimerComponent';
 import Input from '../components/core/Input';
@@ -35,7 +38,7 @@ export default function Timer() {
 
   // console.log('storagge', Boolean(storage));
 
-  const TText = `${stHours}시간 ${stMinutes}분 ${stSeconds}초`;
+  const TText = `${stHours}시간 ${stMinutes}분 ${stSeconds}초 ${stMilli}`;
 
   useEffect(() => {
     const storage = localStorage.getItem('challenge_timer');
@@ -95,6 +98,11 @@ export default function Timer() {
     setUser(e.target.value);
   };
 
+  console.log(
+    'Math.floor(Number(stSeconds) * 1000)',
+    Math.floor(Number(stMilli))
+  );
+
   return (
     <Container>
       <HeaderTitle>타이머</HeaderTitle>
@@ -119,9 +127,25 @@ export default function Timer() {
             <Button onClick={handleEnd}>종료</Button>
           </div>
 
+          <CircleProgressBar
+            percentage={Math.floor((Number(stSeconds) / 60) * 100)}
+            text={TText}
+            size={500}
+            fullSize={true}
+            backgroundColor="#e0e0de"
+            progressColor="#3498db"
+          />
           <TimerComponent
+            showcircle
             text={TText}
             percentage={Math.floor((Number(stSeconds) / 60) * 100)}
+          />
+          <SmoothCircleTimer
+            text={TText}
+            duration={6000} // 총 60초
+            isRunning={true}
+            percentage={Math.floor((Number(stSeconds) / 60) * 100)}
+            fullSize
           />
         </>
       )}

@@ -8,6 +8,7 @@ import TimerComponent from '@/components/TimerComponent';
 import Button from '@/components/core/Buttons';
 import Spacer from '@/components/core/Spacer';
 import { Text } from '@/components/core/Text';
+import CircleProgressBar from '@/components/test/CircleProgressBar';
 
 import useTimer from '@/hooks/useTimer';
 
@@ -45,8 +46,15 @@ export default function HomePage() {
       <Spacer top={20} />
       <TimerComponent
         showcircle={true}
-        text={mainTimerText}
         percentage={Math.floor(Number(timer / lendingTimerTime) * 100)}
+        text={mainTimerText}
+      />
+      <CircleProgressBar
+        percentage={Math.floor(Number(timer / lendingTimerTime) * 100)}
+        text={mainTimerText}
+        fullSize
+        backgroundColor="#e0e0de"
+        progressColor="#3498db"
       />
       <Spacer top={20} />
       <ButtonWrap>
