@@ -34,53 +34,53 @@ module.exports = {
     ],
     // 'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react/no-unknown-property': ['error', { ignore: ['css'] }],
-    'import/order': [
-      'error',
-      {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          'parent',
-          'sibling',
-          'index',
-          // ['parent', 'sibling', 'index'],
-          'object',
-          'type',
-        ],
-        pathGroups: [
-          {
-            pattern: '@/assets/*',
-            group: 'internal',
-            position: 'before',
-          },
-          {
-            pattern: '@/components/core/*',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@/components/*',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@/hooks/*',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@/api/*',
-            group: 'internal',
-            position: 'after',
-          },
-        ],
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-        'newlines-between': 'always',
-      },
+    // 'import/order': [
+    //   'error',
+    //   {
+    //     groups: [
+    //       'builtin',
+    //       'external',
+    //       'internal',
+    //       'parent',
+    //       'sibling',
+    //       'index',
+    //       // ['parent', 'sibling', 'index'],
+    //       'object',
+    //       'type',
+    //     ],
+    //     pathGroups: [
+    //       {
+    //         pattern: '@/assets/*',
+    //         group: 'internal',
+    //         position: 'before',
+    //       },
+    //       {
+    //         pattern: '@/components/core/*',
+    //         group: 'internal',
+    //         position: 'after',
+    //       },
+    //       {
+    //         pattern: '@/components/*',
+    //         group: 'internal',
+    //         position: 'after',
+    //       },
+    //       {
+    //         pattern: '@/hooks/*',
+    //         group: 'internal',
+    //         position: 'after',
+    //       },
+    //       {
+    //         pattern: '@/api/*',
+    //         group: 'internal',
+    //         position: 'after',
+    //       },
+    //     ],
+    //     alphabetize: {
+    //       order: 'asc',
+    //       caseInsensitive: true,
+    //     },
+    //     'newlines-between': 'always',
+    //   },
     ],
   },
   settings: {

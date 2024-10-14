@@ -23,13 +23,14 @@
 ## 3. 구현사항
 
 - [x] 로그인
-  - [x] 구글로그인 구현
-  - [x] github로그인 구현
 - [x] 회원가입
-- [ ] Timer_Room 기능
-  - [ ] Share_room
+- [ ] Room 기능
+  - [ ] Share_room (공유방) → challange
+    - [ ] 타이머
   - [ ] Single_room
-- [ ] 타이머 관련기능
+    - [ ] 타이머
+    - [ ] 스탑워치
+- [x] 타이머 관련기능
 - [ ] 차트 및 측정 기능
   - [ ] 분석기능
 - [ ] 커뮤니티 기능
@@ -40,11 +41,15 @@
 
 ## 4. 적용 기술
 
-1. React (CRA)
-2. TailWindCSS
-3. Recoil
+1. React (CRA) → vite
+2. tailwindCSS
+   1. https://daisyui.com/ → 빠른 mvp 를 위한 작업
+3. ~~Recoil~~
+   1. zustand
 4. Firebase
 5. Jest/React-testing-library
+6. https://github.com/gpbl/react-day-picker
+   1. https://github.com/wojtekmaj/react-calendar에 비해 업데이트 등의 장점이 있다고 생각
 
 Nextjs로 구현할려다 현재 appDir emotion관련된 부분때문에 react로 먼저 구현이후 nextjs로 포팅할 예정이다.
 
@@ -54,12 +59,13 @@ Nextjs로 구현할려다 현재 appDir emotion관련된 부분때문에 react�
 
 ## 5. ERD
 
+````markdown
 ```mermaid
 ---
-title: challenge_timer
+title: challenge_timer ERD
 ---
 erDiagram
-    USER ||--o{ ROOM_USER : user
+    USER ||--o{ ROOM_USER : places
     USER {
         string USER_ID
         string USER_PW
@@ -71,7 +77,7 @@ erDiagram
         datetime CREATE_DATE
         datetime UPDATE_DATE
     }
-    ROOM_USER }|--|| ROOM : room
+    ROOM_USER }|--|| ROOM : contains
     ROOM_USER {
         int ROOM_USER_ID
         string ROOM_ID
@@ -91,6 +97,37 @@ erDiagram
         datetime UPDATE_DATE
     }
 
+````
+
 ```
 
 ## 6. 플로우 차트
+
+## 기능 개발정리
+
+### 타이머 관련 훅 변경필요
+
+현재 타이머는 시간 기준으로하고있는데, 퍼센티지로 변경사항 필요
+컴포넌트도 퍼센티지로 변경사항 필요
+
+소수점까지 체크할수있게 제작할 필요가 있는 것 같음
+
+요구사항
+
+- percentage로 제작된 circleProgressBar 필요
+- Smooth한 애니메이션이 지원되어야함
+- 초단위가 아닌 milliseconds단위로 체크해야됨
+    - 그래서 percentage가 소수점 단위까지 해서 애니메이션이 자연스러워지게 ex) 58.78%
+- percentage는 처음부터가 아닌 퍼센트 단위 만큼 움직여야함
+    - 쉽게 계산 리렌더링이 되서 0%부터 시작이 아닌 50%였다면 → 51% 이렇게 되어야함
+    0 → 51%가 아님
+- text도 props로 받을수 있어야함
+- size도 할 수 있게 제작되어야함
+    - full size도 지원할수있게 boolean 타입으로 props가 있어야함
+- backgroundColor, progressColor 넣을수있게 props가 필요함
+
+### 타이머 애니메이션 정리
+
+requestAnimationFrame
+cancelAnimationFrame
+```
