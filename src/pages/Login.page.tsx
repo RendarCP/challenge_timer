@@ -6,7 +6,7 @@ import tw from 'twin.macro';
 import { loginUserEmail } from '../api/auth';
 import { ReactComponent as Github } from '../assets/github_logo.svg';
 import { ReactComponent as Google } from '../assets/google_logo.svg';
-import SocialLoginButtons from '../components/SocialLoginButtons';
+import SocialLoginButtons from '../components/auth/SocialLoginButtons';
 import Button from '../components/core/Buttons';
 import { Divider } from '../components/core/Divider';
 import Input from '../components/core/Input';

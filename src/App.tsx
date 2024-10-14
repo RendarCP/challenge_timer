@@ -13,7 +13,6 @@ import Login from './pages/Login.page';
 import MainPage from './pages/Main.page';
 import SignUp from './pages/SignUp.page';
 import TestPage from './pages/Test.page';
-import TestTest from './pages/TestTest';
 import Timer from './pages/Timer';
 import Room from './pages/challenge/Room.page';
 import Rooms from './pages/challenge/Rooms.page';
@@ -26,7 +25,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout showHeader />}>
-          <Route path="/ss" element={<TestTest />} />
           <Route path="" element={<HomePage />} />
           <Route path="test" element={<TestPage />} />
         </Route>

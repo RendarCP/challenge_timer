@@ -4,6 +4,7 @@ import tw from 'twin.macro';
 
 import Logo from '@/assets/images/logo.png';
 
+import SmoothCircleTimer from '@/components/SmoothCircleTimer';
 import TimerComponent from '@/components/TimerComponent';
 import Button from '@/components/core/Buttons';
 import Spacer from '@/components/core/Spacer';
@@ -28,6 +29,7 @@ export default function HomePage() {
   useEffect(() => {
     if (timer === 0) {
       pauseTimer();
+      alert('타이머가 종료되었습니다');
     }
   }, [timer]);
 
@@ -43,90 +45,25 @@ export default function HomePage() {
           전용시간이 필요한 모든 작업에 사용하세요.`}
         </Text>
       </Wrapper>
-      <Spacer top={20} />
-      <TimerComponent
+      {/* <Spacer top={20} /> */}
+      {/* <TimerComponent
         showcircle={true}
         percentage={Math.floor(Number(timer / lendingTimerTime) * 100)}
         text={mainTimerText}
-      />
-      <CircleProgressBar
+      /> */}
+      <SmoothCircleTimer
         percentage={Math.floor(Number(timer / lendingTimerTime) * 100)}
-        text={mainTimerText}
+        duration={300}
         fullSize
-        backgroundColor="#e0e0de"
-        progressColor="#3498db"
+        backgroundColor="#e0e0e0"
+        progressColor="#4caf50"
+        textColor="#e0e0e0"
+        text={mainTimerText}
       />
-      <Spacer top={20} />
+      {/* <Spacer top={20} /> */}
       <ButtonWrap>
         <Button onClick={() => navigate('/main')}>시작하기</Button>
       </ButtonWrap>
-      {/* The button to open modal */}
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-      <label htmlFor="my_modal_7" className="btn">
-        open modal
-      </label>
-
-      {/* Put this part before </body> tag */}
-      <input type="checkbox" id="my_modal_7" className="modal-toggle" />
-      <div className="modal" role="dialog">
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">Hello!</h3>
-          <p className="py-4">This modal works with a hidden checkbox!</p>
-        </div>
-        <label className="modal-backdrop" htmlFor="my_modal_7">
-          Close
-        </label>
-      </div>
     </Container>
   );
 }

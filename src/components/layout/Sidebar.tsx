@@ -1,14 +1,18 @@
 import { sideBarMenus } from '@/constant/layoutCont';
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface ISidebar {
   isOpen: boolean;
-  toogleSidebar: () => void;
+  toggleSidebar: () => void;
 }
 
 const Sidebar = ({ isOpen, toggleSidebar }: ISidebar) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const handleMenuClick = menu => {
+    navigate(menu);
+    toggleSidebar();
+  };
   return (
     <div className={`drawer-side ${isOpen ? 'lg:drawer-open' : ''}`}>
       <label
@@ -26,7 +30,10 @@ const Sidebar = ({ isOpen, toggleSidebar }: ISidebar) => {
           {sideBarMenus.map((menu, index) => {
             return (
               <li key={index}>
-                <a className={location.pathname === menu.path ? 'active' : ''}>
+                <a
+                  className={location.pathname === menu.path ? 'active' : ''}
+                  onClick={() => handleMenuClick(menu.path)}
+                >
                   {menu.title}
                 </a>
               </li>

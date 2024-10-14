@@ -130,7 +130,6 @@ export default function Timer() {
           <CircleProgressBar
             percentage={Math.floor((Number(stSeconds) / 60) * 100)}
             text={TText}
-            size={500}
             fullSize={true}
             backgroundColor="#e0e0de"
             progressColor="#3498db"
@@ -141,11 +140,14 @@ export default function Timer() {
             percentage={Math.floor((Number(stSeconds) / 60) * 100)}
           />
           <SmoothCircleTimer
-            text={TText}
-            duration={6000} // 총 60초
-            isRunning={true}
             percentage={Math.floor((Number(stSeconds) / 60) * 100)}
+            duration={1000}
+            // size={300}
             fullSize
+            backgroundColor="#e0e0e0"
+            progressColor="#4caf50"
+            textColor="#e0e0e0"
+            text={TText}
           />
         </>
       )}
@@ -158,7 +160,7 @@ const Container = tw.div`
   flex-col
   justify-center
   items-center
-  h-full
+  // h-full
 `;
 
 const FlexWrap = tw.div`

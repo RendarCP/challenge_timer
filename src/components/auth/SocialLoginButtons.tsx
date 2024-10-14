@@ -2,12 +2,12 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import tw from 'twin.macro';
 
-import { githubAuth, googleAuth } from '../api/auth';
-import { ReactComponent as Github } from '../assets/github_logo.svg';
-import { ReactComponent as Google } from '../assets/google_logo.svg';
-import Button from './core/Buttons';
-import Spacer from './core/Spacer';
-import { Text } from './core/Text';
+import { githubAuth, googleAuth } from '../../api/auth';
+import { ReactComponent as Github } from '../../assets/github_logo.svg';
+import { ReactComponent as Google } from '../../assets/google_logo.svg';
+import Button from '../core/Buttons';
+import Spacer from '../core/Spacer';
+import { Text } from '../core/Text';
 
 export default function SocialLoginButtons() {
   const navigate = useNavigate();

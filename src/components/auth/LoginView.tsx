@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import tw from 'twin.macro';
 
 import { loginUserEmail } from '../../api/auth';
-import SocialLoginButtons from '../../components/SocialLoginButtons';
 import Button from '../../components/core/Buttons';
 import { Divider } from '../../components/core/Divider';
 import Input from '../../components/core/Input';
@@ -14,6 +13,7 @@ import { errorCode } from '../../modules/ErrorHandling';
 import { useUserStore } from '../../store/useUserStore';
 import { ReactComponent as Github } from '../assets/github_logo.svg';
 import { ReactComponent as Google } from '../assets/google_logo.svg';
+import SocialLoginButtons from './SocialLoginButtons';
 
 const LoginView = () => {
   const navigate = useNavigate();

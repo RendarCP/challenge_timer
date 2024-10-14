@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import SmoothCircleTimer from '@/components/SmoothCircleTimer';
 
 const TestPage = () => {
-  const [duration, setDuration] = useState(60);
+  const [duration, setDuration] = useState(1000);
   const [isRunning, setIsRunning] = useState(false);
   const [isFullSize, setIsFullSize] = useState(false);
   const [timerSize, setTimerSize] = useState(500);
@@ -34,14 +34,13 @@ const TestPage = () => {
       <button className="btn btn-link">Link</button>
       <button className="btn btn-warning">warning</button>
       <button className="btn btn-error">error</button>
-      <SmoothCircleTimer
+
+      {/* <SmoothCircleTimer
         duration={duration}
-        isRunning={isRunning}
-        onComplete={handleComplete}
         fullSize={isFullSize}
         size={timerSize}
         mode={mode}
-      />
+      /> */}
       <div className="flex flex-wrap justify-center gap-4 mb-6">
         <button
           onClick={handleStart}
