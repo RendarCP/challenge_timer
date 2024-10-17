@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import tw from 'twin.macro';
 
 import Logo from '@/assets/images/logo.png';
 
+import Section from '@/components/Section';
 import SmoothCircleTimer from '@/components/SmoothCircleTimer';
 import TimerComponent from '@/components/TimerComponent';
 import Button from '@/components/core/Buttons';
@@ -45,13 +46,31 @@ export default function HomePage() {
           전용시간이 필요한 모든 작업에 사용하세요.`}
         </Text>
       </Wrapper>
+      <Section
+        index={0}
+        title="Revolutionary Camera"
+        description="Capture life's moments with unprecedented clarity and detail. Our advanced camera system brings professional-grade photography to your fingertips."
+        imageSrc="/api/placeholder/600/400"
+      />
+      <Section
+        index={1}
+        title="Unmatched Performance"
+        description="Powered by our latest chip, iPhone delivers lightning-fast performance for all your tasks and apps, while maintaining excellent energy efficiency."
+        imageSrc="/api/placeholder/600/400"
+      />
+      <Section
+        index={2}
+        title="Stunning Design"
+        description="Elegance meets durability in our sleek, modern design. Crafted from premium materials, iPhone is not just a device, it's a statement."
+        imageSrc="/api/placeholder/600/400"
+      />
       {/* <Spacer top={20} /> */}
       {/* <TimerComponent
         showcircle={true}
         percentage={Math.floor(Number(timer / lendingTimerTime) * 100)}
         text={mainTimerText}
       /> */}
-      <SmoothCircleTimer
+      {/* <SmoothCircleTimer
         percentage={Math.floor(Number(timer / lendingTimerTime) * 100)}
         duration={300}
         fullSize
@@ -60,10 +79,9 @@ export default function HomePage() {
         textColor="#e0e0e0"
         text={mainTimerText}
       />
-      {/* <Spacer top={20} /> */}
       <ButtonWrap>
         <Button onClick={() => navigate('/main')}>시작하기</Button>
-      </ButtonWrap>
+      </ButtonWrap> */}
     </Container>
   );
 }

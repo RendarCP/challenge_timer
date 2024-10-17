@@ -10,7 +10,7 @@ export const Text = ({ typography = 'p', color, ...props }: TextProps) => {
   return <span style={{ color }} css={styles({ typography })} {...props} />;
 };
 
-const styles = ({ typography }: any) => [
+const styles = ({ typography }: { typography?: string }) => [
   tw`whitespace-pre-line break-all`,
   TYPOGRAPH_VARIANT[typography],
 ];

@@ -18,7 +18,6 @@ const Header = ({ isOpen, toggleSidebar }: IHeader) => {
   const { user, setUser, isLoading } = useUserCheck();
   const { logoutUser } = useUserStore();
   // const { user } = useUserStore();
-  console.log('user', user?.uid, isLoading);
   const navigate = useNavigate();
   const handleLogout = async () => {
     // 먼저 상태를 초기화
@@ -42,7 +41,12 @@ const Header = ({ isOpen, toggleSidebar }: IHeader) => {
           </label>
         </div>
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl">TimeFight</a>
+          <a
+            className="btn btn-ghost normal-case text-xl"
+            onClick={() => navigate('/main')}
+          >
+            TimeFight
+          </a>
         </div>
         <div className="flex-none gap-2">
           <div className="flex-none gap-2">

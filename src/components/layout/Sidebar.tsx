@@ -39,7 +39,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: ISidebar) => {
               </li>
             );
           })}
-          <li>
+          {/* <li>
             <details className="active" open>
               <summary className="active">Timer</summary>
               <ul>
@@ -54,7 +54,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: ISidebar) => {
           </li>
           <li className="mt-auto">
             <a className="text-red-500">Logout</a>
-          </li>
+          </li> */}
         </div>
       </ul>
     </div>
