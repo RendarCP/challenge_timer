@@ -1,15 +1,17 @@
 import { Swords, Timer } from 'lucide-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-// import CardContent from '../components/core/card/CardContent';
 import tw from 'twin.macro';
+
+import useDeviceType from '@/hooks/useDeviceType';
 
 import Spacer from '../components/core/Spacer';
 import Card from '../components/core/card/Card';
-import { ContentContainer } from '../styles/MainContainer';
 
 export default function MainPage() {
   const navigate = useNavigate();
+  const isMobile = useDeviceType();
+  console.log('isMobile', isMobile);
   return (
     <Container>
       <Card full onClick={() => navigate('/main/timer/single')}>

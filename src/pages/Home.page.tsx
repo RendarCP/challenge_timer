@@ -18,21 +18,21 @@ const lendingTimerTime = 3000;
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const { minutes, seconds, timer, startTimer, pauseTimer } =
-    useTimer(lendingTimerTime);
+  // const { minutes, seconds, timer, startTimer, pauseTimer } =
+  //   useTimer(lendingTimerTime);
 
-  const mainTimerText = `${minutes}분 ${seconds}초`;
+  // const mainTimerText = `${minutes}분 ${seconds}초`;
 
-  useEffect(() => {
-    startTimer();
-  }, []);
+  // useEffect(() => {
+  //   startTimer();
+  // }, []);
 
-  useEffect(() => {
-    if (timer === 0) {
-      pauseTimer();
-      alert('타이머가 종료되었습니다');
-    }
-  }, [timer]);
+  // useEffect(() => {
+  //   if (timer === 0) {
+  //     pauseTimer();
+  //     alert('타이머가 종료되었습니다');
+  //   }
+  // }, [timer]);
 
   return (
     <Container>

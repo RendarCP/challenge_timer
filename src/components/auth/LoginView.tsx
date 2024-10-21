@@ -47,7 +47,13 @@ const LoginView = () => {
       <SocialLoginButtons />
       {/* <Divider>or</Divider> */}
       <div className="divider">OR</div>
-      <LoginWrap>
+      <Button
+        variant="text"
+        onClick={() => document.getElementById('login_modal').close()}
+      >
+        비회원으로 시작
+      </Button>
+      {/* <LoginWrap>
         <LoginBox>
           <div>아이디</div>
           <Input type="email" name="email" value={email} onChange={onChange} />
@@ -70,7 +76,7 @@ const LoginView = () => {
             아직 회원이 아니신가요?
           </Text>
         </LoginSignUpBox>
-      </LoginWrap>
+      </LoginWrap> */}
     </Container>
   );
 };

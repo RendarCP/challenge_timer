@@ -1,6 +1,6 @@
 import tw from 'twin.macro';
 
-const ContentContainer = tw.div`
+const ContentFlexContainer = tw.div`
   w-full
   h-full
   flex
@@ -9,4 +9,10 @@ const ContentContainer = tw.div`
   p-5
 `;
 
-export { ContentContainer };
+const ContentPureContainer = tw.div`
+  w-full
+  h-full
+  p-5
+`;
+
+export { ContentFlexContainer, ContentPureContainer };

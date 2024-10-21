@@ -25,7 +25,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainLayout showHeader />}>
+        <Route path="/" element={<MainLayout />}>
           <Route path="" element={<HomePage />} />
           <Route path="test" element={<TestPage />} />
         </Route>
@@ -33,7 +33,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
         </Route>
-        <Route path="/main" element={<MainLayout showHeader />}>
+        <Route path="/main" element={<MainLayout showHeader showSideBar />}>
           <Route path="" element={<MainPage />} />
           <Route path="timer" element={<Timer />} />
           <Route path="test" element={<TimerMainPage />} />

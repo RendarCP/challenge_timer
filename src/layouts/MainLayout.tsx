@@ -7,9 +7,10 @@ import Sidebar from '@/components/layout/Sidebar';
 
 interface MainlayoutProps {
   showHeader?: boolean;
+  showSideBar?: boolean;
 }
 
-const MainLayout = ({ showHeader }: MainlayoutProps) => {
+const MainLayout = ({ showHeader, showSideBar }: MainlayoutProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -24,7 +25,9 @@ const MainLayout = ({ showHeader }: MainlayoutProps) => {
         readOnly
       />
       <div className="drawer-content h-screen">
-        <Header isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        {showHeader && (
+          <Header isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        )}
         <main
           id="content-main"
           className="flex-1 p-4 h-full pt-16 lg:mx-16 lg:ml-60"
@@ -32,7 +35,9 @@ const MainLayout = ({ showHeader }: MainlayoutProps) => {
           <Outlet />
         </main>
       </div>
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      {showSideBar && (
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      )}
     </div>
   );
 };
