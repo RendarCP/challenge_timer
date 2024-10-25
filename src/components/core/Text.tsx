@@ -21,5 +21,6 @@ const TYPOGRAPH_VARIANT: TwStyle = {
   h3: tw`text-4xl font-bold`,
   h4: tw`text-3xl font-bold`,
   h5: tw`text-2xl font-bold`,
+  h6: tw`text-xl font-bold`,
   p: tw`text-base font-normal`,
 };

@@ -1,4 +1,4 @@
-const hours = [
+const hoursData = [
   {
     id: 1,
     text: '1시간',
@@ -116,7 +116,7 @@ const hours = [
   },
 ];
 
-const minutes = [
+const minutesData = [
   {
     id: 0,
     text: '00분',
@@ -419,4 +419,4 @@ const minutes = [
   // },
 ];
 
-export { hours, minutes };
+export { hoursData, minutesData };

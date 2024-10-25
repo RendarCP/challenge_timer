@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import useDeviceType from '@/hooks/useDeviceType';
+
 interface ISmoothCircleTimer {
   percentage: number;
   duration: number;
@@ -21,6 +23,7 @@ const SmoothCircleTimer = ({
   textColor = '#000000',
   text,
 }: ISmoothCircleTimer) => {
+  const isMobile = useDeviceType();
   const [currentPercentage, setCurrentPercentage] = useState(percentage);
   const requestRef = useRef<number>();
   const startTimeRef = useRef<number>();
@@ -111,7 +114,10 @@ const SmoothCircleTimer = ({
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-4xl font-bold" style={{ color: textColor }}>
+        <span
+          className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold`}
+          style={{ color: textColor }}
+        >
           {text || `${currentPercentage.toFixed(2)}%`}
         </span>
       </div>

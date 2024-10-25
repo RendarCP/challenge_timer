@@ -14,6 +14,10 @@ import CircleProgressBar from '@/components/test/CircleProgressBar';
 
 import useTimer from '@/hooks/useTimer';
 
+import ImageChart from '../../public/images/landing_chart.webp';
+import ImageFight from '../../public/images/landing_fight.webp';
+import ImageTimer from '../../public/images/landing_timer.webp';
+
 const lendingTimerTime = 3000;
 
 export default function HomePage() {
@@ -48,21 +52,21 @@ export default function HomePage() {
       </Wrapper>
       <Section
         index={0}
-        title="Revolutionary Camera"
-        description="Capture life's moments with unprecedented clarity and detail. Our advanced camera system brings professional-grade photography to your fingertips."
-        imageSrc="/api/placeholder/600/400"
+        title="타이머로 효율적인 시간을 체크해보세요."
+        description="효율적인 타이머는 정확한 시간 측정과 리소스 절약을 통해 사용자 경험을 최적화하는 도구입니다."
+        imageSrc={ImageTimer}
       />
       <Section
         index={1}
-        title="Unmatched Performance"
-        description="Powered by our latest chip, iPhone delivers lightning-fast performance for all your tasks and apps, while maintaining excellent energy efficiency."
-        imageSrc="/api/placeholder/600/400"
+        title="시간으로 승부를 보세요!"
+        description="누가 승리할지 모르는 게임같은 느낌의 '챌린지' 기능으로 승패를 겨뤄보세요"
+        imageSrc={ImageFight}
       />
       <Section
         index={2}
-        title="Stunning Design"
-        description="Elegance meets durability in our sleek, modern design. Crafted from premium materials, iPhone is not just a device, it's a statement."
-        imageSrc="/api/placeholder/600/400"
+        title="본인의 효율적인 시간 분석을 해보세요"
+        description="차트와 같은 시스템을 제공하여, 더욱더 편리하게 시간을 분석할수 있게 도움을 줍니다."
+        imageSrc={ImageChart}
       />
       {/* <Spacer top={20} /> */}
       {/* <TimerComponent

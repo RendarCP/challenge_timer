@@ -1,30 +1,33 @@
 import React from 'react';
 
+import useDeviceType from '@/hooks/useDeviceType';
 import useViewportVisible from '@/hooks/useViewPortVisible';
 
+import Spacer from './core/Spacer';
 import { Text } from './core/Text';
 
 const Section = ({ title, description, imageSrc, index }) => {
   const [sectionRef, isVisible] = useViewportVisible();
+  const isMobile = useDeviceType();
   const isOdd = index % 2 !== 0;
 
   return (
-    <div ref={sectionRef} className="py-12 px-4 sm:px-8 h-3/4">
-      <div className={`flex flex-row items-center max-w-6xl mx-auto`}>
+    <div ref={sectionRef} className="py-12">
+      <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} mx-auto`}>
         {isOdd ? (
           <>
             <div
-              className={`w-1/2 pr-8 transition-all duration-1000 ease-out ${
+              className={`flex-[2] pr-8 transition-all duration-1000 ease-out ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-16'
               }`}
             >
-              <Text typography="h2">{title}</Text>
+              <Text typography="h3">{title}</Text>
               <p className="text-base sm:text-lg">{description}</p>
             </div>
             <div
-              className={`w-1/2 transition-all duration-1000 ease-out delay-300 ${
+              className={`flex-1 transition-all duration-1000 ease-out delay-300 ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-16'
@@ -40,7 +43,7 @@ const Section = ({ title, description, imageSrc, index }) => {
         ) : (
           <>
             <div
-              className={`w-1/2 transition-all duration-1000 ease-out ${
+              className={`flex-1 transition-all duration-1000 ease-out ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-16'
@@ -53,15 +56,15 @@ const Section = ({ title, description, imageSrc, index }) => {
               />
             </div>
             <div
-              className={`w-1/2 pl-8 transition-all duration-1000 ease-out delay-300 ${
+              className={`flex-[2] pl-8 transition-all duration-1000 ease-out delay-300 ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-16'
               }`}
             >
-              <Text typography="h2">{title}</Text>
+              <Text typography="h3">{title}</Text>
+              <Spacer top={20} />
               <p className="text-base sm:text-lg">{description}</p>
-              <Text typography="h5">테스트</Text>
             </div>
           </>
         )}
