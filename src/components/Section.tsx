@@ -56,7 +56,9 @@ const Section = ({ title, description, imageSrc, index }) => {
               />
             </div>
             <div
-              className={`flex-[2] pl-8 transition-all duration-1000 ease-out delay-300 ${
+              className={`flex-[2] ${
+                isMobile ? '' : 'pl-8'
+              } transition-all duration-1000 ease-out delay-300 ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-16'

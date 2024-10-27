@@ -13,7 +13,7 @@ import { useUserCheck } from '@/hooks/useUserCheck';
 
 export default function Single() {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(true);
+
   const { user } = useUserCheck();
   console.log('user', user);
 
@@ -75,7 +75,7 @@ export default function Single() {
           </Card.Content>
         </Card>
       </ContentWrapper>
-      <Card full onClick={() => navigate('/main/timer/single/stopwatch')}>
+      <Card full onClick={() => navigate('/main/timer/single/analytics')}>
         <Card.Header>
           <FlexWrapper>
             <Hourglass size={64} />

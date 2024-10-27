@@ -1,5 +1,7 @@
+import Preparing from '@/components/layout/Preparing';
+
 const Rooms = () => {
-  return <div>Rooms.page</div>;
+  return <Preparing />;
 };
 
 export default Rooms;

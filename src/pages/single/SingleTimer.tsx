@@ -1,11 +1,13 @@
 import { hoursData, minutesData } from '@/constant/timeConst';
-import { convertToSeconds } from '@/modules/function';
+import { calculatePercentage, convertToSeconds } from '@/modules/function';
 import dayjs from 'dayjs';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Picker from 'react-mobile-picker';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import tw from 'twin.macro';
 
+import CountdownModal from '@/components/CountDownModal';
 import SmoothCircleTimer from '@/components/SmoothCircleTimer';
 import Button from '@/components/core/Buttons';
 import CustomSelect from '@/components/core/Select';
@@ -31,9 +33,13 @@ const selections = {
 };
 
 export default function SingleTimer() {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log('searchParams', searchParams.get('tid'));
   const { user } = useUserCheck();
   const isMobile = useDeviceType();
   const { isVisible, toggleVisibility } = useSlideTransition();
+  const [showModal, setShowModal] = useState(false);
 
   // pc 전용 상태
   const [pickHour, setPickHour] = useState({ ...hoursData[0] });
@@ -61,15 +67,39 @@ export default function SingleTimer() {
   }, [pickerValue, pickHour, pickMinute]);
 
   useEffect(() => {
+    const settingOk = JSON.parse(localStorage.getItem('setting'));
+    if (settingOk) {
+      toggleVisibility();
+      startTimer();
+    }
     if (_.isEmpty(user)) {
-      // document.getElementById('timer_alert_modal').showModal();
+      document.getElementById('timer_alert_modal').showModal();
     }
   }, []);
+
+  const handleSettingTimer = () => {
+    toggleVisibility();
+    setShowModal(true);
+    setSearchParams('tid=test');
+  };
+
+  const handleCountComplete = () => {
+    setShowModal(false);
+    startTimer();
+  };
+
+  // 세팅 내부 타이머 조절
+  const settingTimer =
+    Number(
+      convertToSeconds({
+        hours: isMobile ? pickerValue.hour : pickHour.value,
+        minutes: isMobile ? pickerValue.minute : pickMinute.value,
+      })
+    ) * 100;
+
   const mainTimerText = `${hours}시간 ${minutes}분 ${seconds}초`;
   return (
     <ContentFlexContainer>
-      {/* 설정 */}
-      {/* 타이머 */}
       <ContentWrapper>
         {/* 설정 패널 */}
         <TransitionPanel
@@ -137,7 +167,7 @@ export default function SingleTimer() {
               })}초`}
             </Text>
             <Spacer top={20} />
-            <Button onClick={toggleVisibility}>설정하기</Button>
+            <Button onClick={handleSettingTimer}>설정하기</Button>
           </div>
         </TransitionPanel>
 
@@ -155,17 +185,7 @@ export default function SingleTimer() {
           <div className={`flex flex-col h-full ${isMobile ? '' : 'p-14'}`}>
             {isVisible && (
               <SmoothCircleTimer
-                percentage={Math.floor(
-                  Number(
-                    timer /
-                      convertToSeconds({
-                        hours: isMobile ? pickerValue.hour : pickHour.value,
-                        minutes: isMobile
-                          ? pickerValue.minute
-                          : pickMinute.value,
-                      })
-                  ) * 100
-                )}
+                percentage={calculatePercentage(settingTimer, timer)}
                 duration={300}
                 fullSize
                 backgroundColor="#e0e0e0"
@@ -186,50 +206,34 @@ export default function SingleTimer() {
           </div>
         </TransitionPanel>
       </ContentWrapper>
-      {/* <Wrapper
-        className={`
-          flex flex-col w-full transition-all duration-500 ease-in-out
-          ${
-            isVisible
-              ? 'opacity-100 translate-y-0 h-full'
-              : 'opacity-0 translate-y-full'
-          }
-        `}
-      >
-        <SmoothCircleTimer
-          percentage={Math.floor(
-            Number(
-              timer /
-                convertToSeconds({
-                  hours: isMobile ? pickerValue.hour : pickHour.value,
-                  minutes: isMobile ? pickerValue.minute : pickMinute.value,
-                })
-            ) * 100
-          )}
-          duration={300}
-          fullSize
-          backgroundColor="#e0e0e0"
-          progressColor="#4caf50"
-          textColor="#e0e0e0"
-          text={mainTimerText}
-        />
-        <Button onClick={toggleVisibility}>다시 설정하기</Button>
-      </Wrapper> */}
       <dialog id="timer_alert_modal" className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg text-center">알림</h3>
+        <div className="modal-box text-center">
+          <Text typography="h3" className="font-bold text-lg text-center">
+            알림
+          </Text>
+          <ModalWrapper>
+            <Text typography="h6">
+              {`로그인을 하지 않을시`}
+              <Text typography="h6" color="red">
+                분석 기능
+              </Text>
+              {`등을 
+              사용할 수 없습니다`}
+            </Text>
+            <Text typography="h6">
+              {`유의미한 분석데이터를 
+              활용하기 위해서는 로그인을 해주세요.`}
+            </Text>
+          </ModalWrapper>
         </div>
         <form method="dialog" className="modal-backdrop">
           <button>close</button>
         </form>
       </dialog>
+      {showModal && <CountdownModal onComplete={handleCountComplete} />}
     </ContentFlexContainer>
   );
 }
-
-const Wrapper = tw.div`
-  relative 
-`;
 
 // 스타일링된 컴포넌트들
 const ContentWrapper = tw.div`
@@ -243,4 +247,12 @@ const TransitionPanel = tw.div`
   flex
   flex-col
   p-4
+`;
+
+const ModalWrapper = tw.div`
+  flex
+  flex-col
+  justify-center
+  items-center
+  gap-7
 `;

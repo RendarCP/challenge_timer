@@ -49,7 +49,10 @@ export default function HomePage() {
           {`이 간단하고 효율적인 타이머로 집중력을 유지하고 생산성을 높이세요.
           전용시간이 필요한 모든 작업에 사용하세요.`}
         </Text>
+        <Spacer top={20} />
+        <Button onClick={() => navigate('/main')}>시작하기</Button>
       </Wrapper>
+
       <Section
         index={0}
         title="타이머로 효율적인 시간을 체크해보세요."

@@ -1,19 +1,26 @@
 const sideBarMenus = [
-  {
-    title: '홈으로',
-    path: '/',
-  },
+  // {
+  //   title: '홈으로',
+  //   path: '/',
+  // },
   {
     title: '메인',
     path: '/main',
+    activeList: ['/main'],
   },
   {
     title: 'Single',
     path: '/main/timer/single',
+    activeList: [
+      '/main/timer/single',
+      '/main/timer/single/stopwatch',
+      '/main/timer/single/analytics',
+    ],
   },
   {
     title: 'Challenge',
     path: '/main/challenge/room',
+    activeList: ['/main/challenge/room'],
   },
   // {
   //   title: '타이머',

@@ -5,15 +5,6 @@ const convertToSeconds = ({
   hours: number;
   minutes: number;
 }) => {
-  // 입력값 유효성 검사
-  // if (hours < 1 || hours > 23) {
-  //   throw new Error('시간은 1~23 사이의 값이어야 합니다.');
-  // }
-
-  // if (minutes < 0 || minutes > 55 || minutes % 5 !== 0) {
-  //   throw new Error('분은 0~55 사이의 5분 단위 값이어야 합니다.');
-  // }
-
   // 시간을 초로 변환
   const hoursInSeconds = hours * 60 * 60;
   // 분을 초로 변환
@@ -23,4 +14,10 @@ const convertToSeconds = ({
   return hoursInSeconds + minutesInSeconds;
 };
 
-export { convertToSeconds };
+const calculatePercentage = (timer, timerValue) => {
+  // timer는 초기값, timerValue는 현재 남은 값
+  const percentage = ((timer - timerValue) / timer) * 100;
+  return Number(percentage.toFixed(2)); // 소수점 2자리까지 표시
+};
+
+export { convertToSeconds, calculatePercentage };

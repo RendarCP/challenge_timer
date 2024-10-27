@@ -103,6 +103,11 @@ export default function Timer() {
     Math.floor(Number(stMilli))
   );
 
+  console.log(
+    'Math.floor((Number(stSeconds) / 60) * 100)',
+    Math.floor((Number(stSeconds) / 60) * 100)
+  );
+
   return (
     <Container>
       <HeaderTitle>타이머</HeaderTitle>

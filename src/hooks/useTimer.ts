@@ -8,7 +8,7 @@ const useTimer = (time: number) => {
   const [timer, setTimer] = useState(convertToCentiseconds(time));
   const [isRunning, setIsRunning] = useState(false);
 
-  console.log('timer', timer);
+  // console.log('timer', timer);
 
   useEffect(() => {
     workerRef.current = timerWorker;
@@ -23,6 +23,7 @@ const useTimer = (time: number) => {
   }, []);
 
   const startTimer: () => void = (): void => {
+    console.log('클릭됨 ₩~~');
     workerRef.current.postMessage({
       type: 'start_timer',
       timer,

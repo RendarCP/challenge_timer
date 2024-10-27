@@ -8,6 +8,7 @@ interface ISidebar {
 
 const Sidebar = ({ isOpen, toggleSidebar }: ISidebar) => {
   const location = useLocation();
+  console.log('location', location);
   const navigate = useNavigate();
   const handleMenuClick = menu => {
     navigate(menu);
@@ -31,7 +32,9 @@ const Sidebar = ({ isOpen, toggleSidebar }: ISidebar) => {
             return (
               <li key={index}>
                 <a
-                  className={location.pathname === menu.path ? 'active' : ''}
+                  className={
+                    menu.activeList.includes(location.pathname) ? 'active' : ''
+                  }
                   onClick={() => handleMenuClick(menu.path)}
                 >
                   {menu.title}
