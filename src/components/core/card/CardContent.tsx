@@ -6,7 +6,7 @@ interface CardContentProps {
   full?: boolean;
 }
 
-const styles = ({ full }) => [tw`p-4`, full && tw`w-full`];
+const styles = ({ full }) => [tw`p-3`, full && tw`w-full`];
 
 const CardContent = ({ children, full = false }: CardContentProps) => {
   return <div css={styles({ full })}>{children}</div>;
@@ -15,5 +15,5 @@ const CardContent = ({ children, full = false }: CardContentProps) => {
 export default CardContent;
 
 const Container = tw.div`
-  p-4
+  p-3
 `;

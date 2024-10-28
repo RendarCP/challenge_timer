@@ -1,15 +1,14 @@
 import {
-  getDoc,
-  doc,
-  query,
-  collection,
-  where,
-  getDocs,
   addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
 } from 'firebase/firestore';
 
 import { firestore } from '../firebase/index';
-
 import type { IUserInfo } from '../types/apiType';
 
 class FirebaseError extends Error {
@@ -83,6 +82,7 @@ const createUserDoc = async ({
   }
 };
 
+// 유저 정보 가져오기
 const getUserDoc = async (uid: string) => {
   try {
     const q = query(

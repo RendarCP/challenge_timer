@@ -7,6 +7,7 @@ import CardHeader from './CardHeader';
 interface CardProps {
   children: ReactNode;
   full?: boolean;
+  onClick?: () => void;
 }
 
 const styles = ({ full }) => [

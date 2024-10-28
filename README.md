@@ -23,15 +23,21 @@
 ## 3. 구현사항
 
 - [x] 로그인
-  - [x] 구글로그인 구현
-  - [x] github로그인 구현
 - [x] 회원가입
-- [ ] Timer_Room 기능
-  - [ ] Share_room
+- [ ] Room 기능
+  - [ ] Share_room (공유방) → challange
+    - [ ] 타이머
   - [ ] Single_room
-- [ ] 타이머 관련기능
-- [ ] 차트 및 측정 기능
-  - [ ] 분석기능
+    - [ ] 타이머
+      - [ ] 회원로직
+      - [ ] 비회원로직
+    - [ ] 스탑워치(기록x)
+- [x] 타이머 관련기능
+- [ ] 마이페이지
+  - [ ] 프로필 변경
+  - [ ] 타이머 기록
+  - [ ] 차트 및 측정 기능
+    - [ ] 분석기능
 - [ ] 커뮤니티 기능
   - [ ] 카테고리별 커뮤니티
 - [ ] 타이머 종료 이후 winner, loser 기능
@@ -40,11 +46,15 @@
 
 ## 4. 적용 기술
 
-1. React (CRA)
-2. TailWindCSS
-3. Recoil
+1. React (CRA) → vite
+2. tailwindCSS
+   1. https://daisyui.com/ → 빠른 mvp 를 위한 작업
+3. ~~Recoil~~
+   1. zustand
 4. Firebase
 5. Jest/React-testing-library
+6. https://github.com/gpbl/react-day-picker
+   1. https://github.com/wojtekmaj/react-calendar에 비해 업데이트 등의 장점이 있다고 생각
 
 Nextjs로 구현할려다 현재 appDir emotion관련된 부분때문에 react로 먼저 구현이후 nextjs로 포팅할 예정이다.
 
@@ -54,12 +64,13 @@ Nextjs로 구현할려다 현재 appDir emotion관련된 부분때문에 react�
 
 ## 5. ERD
 
+````markdown
 ```mermaid
 ---
-title: challenge_timer
+title: challenge_timer ERD
 ---
 erDiagram
-    USER ||--o{ ROOM_USER : user
+    USER ||--o{ ROOM_USER : places
     USER {
         string USER_ID
         string USER_PW
@@ -71,7 +82,7 @@ erDiagram
         datetime CREATE_DATE
         datetime UPDATE_DATE
     }
-    ROOM_USER }|--|| ROOM : room
+    ROOM_USER }|--|| ROOM : contains
     ROOM_USER {
         int ROOM_USER_ID
         string ROOM_ID
@@ -91,6 +102,41 @@ erDiagram
         datetime UPDATE_DATE
     }
 
-```
+````
 
 ## 6. 플로우 차트
+
+## 7. 정책 정리
+
+### 타이머/스탑워치
+
+1. 타이머
+   1. 타이머의 경우 설정된 시간에서 80% 이상할시에 기록으로 인정
+   2. 그외 기록의 경우 로그에서 확인은 가능하지만 최종 기록으로는 인정 ㅇx
+2. 스탑워치
+
+   1. 스탑워치의 경우 기록으로 인정 x (정확한 캐치가 불가능함) → 사용기록만 남김
+
+3. 상대방과의 경쟁 (타이머)
+   1. 상대방과의 연결된 기준으로 설정되며, 기준시간의 경우 방장이 설정한 시간 기준으로 기록된다
+      1. 기준시간보다 낮은 시간에 나간경우 타이머 기준에 따라 80% 이상일때만 기록
+         1. 비회원의 경우 따로 기록하지 않는다
+         2. 회원의 경우 DB에 로그기록
+      2. 기준시간내에 사용자가 최소화, 닫기 등의 행동을 할경우
+         1. 5분의 유효시간을 두고, 사용자가 재입장을 하지 않을경우 자동적으로 상대방 승리로 처리
+         2. 5분이내로 입장할경우
+            1. 패널티로 상대방보다 낮은 점수로 기록됨 (-5)
+4. 점수기준
+   1. 점수기준은 기준시간을 %(퍼센티지)로 측정했을시 기준으로 처리하며,
+      기준시간을 모두 채울시 100점, 그외 시간에 나갈시 관련 % 점수로 처리된다
+      ex) 80% → 80점, 100% → 100점, 79% → 점수 없음
+   2. 단, 80% 미만일 경우 측정 및 기록을 하지 않으며, 점수또한 측정되지 않는다.
+      1. 패널티로 80% 미만으로 측정된 경우도 포함된다
+   3. 경쟁 승자 점수
+      1. 승자의 경우 기준점수 (최소:80, 최대:100) + 20점을 추가로 받는다
+      2. 패자의 경우 80% 이상일 경우 관련 점수에 따라 분배되며 추가 점수는 없다
+      3. 동률일 경우 모두 기준점수에 따라 분배되며 + 5점을 추가로 받는다.
+
+```
+
+```

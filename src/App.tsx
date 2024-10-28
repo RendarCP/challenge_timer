@@ -16,13 +16,18 @@ import TestPage from './pages/Test.page';
 import Timer from './pages/Timer';
 import Room from './pages/challenge/Room.page';
 import Rooms from './pages/challenge/Rooms.page';
+import Single from './pages/single/Single';
+import SingleAnalytics from './pages/single/SingleAnalytics';
+import SingleResult from './pages/single/SingleResult';
+import SingleStopWatch from './pages/single/SingleStopWatch';
+import SingleTimer from './pages/single/SingleTimer';
 import TimerMainPage from './pages/timer/TimerMain.page';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainLayout showHeader />}>
+        <Route path="/" element={<MainLayout />}>
           <Route path="" element={<HomePage />} />
           <Route path="test" element={<TestPage />} />
         </Route>
@@ -30,10 +35,18 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
         </Route>
-        <Route path="/main" element={<MainLayout showHeader />}>
+        <Route path="/main" element={<MainLayout showHeader showSideBar />}>
           <Route path="" element={<MainPage />} />
           <Route path="timer" element={<Timer />} />
           <Route path="test" element={<TimerMainPage />} />
+          {/* timer/single */}
+          <Route path="timer/single" element={<Single />} />
+          <Route path="timer/single/timer" element={<SingleTimer />} />
+          <Route path="timer/single/timer/result" element={<SingleResult />} />
+          <Route path="timer/single/stopwatch" element={<SingleStopWatch />} />
+          <Route path="timer/single/analytics" element={<SingleAnalytics />} />
+          {/* timer/single/:id */}
+          <Route path="timer/single/:id" element={<SingleTimer />} />
           <Route path="challenge/room" element={<Rooms />} />
           <Route path="challenge/room/:id" element={<Room />} />
           {/* timer/report */}

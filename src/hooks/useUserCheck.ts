@@ -12,6 +12,7 @@ export const useUserCheck = () => {
   useEffect(() => {
     setIsLoading(true);
     onAuthStateChanged(auth, async user => {
+      console.log('auth', auth);
       console.log('user', user);
       if (user) {
         const uid: string = user.uid;

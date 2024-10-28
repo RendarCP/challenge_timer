@@ -5,6 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import tw, { css } from 'twin.macro';
 
+import SmoothCircleTimer from '@/components/SmoothCircleTimer';
+import CircleProgressBar from '@/components/test/CircleProgressBar';
+
 import Loading from '../components/Loading';
 import TimerComponent from '../components/TimerComponent';
 import Input from '../components/core/Input';
@@ -21,6 +24,7 @@ export default function Timer() {
   const [end, setEnd] = useState<Dayjs | null | Date>(null);
   // const { hours, minutes, seconds } = useClock();
   const storage = localStorage.getItem('challenge_timer_stopWatch');
+  console.log('storage', storage);
   const {
     timer,
     milliseconds: stMilli,
@@ -35,7 +39,7 @@ export default function Timer() {
 
   // console.log('storagge', Boolean(storage));
 
-  const TText = `${stHours}시간 ${stMinutes}분 ${stSeconds}초`;
+  const TText = `${stHours}시간 ${stMinutes}분 ${stSeconds}초 ${stMilli}`;
 
   useEffect(() => {
     const storage = localStorage.getItem('challenge_timer');
@@ -95,6 +99,16 @@ export default function Timer() {
     setUser(e.target.value);
   };
 
+  console.log(
+    'Math.floor(Number(stSeconds) * 1000)',
+    Math.floor(Number(stMilli))
+  );
+
+  console.log(
+    'Math.floor((Number(stSeconds) / 60) * 100)',
+    Math.floor((Number(stSeconds) / 60) * 100)
+  );
+
   return (
     <Container>
       <HeaderTitle>타이머</HeaderTitle>
@@ -119,9 +133,27 @@ export default function Timer() {
             <Button onClick={handleEnd}>종료</Button>
           </div>
 
+          <CircleProgressBar
+            percentage={Math.floor((Number(stSeconds) / 60) * 100)}
+            text={TText}
+            fullSize={true}
+            backgroundColor="#e0e0de"
+            progressColor="#3498db"
+          />
           <TimerComponent
+            showcircle
             text={TText}
             percentage={Math.floor((Number(stSeconds) / 60) * 100)}
+          />
+          <SmoothCircleTimer
+            percentage={Math.floor((Number(stSeconds) / 60) * 100)}
+            duration={1000}
+            // size={300}
+            fullSize
+            backgroundColor="#e0e0e0"
+            progressColor="#4caf50"
+            textColor="#e0e0e0"
+            text={TText}
           />
         </>
       )}
@@ -134,7 +166,7 @@ const Container = tw.div`
   flex-col
   justify-center
   items-center
-  h-full
+  // h-full
 `;
 
 const FlexWrap = tw.div`

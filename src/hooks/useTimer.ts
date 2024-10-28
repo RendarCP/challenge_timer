@@ -4,10 +4,9 @@ import { timerWorker } from '../utils/initWorker';
 
 const useTimer = (time: number) => {
   const workerRef = useRef<any>();
-  const [timer, setTimer] = useState(time);
+  const convertToCentiseconds = (seconds: number) => seconds * 100;
+  const [timer, setTimer] = useState(convertToCentiseconds(time));
   const [isRunning, setIsRunning] = useState(false);
-
-  console.log('timer', timer);
 
   useEffect(() => {
     workerRef.current = timerWorker;
@@ -21,15 +20,26 @@ const useTimer = (time: number) => {
     };
   }, []);
 
-  const startTimer: () => void = (): void => {
-    workerRef.current.postMessage({
-      type: 'start_timer',
-      timer,
-    });
+  const startTimer = () => {
+    if (!isRunning) {
+      workerRef.current.postMessage({
+        type: 'start_timer',
+        timer,
+        isRunning: true,
+      });
+      setIsRunning(true);
+    }
   };
 
   const pauseTimer = () => {
-    workerRef.current.postMessage({ type: 'pause_timer', timer });
+    if (isRunning) {
+      workerRef.current.postMessage({
+        type: 'pause_timer',
+        timer,
+        isRunning: false,
+      });
+      setIsRunning(false);
+    }
   };
 
   const stopTimer = () => {
@@ -41,22 +51,22 @@ const useTimer = (time: number) => {
     setTimer(0);
   };
 
-  // Hours calculation
-  const hours: string = Math.floor(timer / 360000)
+  // Hours calculation (3600 seconds = 1 hour)
+  const hours: string = Math.floor(timer / (100 * 60 * 60))
     .toString()
     .padStart(2, '0');
 
-  // Minutes calculation
-  const minutes: string = Math.floor((timer % 360000) / 6000)
+  // Minutes calculation (60 seconds = 1 minute)
+  const minutes: string = Math.floor((timer % (100 * 60 * 60)) / (100 * 60))
     .toString()
     .padStart(2, '0');
 
   // Seconds calculation
-  const seconds: string = Math.floor((timer % 6000) / 100)
+  const seconds: string = Math.floor((timer % (100 * 60)) / 100)
     .toString()
     .padStart(2, '0');
 
-  // Milliseconds calculation
+  // Milliseconds calculation (centiseconds)
   const milliseconds: string = (timer % 100).toString().padStart(2, '0');
 
   return {
@@ -68,6 +78,7 @@ const useTimer = (time: number) => {
     pauseTimer,
     stopTimer,
     resetTimer,
+    setTimer,
     timer,
     isRunning,
   };

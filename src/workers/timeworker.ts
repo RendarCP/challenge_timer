@@ -6,6 +6,7 @@ let isStopWatchRunning = false;
 let isTimerRunning = false;
 
 self.onmessage = function (e) {
+  // console.log('e================', e.data);
   switch (e.data.type) {
     case 'start':
       return startStopWatch(e.data.stopwatch);
@@ -15,6 +16,8 @@ self.onmessage = function (e) {
       return startTimer(e.data.timer);
     case 'pause_timer':
       return pauseTimer(e.data.timer);
+    case 'stop_timer':
+      return stopTimer();
     default:
       return stopStopWatch();
   }
@@ -59,18 +62,24 @@ function startTimer(timer: number) {
   if (isTimerRunning) {
     timerInterval = setInterval(() => {
       if (timer > 0) {
-        timer -= 1; // 10ms 단위로 감소
+        timer -= 1;
         postMessage({ isTimerRunning, timer });
       } else {
-        clearInterval(timerInterval); // 타이머 종료
+        clearInterval(timerInterval);
         postMessage({ isTimerRunning: false, timer: 0 });
       }
-    }, 10); // 10ms 간격으로 동작
+    }, 10);
   }
 }
 
 function pauseTimer(timer: number) {
-  isStopWatchRunning = false;
-  clearInterval(stopWatchInterval);
-  postMessage({ isStopWatchRunning, timer });
+  isTimerRunning = false;
+  clearInterval(timerInterval);
+  postMessage({ isTimerRunning, timer });
+}
+
+function stopTimer() {
+  isTimerRunning = false;
+  clearInterval(timerInterval);
+  postMessage({ isTimerRunning, timer: 0 });
 }
