@@ -1,7 +1,9 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import viteTsconfigPaths from 'vite-tsconfig-paths';
+import path from 'path';
+import { defineConfig } from 'vite';
 import svgrPlugin from 'vite-plugin-svgr';
+import viteTsconfigPaths from 'vite-tsconfig-paths';
+
 // import tailwindcss from 'tailwindcss';
 
 // https://vitejs.dev/config/
@@ -35,6 +37,11 @@ export default defineConfig({
     svgrPlugin(),
     // tailwindcss,
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
   server: {
     port: 3010,
   },
