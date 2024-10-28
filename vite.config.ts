@@ -38,6 +38,7 @@ export default defineConfig({
     // tailwindcss,
   ],
   resolve: {
+    extensions: ['.js', '.ts', '.tsx'], // 확장자 추가
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
