@@ -7,12 +7,14 @@ const useStopWatch = (storage: any) => {
   const [timer, setTimer] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
+  console.log('timer', timer);
+
   // const storage = localStorage.getItem('challenge_timer_stopWatch');
   // initial localstorage data
   useEffect((): void => {
     if (storage !== null) {
-      const data: any = JSON.parse(storage);
-      setTimer(data.stopwatch);
+      // const data: any = JSON.parse(storage);
+      setTimer(storage);
     }
   }, []);
 
@@ -35,10 +37,10 @@ const useStopWatch = (storage: any) => {
 
   const startTimer: () => void = (): void => {
     if (storage !== null) {
-      const data: any = JSON.parse(storage);
+      // const data: any = JSON.parse(storage);
       workerRef.current.postMessage({
         type: 'start',
-        stopwatch: data.stopwatch,
+        stopwatch: storage,
       });
     } else {
       workerRef.current.postMessage({ type: 'start', stopwatch: 0 });

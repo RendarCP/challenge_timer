@@ -1,5 +1,10 @@
 const hoursData = [
   {
+    id: 0,
+    text: '0시간',
+    value: 0,
+  },
+  {
     id: 1,
     text: '1시간',
     value: 1,

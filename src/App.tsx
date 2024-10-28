@@ -18,6 +18,7 @@ import Room from './pages/challenge/Room.page';
 import Rooms from './pages/challenge/Rooms.page';
 import Single from './pages/single/Single';
 import SingleAnalytics from './pages/single/SingleAnalytics';
+import SingleResult from './pages/single/SingleResult';
 import SingleStopWatch from './pages/single/SingleStopWatch';
 import SingleTimer from './pages/single/SingleTimer';
 import TimerMainPage from './pages/timer/TimerMain.page';
@@ -41,6 +42,7 @@ function App() {
           {/* timer/single */}
           <Route path="timer/single" element={<Single />} />
           <Route path="timer/single/timer" element={<SingleTimer />} />
+          <Route path="timer/single/timer/result" element={<SingleResult />} />
           <Route path="timer/single/stopwatch" element={<SingleStopWatch />} />
           <Route path="timer/single/analytics" element={<SingleAnalytics />} />
           {/* timer/single/:id */}

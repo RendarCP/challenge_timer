@@ -24,6 +24,7 @@ export default function Timer() {
   const [end, setEnd] = useState<Dayjs | null | Date>(null);
   // const { hours, minutes, seconds } = useClock();
   const storage = localStorage.getItem('challenge_timer_stopWatch');
+  console.log('storage', storage);
   const {
     timer,
     milliseconds: stMilli,

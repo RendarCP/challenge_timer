@@ -2,6 +2,7 @@ import { hoursData, minutesData } from '@/constant/timeConst';
 import { calculatePercentage, convertToSeconds } from '@/modules/function';
 import dayjs from 'dayjs';
 import _ from 'lodash';
+import { CirclePlay, Pause, Play, TimerOff } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import Picker from 'react-mobile-picker';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
@@ -27,15 +28,12 @@ import {
 const selections = {
   hour: [...hoursData.map(h => h.value)],
   minute: [...minutesData.map(m => m.value)],
-  // title: ['Mr.', 'Mrs.', 'Ms.', 'Dr.'],
-  // firstName: ['John', 'Micheal', 'Elizabeth'],
-  // lastName: ['Lennon', 'Jackson', 'Jordan', 'Legend', 'Taylor'],
 };
 
 export default function SingleTimer() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log('searchParams', searchParams.get('tid'));
+  // console.log('searchParams', searchParams.get('tid'));
   const { user } = useUserCheck();
   const isMobile = useDeviceType();
   const { isVisible, toggleVisibility } = useSlideTransition();
@@ -46,16 +44,24 @@ export default function SingleTimer() {
   const [pickMinute, setPickMinute] = useState({ ...minutesData[0] });
   // 모바일전용
   const [pickerValue, setPickerValue] = useState({
-    hour: 1,
+    hour: 0,
     minute: 0,
   });
-  const { hours, minutes, seconds, timer, setTimer, startTimer, pauseTimer } =
-    useTimer(
-      convertToSeconds({
-        hours: isMobile ? pickerValue.hour : pickHour.value,
-        minutes: isMobile ? pickerValue.minute : pickMinute.value,
-      })
-    );
+  const {
+    hours,
+    minutes,
+    seconds,
+    timer,
+    setTimer,
+    startTimer,
+    pauseTimer,
+    isRunning,
+  } = useTimer(
+    convertToSeconds({
+      hours: isMobile ? pickerValue.hour : pickHour.value,
+      minutes: isMobile ? pickerValue.minute : pickMinute.value,
+    })
+  );
 
   useEffect(() => {
     setTimer(
@@ -73,14 +79,30 @@ export default function SingleTimer() {
       startTimer();
     }
     if (_.isEmpty(user)) {
-      document.getElementById('timer_alert_modal').showModal();
+      // document.getElementById('timer_alert_modal').showModal();
     }
   }, []);
 
   const handleSettingTimer = () => {
+    if (
+      convertToSeconds({
+        hours: isMobile ? pickerValue.hour : pickHour.value,
+        minutes: isMobile ? pickerValue.minute : pickMinute.value,
+      }) <= 0
+    ) {
+      document.getElementById('timer_warning_modal').showModal();
+      return;
+    }
     toggleVisibility();
     setShowModal(true);
     setSearchParams('tid=test');
+    if (!_.isEmpty(user)) {
+      console.log('유저에 의해서 실행되었습니다');
+      // 회원용 api 로직 추가
+    } else {
+      console.log('비회원에 의해서 실행되었습니다');
+      // 비회원용 로컬스토리지 로직 추가
+    }
   };
 
   const handleCountComplete = () => {
@@ -185,6 +207,7 @@ export default function SingleTimer() {
           <div className={`flex flex-col h-full ${isMobile ? '' : 'p-14'}`}>
             {isVisible && (
               <SmoothCircleTimer
+                showProgress
                 percentage={calculatePercentage(settingTimer, timer)}
                 duration={300}
                 fullSize
@@ -195,12 +218,34 @@ export default function SingleTimer() {
               />
             )}
             <Spacer top={20} />
-            <div className="flex justify-center">
-              <button className="btn btn-primary w-1/3">시작</button>
+            <div className="flex justify-center z-[9999]">
+              <button
+                onClick={() => startTimer()}
+                className={`btn btn-primary text-white w-1/3 ${
+                  isRunning ? 'btn-disabled' : ''
+                }`}
+              >
+                <Play />
+                시작
+              </button>
               <Spacer left={10} />
-              <button className="btn btn-neutral w-1/3">정지</button>
+              <button
+                onClick={() => pauseTimer()}
+                className={`btn btn-neutral text-white w-1/3 ${
+                  isRunning ? '' : 'btn-disabled'
+                }`}
+              >
+                <Pause />
+                정지
+              </button>
               <Spacer left={10} />
-              <button className="btn btn-error w-1/3">종료</button>
+              <button
+                onClick={() => stop}
+                className={`btn btn-error text-white w-1/3`}
+              >
+                <TimerOff />
+                종료
+              </button>
             </div>
             {/* <Button onClick={toggleVisibility}>다시 설정하기</Button> */}
           </div>
@@ -225,6 +270,35 @@ export default function SingleTimer() {
               활용하기 위해서는 로그인을 해주세요.`}
             </Text>
           </ModalWrapper>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+      <dialog id="timer_warning_modal" className="modal">
+        <div className="modal-box text-center">
+          <Text
+            typography="h3"
+            className="font-bold text-lg text-center text-red-500"
+          >
+            경고
+          </Text>
+          <Spacer top={20} />
+          <ModalWrapper>
+            <Text typography="h6">
+              {`값이 0인 시간으로 설정할수 없습니다.
+                재설정해주세요
+              `}
+            </Text>
+          </ModalWrapper>
+          <Spacer top={20} />
+          <Button
+            onClick={() =>
+              document.getElementById('timer_warning_modal').close()
+            }
+          >
+            확인
+          </Button>
         </div>
         <form method="dialog" className="modal-backdrop">
           <button>close</button>

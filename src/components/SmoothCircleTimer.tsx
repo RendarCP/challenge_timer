@@ -11,6 +11,7 @@ interface ISmoothCircleTimer {
   progressColor?: string;
   textColor?: string;
   text?: string;
+  showProgress?: boolean;
 }
 
 const SmoothCircleTimer = ({
@@ -22,6 +23,7 @@ const SmoothCircleTimer = ({
   progressColor = '#3b82f6',
   textColor = '#000000',
   text,
+  showProgress = false,
 }: ISmoothCircleTimer) => {
   const isMobile = useDeviceType();
   const [currentPercentage, setCurrentPercentage] = useState(percentage);
@@ -87,32 +89,34 @@ const SmoothCircleTimer = ({
 
   return (
     <div ref={containerRef} style={containerStyle} className="relative">
-      <svg
-        width="100%"
-        height="100%"
-        viewBox={`0 0 ${currentSize} ${currentSize}`}
-        className="transform -rotate-90"
-      >
-        <circle
-          cx={center}
-          cy={center}
-          r={radius}
-          fill="none"
-          stroke={backgroundColor}
-          strokeWidth={strokeWidth}
-        />
-        <circle
-          cx={center}
-          cy={center}
-          r={radius}
-          fill="none"
-          stroke={progressColor}
-          strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-          strokeLinecap="round"
-        />
-      </svg>
+      {showProgress && (
+        <svg
+          width="100%"
+          height="100%"
+          viewBox={`0 0 ${currentSize} ${currentSize}`}
+          className="transform -rotate-90"
+        >
+          <circle
+            cx={center}
+            cy={center}
+            r={radius}
+            fill="none"
+            stroke={backgroundColor}
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx={center}
+            cy={center}
+            r={radius}
+            fill="none"
+            stroke={progressColor}
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+          />
+        </svg>
+      )}
       <div className="absolute inset-0 flex items-center justify-center">
         <span
           className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold`}

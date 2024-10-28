@@ -13,6 +13,7 @@ const sideBarMenus = [
     path: '/main/timer/single',
     activeList: [
       '/main/timer/single',
+      '/main/timer/single/timer',
       '/main/timer/single/stopwatch',
       '/main/timer/single/analytics',
     ],
