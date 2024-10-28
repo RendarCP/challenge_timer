@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-const useViewportVisible = () => {
+const useViewPortVisiblity = () => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
 
@@ -28,4 +28,4 @@ const useViewportVisible = () => {
   return [ref, isVisible];
 };
 
-export default useViewportVisible;
+export default useViewPortVisiblity;

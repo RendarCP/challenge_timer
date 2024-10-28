@@ -1,8 +1,8 @@
 import React from 'react';
 
 import useDeviceType from '@/hooks/useDeviceType';
+import useViewportVisible from '@/hooks/useViewPortVisiblity';
 
-import useViewportVisible from '../hooks/useViewPortVisible';
 import Spacer from './core/Spacer';
 import { Text } from './core/Text';
 
