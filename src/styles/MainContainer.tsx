@@ -6,7 +6,7 @@ const ContentFlexContainer = tw.div`
   flex
   flex-col
   justify-center
-  p-5
+  // p-5
 `;
 
 const ContentPureContainer = tw.div`

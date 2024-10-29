@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Hourglass, Swords, Timer } from 'lucide-react';
+import { ChartArea, Hourglass, Swords, Timer } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import tw from 'twin.macro';
@@ -10,6 +10,8 @@ import { Text } from '@/components/core/Text';
 import Card from '@/components/core/card/Card';
 
 import { useUserCheck } from '@/hooks/useUserCheck';
+
+import { ContentFlexContainer } from '@/styles/MainContainer';
 
 export default function Single() {
   const navigate = useNavigate();
@@ -78,7 +80,7 @@ export default function Single() {
       <Card full onClick={() => navigate('/main/timer/single/analytics')}>
         <Card.Header>
           <FlexWrapper>
-            <Hourglass size={64} />
+            <ChartArea size={64} />
           </FlexWrapper>
         </Card.Header>
         <Card.Content full>
@@ -96,13 +98,12 @@ const Container = tw.div`
   h-full
   flex
   flex-col
-  justify-center
-  p-5
+  mt-6
 `;
 
 const ContentWrapper = tw.div`
   flex
-  h-1/2
+  h-1/3
   justify-center
   items-center
 `;

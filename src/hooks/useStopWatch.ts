@@ -7,8 +7,6 @@ const useStopWatch = (storage: any) => {
   const [timer, setTimer] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  console.log('timer', timer);
-
   // const storage = localStorage.getItem('challenge_timer_stopWatch');
   // initial localstorage data
   useEffect((): void => {
@@ -43,7 +41,7 @@ const useStopWatch = (storage: any) => {
         stopwatch: storage,
       });
     } else {
-      workerRef.current.postMessage({ type: 'start', stopwatch: 0 });
+      workerRef.current.postMessage({ type: 'start', stopwatch: timer });
     }
   };
 
