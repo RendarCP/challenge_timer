@@ -5,6 +5,8 @@ import tw from 'twin.macro';
 
 import useDeviceType from '@/hooks/useDeviceType';
 
+import { ContentPureContainer } from '@/styles/MainContainer';
+
 import Spacer from '../components/core/Spacer';
 import Card from '../components/core/card/Card';
 
@@ -13,7 +15,7 @@ export default function MainPage() {
   const isMobile = useDeviceType();
   console.log('isMobile', isMobile);
   return (
-    <Container>
+    <ContentPureContainer>
       <Card full onClick={() => navigate('/main/timer/single')}>
         <Card.Header>
           <FlexWrapper>
@@ -38,7 +40,7 @@ export default function MainPage() {
         </Card.Header>
         <Card.Content>상대방과 함께 시간을 겨뤄보세요</Card.Content>
       </Card>
-    </Container>
+    </ContentPureContainer>
   );
 }
 
@@ -49,7 +51,7 @@ const Container = tw.div`
   // justify-center
   // items-start
   // m-auto
-  p-5
+  // p-5
 `;
 
 const FlexWrapper = tw.div`

@@ -16,7 +16,7 @@ const MainLayout = ({ showHeader, showSideBar }: MainlayoutProps) => {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   return (
-    <div className="drawer lg:drawer-open overflow-auto">
+    <div className="drawer lg:drawer-open">
       <input
         id="my-drawer"
         type="checkbox"
@@ -24,13 +24,14 @@ const MainLayout = ({ showHeader, showSideBar }: MainlayoutProps) => {
         checked={isSidebarOpen}
         readOnly
       />
-      <div className="drawer-content h-screen">
+      <div style={{ height: '100dvh' }} className="drawer-content h-screen">
         {showHeader && (
           <Header isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         )}
         <main
           id="content-main"
-          className="flex-1 p-4 h-full pt-16 lg:mx-16 lg:ml-60"
+          style={{ height: '100dvh' }}
+          className="relative overflow-hidden px-9 mt-16 lg:mx-16 lg:ml-60"
         >
           <Outlet />
         </main>

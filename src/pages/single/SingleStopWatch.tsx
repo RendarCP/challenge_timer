@@ -1,5 +1,5 @@
 import { Pause, Play, TimerOff } from 'lucide-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import SmoothCircleTimer from '@/components/SmoothCircleTimer';
 import Spacer from '@/components/core/Spacer';
@@ -10,6 +10,7 @@ import useStopWatch from '@/hooks/useStopWatch';
 import { ContentFlexContainer } from '@/styles/MainContainer';
 
 export default function SingleStopWatch() {
+  const [stopWatch, setStopWatch] = useState(0);
   const {
     timer,
     milliseconds: stMilli,
@@ -20,7 +21,11 @@ export default function SingleStopWatch() {
     pauseTimer: onPause,
     isPause,
     isTimerRunning: isActive,
-  } = useStopWatch(0);
+  } = useStopWatch(stopWatch);
+
+  useEffect(() => {
+    setStopWatch(timer);
+  }, [timer]);
 
   const TText = `${stHours}시간 ${stMinutes}분 ${stSeconds}초 ${stMilli}`;
   return (
@@ -29,7 +34,7 @@ export default function SingleStopWatch() {
         <Text typography="h4">스탑워치</Text>
       </div>
       <div>
-        <div>
+        <div style={{ height: '30vh' }}>
           <SmoothCircleTimer
             percentage={Math.floor((Number(stSeconds) / 60) * 100)}
             duration={1000}
@@ -68,6 +73,39 @@ export default function SingleStopWatch() {
             <TimerOff />
             종료
           </button>
+        </div>
+        <div style={{ overflow: 'scroll', height: 200 }}>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
+          <div>테스트</div>
         </div>
       </div>
     </ContentFlexContainer>

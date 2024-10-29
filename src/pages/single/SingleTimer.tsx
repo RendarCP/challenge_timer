@@ -125,8 +125,8 @@ export default function SingleTimer() {
       <ContentWrapper>
         {/* 설정 패널 */}
         <TransitionPanel
-          className={`
-            absolute inset-0 w-full transition-all duration-500 ease-in-out
+          style={{ display: `${isVisible ? 'none' : ''}` }}
+          className={`w-full h-full transition-all duration-500 ease-in-out
             ${
               isVisible
                 ? 'translate-y-[-100%] opacity-0'
@@ -134,14 +134,20 @@ export default function SingleTimer() {
             }
           `}
         >
-          <div className="flex flex-col h-full justify-center">
+          <div
+            className={`flex flex-col h-full ${
+              isMobile ? '' : 'justify-center'
+            }`}
+          >
             {/* 기존 설정 관련 컨텐츠 */}
             <div className="flex flex-col">
               {/* <Text typography="h1">TimeFight</Text> */}
               <Spacer top={20} />
-              <Text typography="h4">나만의 개인 맞춤 타이머</Text>
+              <Text typography={`${isMobile ? 'h5' : 'h4'}`}>
+                나만의 개인 맞춤 타이머
+              </Text>
               <Spacer top={20} />
-              <Text typography="h5">
+              <Text typography={`${isMobile ? 'h6' : 'h5'}`}>
                 {`이 간단하고 효율적인 타이머로 집중력을 유지하고 생산성을 높이세요.
             전용시간이 필요한 모든 작업에 사용하세요.`}
               </Text>
@@ -195,8 +201,7 @@ export default function SingleTimer() {
 
         {/* 타이머 패널 */}
         <TransitionPanel
-          className={`
-            absolute inset-0 w-full transition-all duration-500 ease-in-out
+          className={`w-full h-full transition-all duration-500 ease-in-out pb-16
             ${
               isVisible
                 ? 'translate-y-0 opacity-100'
@@ -313,14 +318,11 @@ export default function SingleTimer() {
 const ContentWrapper = tw.div`
   relative
   w-full
-  h-screen
-  overflow-hidden
+  h-full
+  py-5
 `;
 
 const TransitionPanel = tw.div`
-  flex
-  flex-col
-  p-4
 `;
 
 const ModalWrapper = tw.div`
