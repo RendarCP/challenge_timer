@@ -1,12 +1,5 @@
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from 'firebase/firestore';
+import { Dayjs } from 'dayjs';
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
 
 import { firestore } from '../firebase/index';
 
@@ -19,7 +12,26 @@ class FirebaseError extends Error {
   }
 }
 
-const createSingleTimer = async ({ userUid, startTime, endTime }) => {
+interface ICreateSingleTimer {
+  userUid: string;
+  startTime: Date;
+  endTime: Date | null;
+  realEndTime: Date | null;
+  percentageBaseDay: Number | string; // 24시간 기준 설정된 값이 몇퍼인지
+  settingTime: number; // 초단위 설정
+  endTimer: number | null; // 종료이후 남은 시간 (초단위) => 0일수 있음
+  finish?: boolean; // 종료인지 아닌지 판별
+}
+
+const createSingleTimer = async ({
+  userUid,
+  startTime,
+  endTime,
+  realEndTime,
+  percentageBaseDay,
+  settingTime,
+  endTimer,
+}: ICreateSingleTimer) => {
   try {
     const query = await addDoc(collection(firestore, 'timer'), {
       userUid,
@@ -27,6 +39,11 @@ const createSingleTimer = async ({ userUid, startTime, endTime }) => {
       updateDate: new Date(),
       timerStartTime: startTime,
       timerEndTime: endTime,
+      timerRealEndTime: realEndTime,
+      percentageBaseDay,
+      settingTime,
+      endTimer,
+      finish: false,
     });
 
     if (query) {
@@ -37,4 +54,35 @@ const createSingleTimer = async ({ userUid, startTime, endTime }) => {
   }
 };
 
-export { createSingleTimer };
+interface IUpdateTimer {
+  docId: string | number;
+  realEndTime: Date | null;
+  endTimer: number | null; // 종료이후 남은 시간 (초단위) => 0일수 있음
+  finish?: boolean; // 종료인지 아닌지 판별
+}
+
+const updateTimer = async ({
+  docId,
+  realEndTime,
+  endTimer,
+  finish,
+}: IUpdateTimer) => {
+  const updateRef = doc(firestore, 'timer', `${docId}`);
+  try {
+    const query = await updateDoc(updateRef, {
+      createDate: new Date(),
+      updateDate: new Date(),
+      timerRealEndTime: realEndTime,
+      endTimer,
+      finish,
+    });
+
+    if (query) {
+      return query;
+    }
+  } catch (error: any) {
+    throw new FirebaseError(error);
+  }
+};
+
+export { createSingleTimer, updateTimer };

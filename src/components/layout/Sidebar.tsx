@@ -8,7 +8,6 @@ interface ISidebar {
 
 const Sidebar = ({ isOpen, toggleSidebar }: ISidebar) => {
   const location = useLocation();
-  console.log('location', location);
   const navigate = useNavigate();
   const handleMenuClick = menu => {
     navigate(menu);
