@@ -36,7 +36,7 @@ const store = (set, get) => ({
   logoutUser: () => {
     set(
       () => ({
-        user: { ...initialState },
+        user: {},
       }),
       false,
       'logout_user'

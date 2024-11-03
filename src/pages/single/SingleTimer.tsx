@@ -11,6 +11,7 @@ import { CirclePlay, Pause, Play, TimerOff } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import Picker from 'react-mobile-picker';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import tw from 'twin.macro';
 
 import { createSingleTimer, updateTimer } from '@/api/timer';
@@ -39,8 +40,6 @@ const selections = {
 
 export default function SingleTimer() {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  // console.log('searchParams', searchParams.get('tid'));
   const { user } = useUserCheck();
   const isMobile = useDeviceType();
   const { isVisible, toggleVisibility } = useSlideTransition();
@@ -111,6 +110,7 @@ export default function SingleTimer() {
       })
         .then(res => {
           console.log('res', res.id);
+          toast.error('에러가 발생하였습니다. 😭');
           setDocId(res.id);
         })
         .catch(err => {
@@ -130,7 +130,6 @@ export default function SingleTimer() {
     }
     toggleVisibility();
     setShowModal(true);
-    setSearchParams('tid=test');
     createTimerData();
   };
 
@@ -140,19 +139,36 @@ export default function SingleTimer() {
   };
 
   const handleEndTimer = () => {
-    updateTimer({
-      docId,
-      endTimer: timer / 100,
-      realEndTime: new Date(),
-      finish: true,
-    })
-      .then(res => {
-        console.log('res', res);
-        stopTimer();
+    const getLocalData = JSON.parse(localStorage.getItem('nonMember_timer'));
+    if (!_.isEmpty(user)) {
+      updateTimer({
+        docId,
+        endTimer: timer / 100,
+        realEndTime: new Date(),
+        finish: true,
       })
-      .catch(err => {
-        console.log('err', err);
-      });
+        .then(res => {
+          console.log('res', res);
+          navigate(`/main/timer/single/result?tid=${docId}`);
+        })
+        .catch(err => {
+          toast.error('에러가 발생하였습니다. 😭');
+          console.log('err', err);
+        });
+    } else {
+      localStorage.setItem(
+        'nonMember_timer',
+        JSON.stringify({
+          ...getLocalData,
+          docId,
+          endTimer: timer / 100,
+          realEndTime: new Date(),
+          finish: true,
+        })
+      );
+      navigate(`/main/timer/single/result`);
+    }
+    stopTimer();
   };
 
   // 세팅 내부 타이머 조절

@@ -16,6 +16,7 @@ const sideBarMenus = [
       '/main/timer/single/timer',
       '/main/timer/single/stopwatch',
       '/main/timer/single/analytics',
+      '/main/timer/single/result',
     ],
   },
   {
