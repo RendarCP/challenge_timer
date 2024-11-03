@@ -15,7 +15,14 @@ export default function MainPage() {
   const isMobile = useDeviceType();
   console.log('isMobile', isMobile);
   return (
-    <ContentPureContainer>
+    <ContentPureContainer
+    // style={{
+    //   display: 'flex',
+    //   justifyContent: 'center',
+    //   alignItems: 'center',
+    //   flexDirection: 'column',
+    // }}
+    >
       <Card full onClick={() => navigate('/main/timer/single')}>
         <Card.Header>
           <FlexWrapper>
@@ -43,16 +50,6 @@ export default function MainPage() {
     </ContentPureContainer>
   );
 }
-
-const Container = tw.div`
-  w-full
-  h-full
-  // flex
-  // justify-center
-  // items-start
-  // m-auto
-  // p-5
-`;
 
 const FlexWrapper = tw.div`
   flex

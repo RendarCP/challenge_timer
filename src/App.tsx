@@ -42,14 +42,15 @@ function App() {
           {/* timer/single */}
           <Route path="timer/single" element={<Single />} />
           <Route path="timer/single/timer" element={<SingleTimer />} />
-          <Route path="timer/single/timer/result" element={<SingleResult />} />
+          <Route path="timer/single/result" element={<SingleResult />} />
           <Route path="timer/single/stopwatch" element={<SingleStopWatch />} />
           <Route path="timer/single/analytics" element={<SingleAnalytics />} />
           {/* timer/single/:id */}
           <Route path="timer/single/:id" element={<SingleTimer />} />
           <Route path="challenge/room" element={<Rooms />} />
           <Route path="challenge/room/:id" element={<Room />} />
-          {/* timer/report */}
+          {/* timer/report/single */}
+          {/* timer/report/challenge */}
           {/* comunity */}
           {/* comunity/:type */}
           {/* shared */}

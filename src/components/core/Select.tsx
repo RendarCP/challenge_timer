@@ -12,8 +12,6 @@ const CustomSelect = ({
   const [isOpen, setIsOpen] = useState(false);
   // const [selectedOption, setSelectedOption] = useState({});
 
-  console.log('selectedOption', selectedOption);
-
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const handleOptionClick = option => {
@@ -54,7 +52,6 @@ const CustomSelect = ({
       {isOpen && (
         <div className="absolute w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-4 max-h-80 overflow-scroll z-[9999]">
           {options.map((option, index) => {
-            console.log('options', option);
             return (
               <div
                 key={index}

@@ -6,7 +6,6 @@ let isStopWatchRunning = false;
 let isTimerRunning = false;
 
 self.onmessage = function (e) {
-  // console.log('e================', e.data);
   switch (e.data.type) {
     case 'start':
       return startStopWatch(e.data.stopwatch);

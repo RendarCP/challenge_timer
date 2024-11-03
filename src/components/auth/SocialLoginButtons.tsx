@@ -21,7 +21,6 @@ export default function SocialLoginButtons() {
           res.create_date.seconds,
           new Date(res.create_date.seconds * 1000)
         );
-        navigate('/');
         document.getElementById('login_modal').close();
       })
       .catch(err => {
@@ -34,7 +33,6 @@ export default function SocialLoginButtons() {
     githubAuth()
       .then(res => {
         console.log('res', res);
-        navigate('/');
         document.getElementById('login_modal').close();
       })
       .catch(err => {

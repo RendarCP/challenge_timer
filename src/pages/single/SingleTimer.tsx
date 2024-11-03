@@ -1,12 +1,20 @@
 import { hoursData, minutesData } from '@/constant/timeConst';
-import { calculatePercentage, convertToSeconds } from '@/modules/function';
+import {
+  addSecondsToNow,
+  calculatePercentage,
+  calculateSecondsPercentage,
+  convertToSeconds,
+} from '@/modules/function';
 import dayjs from 'dayjs';
 import _ from 'lodash';
 import { CirclePlay, Pause, Play, TimerOff } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import Picker from 'react-mobile-picker';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import tw from 'twin.macro';
+
+import { createSingleTimer, updateTimer } from '@/api/timer';
 
 import CountdownModal from '@/components/CountDownModal';
 import SmoothCircleTimer from '@/components/SmoothCircleTimer';
@@ -32,16 +40,16 @@ const selections = {
 
 export default function SingleTimer() {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  // console.log('searchParams', searchParams.get('tid'));
   const { user } = useUserCheck();
   const isMobile = useDeviceType();
   const { isVisible, toggleVisibility } = useSlideTransition();
+  const [docId, setDocId] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   // pc 전용 상태
   const [pickHour, setPickHour] = useState({ ...hoursData[0] });
   const [pickMinute, setPickMinute] = useState({ ...minutesData[0] });
+
   // 모바일전용
   const [pickerValue, setPickerValue] = useState({
     hour: 0,
@@ -55,6 +63,7 @@ export default function SingleTimer() {
     setTimer,
     startTimer,
     pauseTimer,
+    stopTimer,
     isRunning,
   } = useTimer(
     convertToSeconds({
@@ -63,13 +72,13 @@ export default function SingleTimer() {
     })
   );
 
+  const pickTimerConvertSeconds = convertToSeconds({
+    hours: isMobile ? pickerValue.hour : pickHour.value,
+    minutes: isMobile ? pickerValue.minute : pickMinute.value,
+  });
+
   useEffect(() => {
-    setTimer(
-      convertToSeconds({
-        hours: isMobile ? pickerValue.hour : pickHour.value,
-        minutes: isMobile ? pickerValue.minute : pickMinute.value,
-      }) * 100
-    );
+    setTimer(pickTimerConvertSeconds * 100);
   }, [pickerValue, pickHour, pickMinute]);
 
   useEffect(() => {
@@ -83,26 +92,45 @@ export default function SingleTimer() {
     }
   }, []);
 
+  const createTimerData = () => {
+    const timerData = {
+      userUid: user.uid,
+      startTime: new Date(),
+      endTime: addSecondsToNow(pickTimerConvertSeconds),
+      realEndTime: null,
+      percentageBaseDay: calculateSecondsPercentage(pickTimerConvertSeconds),
+      settingTime: pickTimerConvertSeconds,
+      endTimer: null,
+    };
+    if (!_.isEmpty(user)) {
+      console.log('유저에 의해서 실행되었습니다', user);
+      // 회원용 api 로직 추가
+      createSingleTimer({
+        ...timerData,
+      })
+        .then(res => {
+          console.log('res', res.id);
+          toast.error('에러가 발생하였습니다. 😭');
+          setDocId(res.id);
+        })
+        .catch(err => {
+          console.log('err', err);
+        });
+    } else {
+      console.log('비회원에 의해서 실행되었습니다');
+      // 비회원용 로컬스토리지 로직 추가
+      localStorage.setItem('nonMember_timer', JSON.stringify({ ...timerData }));
+    }
+  };
+
   const handleSettingTimer = () => {
-    if (
-      convertToSeconds({
-        hours: isMobile ? pickerValue.hour : pickHour.value,
-        minutes: isMobile ? pickerValue.minute : pickMinute.value,
-      }) <= 0
-    ) {
+    if (pickTimerConvertSeconds <= 0) {
       document.getElementById('timer_warning_modal').showModal();
       return;
     }
     toggleVisibility();
     setShowModal(true);
-    setSearchParams('tid=test');
-    if (!_.isEmpty(user)) {
-      console.log('유저에 의해서 실행되었습니다');
-      // 회원용 api 로직 추가
-    } else {
-      console.log('비회원에 의해서 실행되었습니다');
-      // 비회원용 로컬스토리지 로직 추가
-    }
+    createTimerData();
   };
 
   const handleCountComplete = () => {
@@ -110,14 +138,41 @@ export default function SingleTimer() {
     startTimer();
   };
 
-  // 세팅 내부 타이머 조절
-  const settingTimer =
-    Number(
-      convertToSeconds({
-        hours: isMobile ? pickerValue.hour : pickHour.value,
-        minutes: isMobile ? pickerValue.minute : pickMinute.value,
+  const handleEndTimer = () => {
+    const getLocalData = JSON.parse(localStorage.getItem('nonMember_timer'));
+    if (!_.isEmpty(user)) {
+      updateTimer({
+        docId,
+        endTimer: timer / 100,
+        realEndTime: new Date(),
+        finish: true,
       })
-    ) * 100;
+        .then(res => {
+          console.log('res', res);
+          navigate(`/main/timer/single/result?tid=${docId}`);
+        })
+        .catch(err => {
+          toast.error('에러가 발생하였습니다. 😭');
+          console.log('err', err);
+        });
+    } else {
+      localStorage.setItem(
+        'nonMember_timer',
+        JSON.stringify({
+          ...getLocalData,
+          docId,
+          endTimer: timer / 100,
+          realEndTime: new Date(),
+          finish: true,
+        })
+      );
+      navigate(`/main/timer/single/result`);
+    }
+    stopTimer();
+  };
+
+  // 세팅 내부 타이머 조절
+  const settingTimer = Number(pickTimerConvertSeconds) * 100;
 
   const mainTimerText = `${hours}시간 ${minutes}분 ${seconds}초`;
   return (
@@ -245,7 +300,7 @@ export default function SingleTimer() {
               </button>
               <Spacer left={10} />
               <button
-                onClick={() => stop}
+                onClick={() => handleEndTimer()}
                 className={`btn btn-error text-white w-1/3`}
               >
                 <TimerOff />

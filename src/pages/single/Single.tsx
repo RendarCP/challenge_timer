@@ -17,7 +17,6 @@ export default function Single() {
   const navigate = useNavigate();
 
   const { user } = useUserCheck();
-  console.log('user', user);
 
   const handleCardClick = ({
     type,
@@ -26,10 +25,9 @@ export default function Single() {
     type: string;
     navigate: () => void;
   }) => {
-    if (!_.isEmpty(user)) {
-      console.log('이게 실행되어야함');
-      navigate();
-    }
+    // if (!_.isEmpty(user)) {
+    navigate();
+    // }
   };
 
   return (
@@ -89,7 +87,6 @@ export default function Single() {
           </FlexWrapper>
         </Card.Content>
       </Card>
-      {/* {showModal && <CountdownModal onComplete={() => setShowModal(false)} />} */}
     </Container>
   );
 }
@@ -98,7 +95,7 @@ const Container = tw.div`
   h-full
   flex
   flex-col
-  mt-6
+  pt-6
 `;
 
 const ContentWrapper = tw.div`
