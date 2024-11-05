@@ -22,15 +22,17 @@
 
 ## 3. 구현사항
 
+우선순위
+
 - [x] 로그인
 - [x] 회원가입
 - [ ] Room 기능
   - [ ] Share_room (공유방) → challange
     - [ ] 타이머
   - [ ] Single_room
-    - [ ] 타이머
-      - [ ] 회원로직
-      - [ ] 비회원로직
+    - [x] 타이머
+      - [x] 회원로직
+      - [x] 비회원로직
     - [ ] 스탑워치(기록x)
 - [x] 타이머 관련기능
 - [ ] 마이페이지
@@ -38,6 +40,11 @@
   - [ ] 타이머 기록
   - [ ] 차트 및 측정 기능
     - [ ] 분석기능
+
+---
+
+후순위
+
 - [ ] 커뮤니티 기능
   - [ ] 카테고리별 커뮤니티
 - [ ] 타이머 종료 이후 winner, loser 기능
@@ -64,7 +71,6 @@ Nextjs로 구현할려다 현재 appDir emotion관련된 부분때문에 react�
 
 ## 5. ERD
 
-````markdown
 ```mermaid
 ---
 title: challenge_timer ERD
@@ -101,21 +107,86 @@ erDiagram
         datetime FINISH_TIME
         datetime UPDATE_DATE
     }
-
-````
+```
 
 ## 6. 플로우 차트
 
-## 7. 정책 정리
+## 7. 시퀀스 다이어그램
+
+```mermaid
+
+sequenceDiagram
+    participant Member
+    participant NonMember
+    participant Timer
+    participant Stopwatch
+    participant Competition
+    participant Scoring
+    participant DB
+
+    Member ->> Timer: Start Timer
+    alt Time >= 80%
+        Timer ->> DB: Log Record
+        Member ->> Timer: Request Analysis
+        Timer ->> Scoring: Provide Analysis
+    else
+        Timer ->> DB: Log Invalid Record
+    end
+
+    NonMember ->> Timer: Start Timer
+    Timer ->> NonMember: Save Data to Local Storage
+    NonMember -->> Timer: No Analysis Access
+
+    Member ->> Stopwatch: Start Stopwatch
+    Stopwatch -->> Member: No Records Logged
+    Stopwatch -->> Member: Stop Time Ignored
+
+    Member ->> Competition: Connect to Opponent
+    Competition ->> Timer: Host Sets Time
+    alt Leave Before Time?
+        alt Time >= 80%
+            Timer ->> DB: Log Record
+        else
+            Timer ->> Competition: Apply Penalty (-5)
+        end
+    else
+        Timer ->> Competition: No Penalty
+    end
+
+    Timer ->> Competition: Minimize/Close?
+    alt Rejoin within 5 min
+        Competition ->> Timer: Apply Penalty (-5)
+    else
+        Timer ->> Competition: Opponent Wins
+    end
+
+    Timer ->> Scoring: Calculate Score
+    alt Time >= 80%
+        Scoring ->> Member: Winner +20 Points
+        Scoring ->> Member: Loser Points Based on %
+    else
+        Scoring ->> Member: No Score
+    end
+    Scoring ->> Member: Tie +5 Points Each
+
+```
+
+## 8. 정책 정리
 
 ### 타이머/스탑워치
 
 1. 타이머
-   1. 타이머의 경우 설정된 시간에서 80% 이상할시에 기록으로 인정
-   2. 그외 기록의 경우 로그에서 확인은 가능하지만 최종 기록으로는 인정 ㅇx
+   1. 회원
+      1. 타이머의 경우 설정된 시간에서 80% 이상할시에 기록으로 인정
+      2. 그외 기록의 경우 로그에서 확인은 가능하지만 최종 기록으로는 인정하지 않음
+      3. 분석기능을 통해 자신의 기록을 확인 가능
+   2. 비회원
+      1. 비회원의 경우 로컬스토리지에 저장된 데이터만 가져온다
+      2. 분석 기능은 사용할수 없다.
 2. 스탑워치
 
-   1. 스탑워치의 경우 기록으로 인정 x (정확한 캐치가 불가능함) → 사용기록만 남김
+   1. 스탑워치의 경우 기록으로 인정 x (정확한 캐치가 불가능함)
+   2. 스탑워치 정지시간은 기록되지 않는다 (측정당시에만 유효한 데이터)
 
 3. 상대방과의 경쟁 (타이머)
    1. 상대방과의 연결된 기준으로 설정되며, 기준시간의 경우 방장이 설정한 시간 기준으로 기록된다

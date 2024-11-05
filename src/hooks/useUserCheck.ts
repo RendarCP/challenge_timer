@@ -1,4 +1,5 @@
 import { onAuthStateChanged } from 'firebase/auth';
+import _ from 'lodash';
 // eslint-disable-next-line import/named
 import React, { useEffect, useState } from 'react';
 
@@ -22,9 +23,11 @@ export const useUserCheck = () => {
       }
     });
   }, []);
+  const isUser = !_.isEmpty(user);
   return {
     user,
     setUser,
     isLoading,
+    isUser,
   };
 };
