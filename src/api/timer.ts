@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs';
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 
 import { firestore } from '../firebase/index';
 
@@ -85,4 +85,18 @@ const updateTimer = async ({
   }
 };
 
-export { createSingleTimer, updateTimer };
+const getUserTimer = async ({ docId }: { docId: string }) => {
+  try {
+    const timer = doc(firestore, 'timer', docId);
+    const roomSnapShot = await getDoc(timer);
+
+    if (roomSnapShot.exists()) {
+      return roomSnapShot.data();
+    }
+    throw new Error('fail');
+  } catch (error: any) {
+    throw new FirebaseError(error);
+  }
+};
+
+export { createSingleTimer, updateTimer, getUserTimer };

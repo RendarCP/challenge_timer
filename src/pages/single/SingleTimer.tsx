@@ -40,7 +40,7 @@ const selections = {
 
 export default function SingleTimer() {
   const navigate = useNavigate();
-  const { user } = useUserCheck();
+  const { user, isUser } = useUserCheck();
   const isMobile = useDeviceType();
   const { isVisible, toggleVisibility } = useSlideTransition();
   const [docId, setDocId] = useState('');
@@ -103,21 +103,20 @@ export default function SingleTimer() {
       endTimer: null,
     };
     if (!_.isEmpty(user)) {
-      console.log('유저에 의해서 실행되었습니다', user);
       // 회원용 api 로직 추가
       createSingleTimer({
         ...timerData,
       })
         .then(res => {
           console.log('res', res.id);
-          toast.error('에러가 발생하였습니다. 😭');
+
           setDocId(res.id);
         })
         .catch(err => {
+          toast.error('에러가 발생하였습니다. 😭');
           console.log('err', err);
         });
     } else {
-      console.log('비회원에 의해서 실행되었습니다');
       // 비회원용 로컬스토리지 로직 추가
       localStorage.setItem('nonMember_timer', JSON.stringify({ ...timerData }));
     }
@@ -149,7 +148,7 @@ export default function SingleTimer() {
       })
         .then(res => {
           console.log('res', res);
-          navigate(`/main/timer/single/result?tid=${docId}`);
+          navigate(`/main/timer/single/result?docid=${docId}`);
         })
         .catch(err => {
           toast.error('에러가 발생하였습니다. 😭');
