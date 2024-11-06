@@ -76,7 +76,20 @@ Nextjs로 구현할려다 현재 appDir emotion관련된 부분때문에 react�
 title: challenge_timer ERD
 ---
 erDiagram
-    USER ||--o{ ROOM_USER : places
+    POST_TYPE {
+        string POST_TYPE_ID
+        string POST_TYPE
+    }
+    POST {
+        string POST_ID
+        string USER_ID
+        string POST_TYPE_ID
+        string POST_TITLE
+        string POST_DESCRIPTION
+        string POST_CONTENT
+        datetime CREATE_DATE
+        datetime UPDATE_DATE
+    }
     USER {
         string USER_ID
         string USER_PW
@@ -84,12 +97,20 @@ erDiagram
         string USER_NICKNAME
         string USER_GOAL
         string USER_CATEGORY
-        int USER_EXP
+        string USER_EXP
         datetime CREATE_DATE
         datetime UPDATE_DATE
     }
-    ROOM_USER }|--|| ROOM : contains
-    ROOM_USER {
+    CHALLENGE_ROOM {
+        string ROOM_ID
+        string ROOM_NAME
+        string ROOM_DESCRIPTION
+        boolean ROOM_FINISH
+        datetime CREATE_DATE
+        datetime UPDATE_DATE
+        datetime FINISH_TIME
+    }
+    CHALLENGE_ROOM_USER {
         int ROOM_USER_ID
         string ROOM_ID
         string USER_ID
@@ -98,15 +119,26 @@ erDiagram
         boolean ROOM_INSIDE
         boolean ROOM_WINNER
     }
-    ROOM {
-        string ROOM_ID
-        string ROOM_NAME
-        string ROOM_DESCRIPTION
-        boolean ROOM_FINISH
+    TIMER {
+        string TIMER_ID
+        string USER_ID
+        datetime TIMER_START_TIME
+        datetime TIMER_END_TIME
+        datetime TIMER_REAL_END_TIME
         datetime CREATE_DATE
-        datetime FINISH_TIME
         datetime UPDATE_DATE
+        number percentTimesDay
+        number settingTime
+        number endTime
+        boolean finish
     }
+
+    POST_TYPE ||--o{ POST : "linked to"
+    POST ||--o{ USER : "created by"
+    CHALLENGE_ROOM ||--o{ CHALLENGE_ROOM_USER : "has users"
+    USER ||--o{ CHALLENGE_ROOM_USER : "joins rooms"
+    USER ||--o{ TIMER : "sets timers"
+
 ```
 
 ## 6. 플로우 차트
