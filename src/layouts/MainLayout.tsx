@@ -10,7 +10,7 @@ interface MainlayoutProps {
   showSideBar?: boolean;
 }
 
-const scrollActivePath = ['/'];
+const scrollActivePath = ['/', '/shared'];
 
 const MainLayout = ({ showHeader, showSideBar }: MainlayoutProps) => {
   const location = useLocation();
