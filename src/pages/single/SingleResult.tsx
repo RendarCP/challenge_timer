@@ -1,54 +1,20 @@
+import { copyToClipboard, encodeData } from '@/modules/function';
 import _ from 'lodash';
-import { MousePointerClick, Percent, Timer } from 'lucide-react';
+import { MousePointerClick, Percent, Share, Timer } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { getUserTimer } from '@/api/timer';
+
+import ResultStats from '@/components/ResultStats';
+import Spacer from '@/components/core/Spacer';
+import { Text } from '@/components/core/Text';
 
 import useDeviceType from '@/hooks/useDeviceType';
 import { useUserCheck } from '@/hooks/useUserCheck';
 
 import { ContentFlexContainer } from '@/styles/MainContainer';
-
-// 결과를 보여주는 컴포넌트를 분리
-const ResultStats = ({ result, isMobile }) => (
-  <div className={`stats shadow ${isMobile ? 'stats-vertical' : ''} bg-black`}>
-    <div className="stat">
-      <div className="stat-figure text-primary">
-        <MousePointerClick />
-      </div>
-      <div className="stat-title">선택된 시간</div>
-      <div className="stat-value text-primary">{result.selectTimer}초</div>
-      <div className="stat-desc">타이머로 선택한 시간</div>
-    </div>
-
-    <div className="stat">
-      <div className="stat-figure text-secondary">
-        <Timer />
-      </div>
-      <div className="stat-title">총 소모된 시간</div>
-      <div className="stat-value text-secondary">{result.endTimer}초</div>
-      <div className="stat-desc">타이머로 선택된 시간에서 소모된 시간</div>
-    </div>
-
-    <div className="stat">
-      <div className="stat-figure text-info">
-        <Percent />
-      </div>
-      <div className="stat-title">소모된 비율</div>
-      <div className="stat-value text-info">{result.percentageTimer}%</div>
-      <div className="stat-desc">선택된 시간 대비 소모된 비율</div>
-    </div>
-
-    <div className="stat">
-      <div className="stat-title">선택된 시간으로 소비한 하루비율</div>
-      <div className="stat-value">
-        {Number(result.percentageBaseDay).toFixed(2)}%{' '}
-      </div>
-      <div className="stat-desc text-secondary">24시간중 소모된 비율</div>
-    </div>
-  </div>
-);
 
 export default function SingleResult() {
   const isMobile = useDeviceType();
@@ -61,6 +27,8 @@ export default function SingleResult() {
     percentageBaseDay: '',
     percentageTimer: 0,
   });
+
+  const encodedData = encodeData(result);
 
   useEffect(() => {
     const calculateResult = data => {
@@ -89,6 +57,26 @@ export default function SingleResult() {
     }
   }, [user, docId]);
 
+  const handleSharedButton = () => {
+    const encodedData = encodeData(result);
+    const shareLink = `${window.location.origin}/shared?data=${encodedData}`;
+    copyToClipboard(shareLink);
+    document.getElementById('shared_modal').close();
+    toast.success('클립보드에 복사되었습니다.');
+  };
+
+  // const copyToClipboard = text => {
+  //   navigator.clipboard.writeText(text).then(
+  //     () => {
+  //       document.getElementById('shared_modal').close();
+  //       toast.success('클립보드에 복사되었습니다.');
+  //     },
+  //     err => {
+  //       console.error('클립보드 복사 실패:', err);
+  //     }
+  //   );
+  // };
+
   if (user && isLoading) {
     return (
       <ContentFlexContainer>
@@ -100,6 +88,48 @@ export default function SingleResult() {
   return (
     <ContentFlexContainer>
       <ResultStats result={result} isMobile={isMobile} />
+      <Spacer top={20} />
+      <div className="flex justify-center">
+        <button
+          className={`btn btn-primary text-white ${
+            isMobile ? 'w-2/3' : 'w-1/3'
+          }`}
+          onClick={() => document.getElementById('shared_modal').showModal()}
+        >
+          <Share />
+          공유하기
+        </button>
+      </div>
+      <dialog id="shared_modal" className="modal">
+        <div className="modal-box text-center">
+          <Text typography="h5" className="font-bold text-lg text-center">
+            공유하기
+          </Text>
+          <Spacer top={10} />
+          <div>
+            <input
+              type="text"
+              placeholder="Type here"
+              readOnly
+              value={`${window.location.origin}/shared?data=${encodedData}`}
+              className="input input-bordered input-warning w-full max-w-xs"
+            />
+            <Spacer top={20} />
+            <button
+              className={`btn btn-primary text-white ${
+                isMobile ? 'w-2/3' : 'w-1/3'
+              }`}
+              onClick={() => handleSharedButton()}
+            >
+              <Share />
+              복사하기
+            </button>
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </ContentFlexContainer>
   );
 }

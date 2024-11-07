@@ -38,9 +38,34 @@ function addSecondsToNow(seconds: number) {
   return new Date(now.getTime() + seconds * 1000);
 }
 
+// 데이터를 Base64로 인코딩하는 함수
+const encodeData = data => {
+  return btoa(encodeURIComponent(JSON.stringify(data)));
+};
+
+// 데이터를 디코딩하는 함수
+const decodeData = encodedData => {
+  return JSON.parse(decodeURIComponent(atob(encodedData)));
+};
+
+// 클립보드에 복사 함수
+const copyToClipboard = text => {
+  navigator.clipboard.writeText(text).then(
+    () => {
+      return;
+    },
+    err => {
+      console.error('클립보드 복사 실패:', err);
+    }
+  );
+};
+
 export {
   convertToSeconds,
   calculatePercentage,
   calculateSecondsPercentage,
   addSecondsToNow,
+  encodeData,
+  decodeData,
+  copyToClipboard,
 };

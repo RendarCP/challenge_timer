@@ -27,12 +27,13 @@
 - [x] 로그인
 - [x] 회원가입
 - [ ] Room 기능
-  - [ ] Share_room (공유방) → challange
+  - [ ] Share_room (공유방) → challanges
     - [ ] 타이머
   - [ ] Single_room
     - [x] 타이머
       - [x] 회원로직
       - [x] 비회원로직
+      - [x] 공유로직
     - [ ] 스탑워치(기록x)
 - [x] 타이머 관련기능
 - [ ] 마이페이지

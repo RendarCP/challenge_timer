@@ -16,6 +16,7 @@ import TestPage from './pages/Test.page';
 import Timer from './pages/Timer';
 import Room from './pages/challenge/Room.page';
 import Rooms from './pages/challenge/Rooms.page';
+import SharedPage from './pages/shared/SharedPage';
 import Single from './pages/single/Single';
 import SingleAnalytics from './pages/single/SingleAnalytics';
 import SingleResult from './pages/single/SingleResult';
@@ -28,6 +29,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout />}>
+          <Route path="shared" element={<SharedPage />} />
           <Route path="" element={<HomePage />} />
           <Route path="test" element={<TestPage />} />
         </Route>
