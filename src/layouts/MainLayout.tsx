@@ -32,7 +32,7 @@ const MainLayout = ({ showHeader, showSideBar }: MainlayoutProps) => {
   // }, [location]);
 
   const isScroll = scrollActivePath.includes(location.pathname);
-  const isLanding = location.pathname === '/';
+  const isLanding = scrollActivePath.includes(location.pathname);
 
   return (
     <div className="drawer lg:drawer-open">

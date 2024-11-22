@@ -38,7 +38,7 @@ export default function SharedPage() {
     }
   }, [location]);
 
-  const Container = isMobile ? ContentPureContainer : ContentFlexContainer;
+  const Container = isMobile ? SharedContainer : ContentFlexContainer;
 
   return (
     <Container>
@@ -54,10 +54,17 @@ export default function SharedPage() {
       </button>
       <Spacer top={20} />
       <ResultStats result={data} isMobile={isMobile} />
+      <Spacer bottom={20} />
     </Container>
   );
 }
 
 const LogoImage = tw.img`
   w-20
+`;
+
+const SharedContainer = tw.div`
+  h-fit
+  p-7
+  mb-7
 `;

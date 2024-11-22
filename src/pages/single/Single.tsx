@@ -20,13 +20,13 @@ export default function Single() {
 
   const handleCardClick = ({
     type,
-    navigate,
+    path, // navigate 대신 경로를 받도록 수정
   }: {
     type: string;
-    navigate: () => void;
+    path: string; // 타입을 string으로 변경
   }) => {
     // if (!_.isEmpty(user)) {
-    navigate();
+    navigate(path); // 경로를 사용하여 navigate 실행
     // }
   };
 
@@ -46,7 +46,7 @@ export default function Single() {
           onClick={() =>
             handleCardClick({
               type: 'timer',
-              navigate: navigate('/main/timer/single/timer'),
+              path: '/main/timer/single/timer', // 직접 경로 문자열 전달
             })
           }
         >
