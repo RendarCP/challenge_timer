@@ -31,11 +31,28 @@ export default function SingleResult() {
   const encodedData = encodeData(result);
 
   useEffect(() => {
+    const formatTime = totalSeconds => {
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = Math.floor(totalSeconds % 60);
+
+      let result = [];
+      if (hours > 0) {
+        result.push(`${hours}시간`);
+      }
+      if (minutes > 0) {
+        result.push(`${minutes}분`);
+      }
+      if (seconds > 0) {
+        result.push(`${seconds}초`);
+      }
+      return result.join(' ');
+    };
     const calculateResult = data => {
       const resultPercentage = (data.endTimer / data.settingTime) * 100;
       return {
-        selectTimer: data.settingTime,
-        endTimer: (data.settingTime - data.endTimer).toFixed(2),
+        selectTimer: formatTime(data.settingTime),
+        endTimer: formatTime(data.settingTime - data.endTimer),
         percentageTimer: (100 - resultPercentage).toFixed(2),
         percentageBaseDay: data.percentageBaseDay,
       };
@@ -64,18 +81,6 @@ export default function SingleResult() {
     document.getElementById('shared_modal').close();
     toast.success('클립보드에 복사되었습니다.');
   };
-
-  // const copyToClipboard = text => {
-  //   navigator.clipboard.writeText(text).then(
-  //     () => {
-  //       document.getElementById('shared_modal').close();
-  //       toast.success('클립보드에 복사되었습니다.');
-  //     },
-  //     err => {
-  //       console.error('클립보드 복사 실패:', err);
-  //     }
-  //   );
-  // };
 
   if (user && isLoading) {
     return (

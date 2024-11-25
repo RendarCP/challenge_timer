@@ -1,5 +1,5 @@
 import { Disc2, Pause, Play, TimerOff } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
 
 import SmoothCircleTimer from '@/components/SmoothCircleTimer';
 import Spacer from '@/components/core/Spacer';
@@ -9,10 +9,23 @@ import useStopWatch from '@/hooks/useStopWatch';
 
 import { ContentFlexContainer } from '@/styles/MainContainer';
 
+interface LapTimeItem {
+  id: number;
+  name: string;
+  content: string;
+}
+
 export default function SingleStopWatch() {
-  const [lapTime, setLapTime] = useState([]);
-  console.log('lapTime', lapTime);
-  const [stopWatch, setStopWatch] = useState(0);
+  const scrollRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+  const [lapTime, setLapTime] = useState<LapTimeItem[]>([]);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [lapTime]);
+
+  const [stopWatch, setStopWatch] = useState(0); // stopwatch 상태
   const {
     timer,
     milliseconds: stMilli,
@@ -22,7 +35,6 @@ export default function SingleStopWatch() {
     startTimer: onActive,
     pauseTimer: onPause,
     resetTimer: onReset,
-    isPause,
     isTimerRunning: isActive,
   } = useStopWatch(stopWatch);
 
@@ -30,8 +42,8 @@ export default function SingleStopWatch() {
     setStopWatch(timer);
   }, [timer]);
 
+  // 스탑워치 기록관련 상태 추가
   const handlePushLapTime = () => {
-    console.log('클릭됨');
     setLapTime(prevLapTime => [
       ...prevLapTime,
       {
@@ -42,6 +54,7 @@ export default function SingleStopWatch() {
     ]);
   };
 
+  // 스탑워치 초기화
   const handleRestLapTime = () => {
     setLapTime([]);
     onReset();
@@ -114,7 +127,7 @@ export default function SingleStopWatch() {
         <Spacer top={20} />
         <Text typography="h4">랩타임</Text>
         <Spacer top={20} />
-        <div style={{ overflow: 'scroll', height: 200 }}>
+        <div ref={scrollRef} style={{ overflow: 'scroll', height: 200 }}>
           {lapTime.map(lap => {
             return (
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>

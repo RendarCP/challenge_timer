@@ -238,15 +238,12 @@ export default function SingleTimer() {
             )}
             <Spacer top={20} />
             <Text typography={isMobile ? 'h5' : 'h3'}>
-              설정된 시간{' '}
+              설정된 시간 :{' '}
               {`${dayjs()
                 .set('hour', isMobile ? pickerValue.hour : pickHour.value)
                 .set('minute', isMobile ? pickerValue.minute : pickMinute.value)
                 .set('second', 0)
-                .format('HH:mm')} - ${convertToSeconds({
-                hours: isMobile ? pickerValue.hour : pickHour.value,
-                minutes: isMobile ? pickerValue.minute : pickMinute.value,
-              })}초`}
+                .format('HH 시간 mm분')}`}
             </Text>
             <Spacer top={20} />
             <Button onClick={handleSettingTimer}>설정하기</Button>
