@@ -11,7 +11,7 @@ export default function ResultStats({ result, isMobile }) {
           <MousePointerClick />
         </div>
         <div className="stat-title">선택된 시간</div>
-        <div className="stat-value text-primary">{result?.selectTimer}초</div>
+        <div className="stat-value text-primary">{result?.selectTimer}</div>
         <div className="stat-desc">타이머로 선택한 시간</div>
       </div>
 
@@ -20,7 +20,7 @@ export default function ResultStats({ result, isMobile }) {
           <Timer />
         </div>
         <div className="stat-title">총 소모된 시간</div>
-        <div className="stat-value text-secondary">{result?.endTimer}초</div>
+        <div className="stat-value text-secondary">{result?.endTimer}</div>
         <div className="stat-desc">타이머로 선택된 시간에서 소모된 시간</div>
       </div>
 
